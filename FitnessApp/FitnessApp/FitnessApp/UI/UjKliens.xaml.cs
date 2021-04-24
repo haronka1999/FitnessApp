@@ -70,20 +70,45 @@ namespace FitnessApp.UI
             comment = Comment.Text;
             date_str = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
             DateTime date = Convert.ToDateTime(date_str);
+            int deleted = 0;
+            insertClientIntoDataBase(name,phone,email,deleted,photo,date,cnp,my_address,barcode,comment);         
+        }
 
-            Kliens new_kliens = new Kliens(0,name,phone,email,false,photo,date,cnp,my_address,barcode,comment);
-          
-            System.Windows.MessageBox.Show(new_kliens.ToString());
-     
+        private void insertClientIntoDataBase(string name, string phone, string email, int deleted, string photo, DateTime date, string cnp, string my_address, string barcode, string comment)
+        {
             SqlConnection sqlCon = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\.Net_Project\FitnessApp\FitnessApp\FitnessApp\FitnessApp\Database\db_local.mdf;Integrated Security=True");
 
             try
             {
+                string query = "INSERT INTO Kliensek (nev, telefon, email, " +
+                    "is_deleted, photo, inserted_date, szemelyi, cim, vonalkod, megjegyzes)" +
+                    " VALUES ( @name, @phone, @email, @deleted, @photo, @date, @cnp, @my_address, @barcode, @comment );";
+
+                SqlCommand sqlCmd = new SqlCommand(query, sqlCon);
+                sqlCmd.Parameters.AddWithValue("@name", name);
+                sqlCmd.Parameters.AddWithValue("@phone", phone);
+                sqlCmd.Parameters.AddWithValue("@email", email);
+                sqlCmd.Parameters.AddWithValue("@deleted", deleted);
+                sqlCmd.Parameters.AddWithValue("@photo", photo);
+                sqlCmd.Parameters.AddWithValue("@date", date);
+                sqlCmd.Parameters.AddWithValue("@cnp", cnp);
+                sqlCmd.Parameters.AddWithValue("@my_address", my_address);
+                sqlCmd.Parameters.AddWithValue("@barcode", barcode);
+                sqlCmd.Parameters.AddWithValue("@comment", comment);
+
+
                 if (sqlCon.State == ConnectionState.Closed)
                 {
                     sqlCon.Open();
                 }
 
+                int result = sqlCmd.ExecuteNonQuery();
+
+
+                if (result < 0)
+                    System.Windows.MessageBox.Show("Adatbázis hiba új kliens hozzáadásnál");
+                else
+                    System.Windows.MessageBox.Show("Kliens sikeresen hozzáadva");
             }
             catch (Exception ex)
             {
@@ -91,10 +116,8 @@ namespace FitnessApp.UI
             }
             finally
             {
-                sqlCon.Close();
+                  sqlCon.Close();
             }
-
-
         }
 
         private string generateRandomString(int length)
@@ -109,6 +132,7 @@ namespace FitnessApp.UI
         private void BtnCancel_click(object sender, RoutedEventArgs e)
         {
 
+            //this.tab = Visibility.Hidden;
 
         }
     }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -7,7 +8,7 @@ using System.Windows.Media;
 
 namespace FitnessApp.Model
 {
-    class Kliens
+    class Kliens : INotifyPropertyChanged
     {
         public int kliens_id;
         public string nev;
@@ -36,6 +37,18 @@ namespace FitnessApp.Model
             this.megjegyzes = megjegyzes;
         }
 
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private int _count;
+        public int Count
+        {
+            get { return _count; }
+            set
+            {
+                _count = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Count"));
+            }
+        }
         public override string ToString()
         {
             return 
