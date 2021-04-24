@@ -8,7 +8,7 @@ using System.Windows.Media;
 
 namespace FitnessApp.Model
 {
-    class Kliens : INotifyPropertyChanged
+    public class Kliens : INotifyPropertyChanged
     {
         public int kliens_id;
         public string nev;

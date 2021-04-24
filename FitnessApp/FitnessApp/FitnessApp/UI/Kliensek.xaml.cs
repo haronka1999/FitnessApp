@@ -21,18 +21,17 @@ namespace FitnessApp.UI
 {
     public partial class Kliensek : UserControl
     {
-        ObservableCollection<Kliens> users = new ObservableCollection<Kliens>();
-
-
+        public ObservableCollection<Kliens> users { get; set; }
         public Kliensek()
         {
             InitializeComponent();
-            getUsersFromDatabase();
             DataContext = this;
-            KliensGrid.ItemsSource = users;
+            users = new ObservableCollection<Kliens>();
+            users =getUsersFromDatabase();
+            this.KliensGrid.ItemsSource = users;
         }
 
-        private void getUsersFromDatabase()
+        private ObservableCollection<Kliens> getUsersFromDatabase()
         {
 
             ObservableCollection<Kliens> kliensek = new ObservableCollection<Kliens>();
@@ -77,7 +76,7 @@ namespace FitnessApp.UI
             }
 
             users = kliensek;
-
+            return users;
         }
     }
 }
