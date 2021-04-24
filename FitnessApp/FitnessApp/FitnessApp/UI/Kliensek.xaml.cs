@@ -21,7 +21,7 @@ namespace FitnessApp.UI
 {
     public partial class Kliensek : UserControl
     {
-        ObservableCollection<Kliens> users { get; set; } = new ObservableCollection<Kliens>();
+        ObservableCollection<Kliens> users = new ObservableCollection<Kliens>();
 
 
         public Kliensek()
@@ -64,7 +64,7 @@ namespace FitnessApp.UI
                                                     reader["vonalkod"].ToString(),
                                                     reader["megjegyzes"].ToString());
                         kliensek.Add(kliens);
-                    }                
+                    }
                 }
             }
             catch (Exception ex)
@@ -77,7 +77,7 @@ namespace FitnessApp.UI
             }
 
             users = kliensek;
-          
+
         }
     }
 }
