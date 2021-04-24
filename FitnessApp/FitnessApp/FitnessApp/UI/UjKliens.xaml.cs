@@ -15,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using FitnessApp.Model;
 
 namespace FitnessApp.UI
 {
@@ -23,20 +24,21 @@ namespace FitnessApp.UI
     /// </summary>
     public partial class UjKliens : System.Windows.Controls.UserControl
     {
+        public const int BARCODE_LENGTH = 4;
 
         //az infok a form-rol
         private string name;
         private string phone;
         private string email;
         private string cnp;
-        private string cim;
+        private string my_address;
+        private string barcode;
         private string berletType;
-        private Image photo;
+        private string photo = "placeholder";
         private string comment;
 
-
         //egyeb valtozok
-        private string date;
+        private string date_str;
 
         public UjKliens()
         {
@@ -59,12 +61,25 @@ namespace FitnessApp.UI
 
         private void BtnOk_click(object sender, RoutedEventArgs e)
         {
+            name = UserName.Text;
+            phone = Number.Text;
+            email = Email.Text;
+            cnp = CNP.Text;
+            my_address = address.Text;
+            barcode = generateRandomString(BARCODE_LENGTH);
+            comment = Comment.Text;
+            date_str = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+            DateTime date = Convert.ToDateTime(date_str);
 
+            Kliens new_kliens = new Kliens(0,name,phone,email,false,photo,date,cnp,my_address,barcode,comment);
+          
+            System.Windows.MessageBox.Show(new_kliens.ToString());
+     
             SqlConnection sqlCon = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\.Net_Project\FitnessApp\FitnessApp\FitnessApp\FitnessApp\Database\db_local.mdf;Integrated Security=True");
 
             try
             {
-                if(sqlCon.State == ConnectionState.Closed)
+                if (sqlCon.State == ConnectionState.Closed)
                 {
                     sqlCon.Open();
                 }
@@ -82,8 +97,18 @@ namespace FitnessApp.UI
 
         }
 
+        private string generateRandomString(int length)
+        {
+            Random random = new Random();
+
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            return new string(Enumerable.Repeat(chars, length)
+              .Select(s => s[random.Next(s.Length)]).ToArray());
+        }
+
         private void BtnCancel_click(object sender, RoutedEventArgs e)
         {
+
 
         }
     }

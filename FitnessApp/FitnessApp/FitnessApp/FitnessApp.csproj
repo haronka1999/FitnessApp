@@ -75,6 +75,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Model\Kliens.cs" />
     <Compile Include="UI\BeleptetesInfo.xaml.cs">
       <DependentUpon>BeleptetesInfo.xaml</DependentUpon>
     </Compile>
@@ -149,9 +150,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Model\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="Database\db_local.mdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
