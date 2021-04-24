@@ -55,11 +55,8 @@
                     </StackPanel>
                 </GroupBox>
             </Expander>
-        
-        
-        
-   
-         <Label Grid.Row="7">Megjegyzés:</Label>
+
+            <Label Grid.Row="7">Megjegyzés:</Label>
         <TextBox Grid.Row="7" Grid.Column="1" AcceptsReturn="True" Margin="0,0,0,10" />
     </Grid>
 

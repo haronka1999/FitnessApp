@@ -4,6 +4,8 @@
              xmlns:local="clr-namespace:FitnessApp"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <ResourceDictionary>
+            <BitmapImage x:Key="icon" UriSource="icon.png"></BitmapImage>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

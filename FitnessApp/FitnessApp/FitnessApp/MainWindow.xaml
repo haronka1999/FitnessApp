@@ -7,15 +7,11 @@
         xmlns:uc="clr-namespace:FitnessApp.UI"
         mc:Ignorable="d"
         Title="FitnesApp" Height="450" Width="800">
+    <StackPanel>
 
-
-    <TabControl>
-        <TabItem Header="Főoldal">
-                <!--ide jon a kod a fooldalra ide irunk-->
-                
-            
-            
-           
+        <TabControl>
+            <TabItem Header="Főoldal">
+                <uc:FoOldal></uc:FoOldal>
             </TabItem>
 
             <TabItem Header="Új kliens">
@@ -24,12 +20,14 @@
 
             <TabItem Header="Kliensek">
                 <uc:Kliensek></uc:Kliensek>
-        </TabItem>
+            </TabItem>
 
+            <TabItem Header="Bérlet hozzáadása">
+                
+            </TabItem>
 
-        <TabItem Header="Bérlet hozzáadása">
-        </TabItem>
-            
-            
         </TabControl>
+
+        
+    </StackPanel>
 </Window>
