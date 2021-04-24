@@ -160,6 +160,8 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <DependentUpon>db_local.mdf</DependentUpon>
     </Content>
+    <Resource Include="icon.ico" />
+    <Resource Include="icon.png" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">

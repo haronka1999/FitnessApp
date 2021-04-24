@@ -31,13 +31,14 @@
             <Label Grid.Row="1">Telefonszám:</Label>
             <TextBox Grid.Row="1" Grid.Column="1" AcceptsReturn="True" Margin="0,0,0,10"/>
 
-             <Label Grid.Row="2">E-mail:</Label>
+            <Label Grid.Row="2">E-mail:</Label>
             <TextBox Grid.Row="2" Grid.Column="1" AcceptsReturn="True" Margin="0,0,0,10"/>
         
             <Label Grid.Row="3">Fotó:</Label>
-                <Button Name="BtnUpload" Grid.Row="3" Grid.Column="1" Margin="0,0,0,10" Width="100" Click="BtnUpload_click" Content="Feltölt"/>
+            <Button Name="BtnUpload" Grid.Row="3" Grid.Column="1" Margin="0,0,0,10" Width="100" Click="BtnUpload_click" Content="Feltölt" />
+            <Image  Name="imgPhoto" Grid.Row="3" Grid.Column="2"  />
 
-                <Label Grid.Row="4">CNP:</Label>
+            <Label Grid.Row="4">CNP:</Label>
             <TextBox Grid.Row="4" Grid.Column="1" AcceptsReturn="True" Margin="0,0,0,10"/>
         
             <Label Grid.Row="5">Cím:</Label>
