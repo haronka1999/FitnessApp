@@ -6,17 +6,16 @@
              xmlns:local="clr-namespace:FitnessApp.UI"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    
-    <StackPanel>
-        <Canvas HorizontalAlignment="Left">
-            <Button Width="50" Height="50" Margin="10">
-                <Viewbox>
-                    <Image Source="{StaticResource icon}" RenderTransformOrigin="0.643,4.328"></Image>
-                </Viewbox>
-            </Button>
-        </Canvas>
 
-        <Border BorderThickness="1" BorderBrush="Black" Width="400" Height="150" Margin="50">
+    <StackPanel>
+        <Image HorizontalAlignment="Left" Width="90" Height="70" Margin="30">
+            <Image.Source>
+                <FormatConvertedBitmap Source="/icon.ico" />
+            </Image.Source>
+        </Image>
+
+
+        <Border BorderThickness="1" BorderBrush="Black" Width="400" Height="150" Margin="0,50,0,0">
             <Grid Margin="10">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
@@ -35,7 +34,7 @@
                 <Label Grid.Row="1">Bérlet id:</Label>
                 <TextBox Grid.Row="1" Grid.Column="1" Margin="0,0,0,10" />
 
-                <Button Grid.Row="2" Grid.Column="1" Margin="10" Width="100">Ok</Button>
+                <Button Grid.Row="2" Grid.Column="1" Margin="10" Width="100" Content="Ok"/>
             </Grid>
         </Border>
     </StackPanel>

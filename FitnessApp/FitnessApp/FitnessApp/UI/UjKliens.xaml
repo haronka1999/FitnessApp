@@ -7,62 +7,60 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
 
-
     <StackPanel>    
-    <Grid Margin="10">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
+        <Grid Margin="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
 
-        <Label Grid.Row="0">Név:</Label>
-        <TextBox Grid.Row="0" Grid.Column="1" Margin="0,0,0,10" />
+            <Label Grid.Row="0">Név:</Label>
+            <TextBox Grid.Row="0" Grid.Column="1" AcceptsReturn="True" Margin="0,0,0,10"/>
         
-        <Label Grid.Row="1">Telefonszám:</Label>
-        <TextBox Grid.Row="1" Grid.Column="1" Margin="0,0,0,10" />
+            <Label Grid.Row="1">Telefonszám:</Label>
+            <TextBox Grid.Row="1" Grid.Column="1" AcceptsReturn="True" Margin="0,0,0,10"/>
 
-         <Label Grid.Row="2">E-mail:</Label>
-        <TextBox Grid.Row="2" Grid.Column="1" AcceptsReturn="True" Margin="0,0,0,10" />
+             <Label Grid.Row="2">E-mail:</Label>
+            <TextBox Grid.Row="2" Grid.Column="1" AcceptsReturn="True" Margin="0,0,0,10"/>
         
-        <Label Grid.Row="3">Fotó:</Label>
-            <Button Name="BtnUpload" Grid.Row="3" Grid.Column="1" Margin="0,0,0,10" Click="BtnUpload_click"> Feltölt</Button>
-        
-        <Label Grid.Row="4">CNP:</Label>
-        <TextBox Grid.Row="4" Grid.Column="1" AcceptsReturn="True" Margin="0,0,0,10" />
-        
-        <Label Grid.Row="5">Cím:</Label>
-        <TextBox Grid.Row="5" Grid.Column="1" AcceptsReturn="True" Margin="0,0,0,10" />
+            <Label Grid.Row="3">Fotó:</Label>
+                <Button Name="BtnUpload" Grid.Row="3" Grid.Column="1" Margin="0,0,0,10" Width="100" Click="BtnUpload_click" Content="Feltölt"/>
 
-        <Label Grid.Row="6">Bérlet típusa:</Label>
-            <Expander Grid.Row="6" Grid.Column="1">
-                <GroupBox>
-                    <StackPanel>
-                        <Label>Favorite Car</Label>
-                        <RadioButton Content="30 napos" GroupName="Gender" IsChecked="True" />
-                        <RadioButton Content="15 napos" GroupName="Gender" />
-                        <RadioButton Content="10 belépéses" GroupName="Gender" />
-                    </StackPanel>
-                </GroupBox>
-            </Expander>
+                <Label Grid.Row="4">CNP:</Label>
+            <TextBox Grid.Row="4" Grid.Column="1" AcceptsReturn="True" Margin="0,0,0,10"/>
+        
+            <Label Grid.Row="5">Cím:</Label>
+            <TextBox Grid.Row="5" Grid.Column="1" AcceptsReturn="True" Margin="0,0,0,10"/>
 
-            <Label Grid.Row="7">Megjegyzés:</Label>
-        <TextBox Grid.Row="7" Grid.Column="1" AcceptsReturn="True" Margin="0,0,0,10" />
-    </Grid>
+            <Label Grid.Row="6">Bérlet típusa:</Label>
+                <Expander Grid.Row="6" Grid.Column="1">
+                    <GroupBox>
+                        <StackPanel>
+                            <RadioButton Content="30 napos" GroupName="Gender" IsChecked="True"/>
+                            <RadioButton Content="15 napos" GroupName="Gender"/>
+                            <RadioButton Content="10 belépéses" GroupName="Gender"/>
+                        </StackPanel>
+                    </GroupBox>
+                </Expander>
+
+                <Label Grid.Row="7">Megjegyzés:</Label>
+            <TextBox Grid.Row="7" Grid.Column="1" AcceptsReturn="True" Margin="0,0,0,10"/>
+        </Grid>
 
         <WrapPanel>
-            <Button Margin="10" Width="100">Ok</Button>
-            <Button Margin="10" Width="100">Mégse</Button>
+            <Button Margin="10" Width="100" Content="Mentés"/>
+            <Button Margin="10" Width="100" Content="Mégse"/>
         </WrapPanel>
     </StackPanel>
 

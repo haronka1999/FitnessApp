@@ -60,11 +60,17 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="UI\BeleptetesInfo.xaml.cs">
+      <DependentUpon>BeleptetesInfo.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\FoOldal.xaml.cs">
       <DependentUpon>FoOldal.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\Kliensek.xaml.cs">
       <DependentUpon>Kliensek.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\UjBerlet.xaml.cs">
+      <DependentUpon>UjBerlet.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\UjKliens.xaml.cs">
       <DependentUpon>UjKliens.xaml</DependentUpon>
@@ -81,11 +87,19 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="UI\BeleptetesInfo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UI\FoOldal.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UI\Kliensek.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\UjBerlet.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
