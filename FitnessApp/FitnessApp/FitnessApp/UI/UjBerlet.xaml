@@ -23,14 +23,14 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
-            <Label Grid.Row="0">Időtartam:</Label>
-            <TextBox Grid.Row="0" Grid.Column="1" AcceptsReturn="True" Margin="0,0,0,10" />
+            <Label  Grid.Row="0">Időtartam:</Label>
+            <TextBox  Grid.Row="0" Grid.Column="1" AcceptsReturn="True" Margin="0,0,0,10" PreviewTextInput="NumberValidationTextBox_1" />
 
             <Label Grid.Row="1">Belépés szám:</Label>
-            <TextBox Grid.Row="1" Grid.Column="1" AcceptsReturn="True" Margin="0,0,0,10" />
+            <TextBox Name ="input_2" Grid.Row="1" Grid.Column="1" AcceptsReturn="True" Margin="0,0,0,10" PreviewTextInput="NumberValidationTextBox_2" />
 
             <Label Grid.Row="2">Napi belépési limit:</Label>
-            <TextBox Grid.Row="2" Grid.Column="1" AcceptsReturn="True" Margin="0,0,0,10" />
+            <TextBox Grid.Row="2" Grid.Column="1" AcceptsReturn="True" Margin="0,0,0,10" PreviewTextInput="NumberValidationTextBox_3" />
 
             <Label Grid.Row="3">Időtartam limit:</Label>
             <TextBox Grid.Row="3" Grid.Column="1" AcceptsReturn="True" Margin="0,0,0,10" />
@@ -44,7 +44,7 @@
         </Grid>
 
         <WrapPanel>
-            <Button Margin="10" Width="100" Content="Mentés"/>
+            <Button Name="BtnSave" Click="BtnSave_click" Margin="10" Width="100" Content="Mentés"/>
             <Button Margin="10" Width="100" Content="Mégse"/>
         </WrapPanel>
     </StackPanel>

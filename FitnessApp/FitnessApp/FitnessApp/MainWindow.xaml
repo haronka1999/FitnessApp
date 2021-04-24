@@ -10,6 +10,8 @@
         Title="FitnesApp" Height="450" Width="800">
     <StackPanel>
 
+
+     
         <TabControl >
             <TabItem Header="Főoldal">
                 <uc:FoOldal x:Name="Home" ></uc:FoOldal> 
