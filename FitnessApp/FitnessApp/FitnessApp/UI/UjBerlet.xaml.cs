@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -22,9 +23,6 @@ namespace FitnessApp.UI
 
     public partial class UjBerlet : UserControl
     {
-
-
-
         /*
          A berlet megnevezeseket egy szamkent taroljuk el
          mindegyik szam egy fajta berletet jelol. 
@@ -32,11 +30,12 @@ namespace FitnessApp.UI
 
         1 - "Napszam" --> ha a nap szam van korlatozva
         2 - "Belepes szam" --> ha a nap szam van korlatozva
-         
+        3 - "kombinalt" --> mindketto teljesul
          */
-        public string megnevezes;
+        public int megnevezes = -1;
 
         public float ar;
+        public string ar_str;
 
         /* 
          Kezdetben az ervenyessegeket -1 ertekkel lassuk el.
@@ -47,7 +46,7 @@ namespace FitnessApp.UI
         public int napokErvenyesseg = -1;
         public int belepesekErvenyesseg = -1;
         public bool torolve = false;
-       
+
         public string hanyOratol_str;
         public string hanyOraig_str;
         public DateTime hanyOraig;
@@ -73,7 +72,18 @@ namespace FitnessApp.UI
 
         private void BtnSave_click(object sender, RoutedEventArgs e)
         {
-            if (napokErvenyesseg < 5 ||napokErvenyesseg > 31)
+            letrehozasi_datum = Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
+            hanyOraig_str = veg.Text;
+            hanyOratol_str = kezdet.Text;
+            teremId = getTeremId();
+            setBelepesek();
+            setNapokervenyesseg();
+            setAr();
+            setMegnevezes();
+
+
+            //egy kicsi szukites a formnal
+            if (napokErvenyesseg < 5 || napokErvenyesseg > 31)
             {
                 //error message should be displayed
             }
@@ -88,34 +98,21 @@ namespace FitnessApp.UI
                 //error message should be displayed
             }
 
-            try
-            {
-                hanyOraig = DateTime.ParseExact(hanyOraig_str, "HH:mm", System.Globalization.CultureInfo.InvariantCulture);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Hiba hanyoraig: " + ex.Message);
-            }
 
-            try
-            {
-                hanyOratol = DateTime.ParseExact(hanyOraig_str, "HH:mm", System.Globalization.CultureInfo.InvariantCulture);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Hiba hanyOratol: " + ex.Message);
-            }
+             //kesobbre kell ha vissza akarom alakitani datumra
+             //hanyOraig = DateTime.ParseExact(hanyOraig_str, "HH:mm", System.Globalization.CultureInfo.InvariantCulture);
+             //hanyOratol = DateTime.ParseExact(hanyOraig_str, "HH:mm", System.Globalization.CultureInfo.InvariantCulture);
 
 
-
-
-            MessageBox.Show("teremId: " + teremId);
-
-          //  insertBerletIntoDataBase(megnevezes, ar, napokErvenyesseg, belepesekErvenyesseg, torolve, teremId, hanyOratol, hanyOraig, napiMaxHasznalat, letrehozasi_datum);
+            //deleteRowsIfNeeded();
+            insertBerletIntoDataBase(megnevezes, ar, napokErvenyesseg, belepesekErvenyesseg, torolve, teremId, hanyOratol_str, hanyOraig_str, napiMaxHasznalat, letrehozasi_datum);
         }
 
-        private void insertBerletIntoDataBase(string megnevezes, float ar, int napokErvenyesseg, int belepesekErvenyesseg, bool torolve, int teremId, DateTime hanyOratol, DateTime hanyOraig, int napiMaxHasznalat, DateTime letrehozasi_datum)
+        private void insertBerletIntoDataBase(int megnevezes, float ar, int napokErvenyesseg, int belepesekErvenyesseg, bool torolve, int teremId, string hanyOratol, string hanyOraig, int napiMaxHasznalat, DateTime letrehozasi_datum)
         {
+
+            //MessageBox.Show("Adatok: " + megnevezes + " " + ar + " " + napokErvenyesseg + " " + belepesekErvenyesseg + " " + torolve + " " + teremId + " " + hanyOratol + " " + hanyOraig + " " + napiMaxHasznalat + " " + " " + letrehozasi_datum);
+
             SqlConnection sqlCon = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\.Net_Project\FitnessApp\FitnessApp\FitnessApp\FitnessApp\Database\db_local.mdf;Integrated Security=True");
 
             string query = "INSERT INTO Berletek (megnevezes, ar, " +
@@ -138,36 +135,136 @@ namespace FitnessApp.UI
                 sqlCmd.Parameters.AddWithValue("@napi_max_hasznalat", napiMaxHasznalat);
                 sqlCmd.Parameters.AddWithValue("@letrehozasi_datum", letrehozasi_datum);
 
+                if (sqlCon.State == ConnectionState.Closed)
+                {
+                    sqlCon.Open();
+                }
+
+                int result = sqlCmd.ExecuteNonQuery();
+
+
+                if (result < 0)
+                    System.Windows.MessageBox.Show("Adatbázis hiba új berlet hozzáadásnál");
+                else
+                    System.Windows.MessageBox.Show("Bérlet sikeresen hozzáadva");
             }
             catch (Exception ex)
             {
-
+                System.Windows.MessageBox.Show(ex.Message);
             }
             finally
             {
-
+                sqlCon.Close();
             }
-
-
-
         }
 
 
-        //VALIDATION!!!
-
-        private void NumberValidationTextBox_1(object sender, TextCompositionEventArgs e)
+        private void setMegnevezes()
         {
-            e.Handled = regex.IsMatch(e.Text);
-            napokErvenyesseg = Int32.Parse(e.Text);
+            if (napokErvenyesseg == -1)
+                megnevezes = 2;
+            else if (belepesekErvenyesseg == -1)
+                megnevezes = 1;
+            else
+                megnevezes = 3;
+
+
+            //hiba kezeles
+            if (megnevezes == -1)
+                MessageBox.Show("Hiba a berlet tipus kivalasztasanal");
+
         }
 
-
-
-        private void NumberValidationTextBox_2(object sender, TextCompositionEventArgs e)
+        private void setAr()
         {
-             e.Handled = regex.IsMatch(e.Text);
-             belepesekErvenyesseg = Int32.Parse(e.Text);       
+            try
+            {
+                ar = float.Parse(price.Text);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Hiba az ar alakitasnal: " + ex.Message);
+            }
         }
+
+        private void setNapokervenyesseg()
+        {
+
+            if (NapErvenyesseg.Text != "")
+            {
+                try
+                {
+                    napokErvenyesseg = Int32.Parse(NapErvenyesseg.Text);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Hiba a napok atalakitasanal: " + ex.Message);
+                }
+            }
+        }
+
+        private void setBelepesek()
+        {
+            if (BelepesErvenyesseg.Text != "")
+            {
+                try
+                {
+                    belepesekErvenyesseg = Int32.Parse(BelepesErvenyesseg.Text);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Hiba a belepesek atalakitasanal: " + ex.Message);
+                }
+            }
+        }
+
+        private int getTeremId()
+        {
+            if ((bool)terem1.IsChecked)
+               return  teremId = 1;
+
+            if ((bool)terem2.IsChecked)
+               return  teremId = 2;
+
+            if ((bool)terem3.IsChecked)
+              return  teremId = 3;
+
+            return -1;
+        }
+
+        private void deleteRowsIfNeeded()
+        {
+            SqlConnection sqlCon = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\.Net_Project\FitnessApp\FitnessApp\FitnessApp\FitnessApp\Database\db_local.mdf;Integrated Security=True");
+            string query = "DELETE FROM Berletek";
+
+            try
+            {
+                SqlCommand sqlCmd = new SqlCommand(query, sqlCon);
+
+                if (sqlCon.State == ConnectionState.Closed)
+                {
+                    sqlCon.Open();
+                }
+
+                int result = sqlCmd.ExecuteNonQuery();
+
+
+                if (result < 0)
+                    System.Windows.MessageBox.Show("hiba a sorok torlesenel");
+                else
+                    System.Windows.MessageBox.Show("Sorok sikeresen torolv");
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                sqlCon.Close();
+            }
+        }
+
+        //VALIDATION FUNCTION----------------------------
 
         private void NumberValidationTextBox_3(object sender, TextCompositionEventArgs e)
         {
@@ -175,48 +272,10 @@ namespace FitnessApp.UI
             napiMaxHasznalat = Int32.Parse(e.Text);
         }
 
-        private void NumberValidationTextBox_4(object sender, TextCompositionEventArgs e)
-        {
-            hanyOratol_str = e.Text;
-        }
-
-        private void NumberValidationTextBox_5(object sender, TextCompositionEventArgs e)
-        {
-            hanyOraig_str = e.Text;
-        }
-
         private void NumberValidationTextBox_6(object sender, TextCompositionEventArgs e)
         {
             e.Handled = regex.IsMatch(e.Text);
             teremId = Int32.Parse(e.Text);
-        }
-
-        private void Terem1_Clicked(object sender, RoutedEventArgs e)
-        {
-         
-            if ((bool)terem1.IsChecked)
-            {
-                teremId = 1;
-            }
-            
-        }
-
-        private void Terem2_Clicked(object sender, RoutedEventArgs e)
-        {
-
-            if ((bool)terem2.IsChecked)
-            {
-                teremId = 2;
-            }
-        }
-
-        private void Terem3_Clicked(object sender, RoutedEventArgs e)
-        {
-
-            if ((bool)terem3.IsChecked)
-            {
-                teremId = 3;
-            }
         }
     }
 }
