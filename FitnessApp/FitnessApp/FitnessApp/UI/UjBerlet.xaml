@@ -21,25 +21,36 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
-            <Label  Grid.Row="0">Időtartam:</Label>
+            <Label ToolTip="Hány napig érvényes"  Grid.Row="0">Időtartam:</Label>
             <TextBox  Grid.Row="0" Grid.Column="1" AcceptsReturn="True" Margin="0,0,0,10" PreviewTextInput="NumberValidationTextBox_1" />
 
-            <Label Grid.Row="1">Belépés szám:</Label>
+            <Label ToolTip="Hanyszor hasznalhato a berlet"  Grid.Row="1">Belépés szám:</Label>
             <TextBox Name ="input_2" Grid.Row="1" Grid.Column="1" AcceptsReturn="True" Margin="0,0,0,10" PreviewTextInput="NumberValidationTextBox_2" />
 
-            <Label Grid.Row="2">Napi belépési limit:</Label>
+            <Label ToolTip="Naponta maximum hányszor használható a bérlet" Grid.Row="2">Napi belépési limit:</Label>
             <TextBox Grid.Row="2" Grid.Column="1" AcceptsReturn="True" Margin="0,0,0,10" PreviewTextInput="NumberValidationTextBox_3" />
 
-            <Label Grid.Row="3">Időtartam limit:</Label>
-            <TextBox Grid.Row="3" Grid.Column="1" AcceptsReturn="True" Margin="0,0,0,10" />
+            <Label ToolTip="Hány órától használható a bérlet, formátum HH:MM" Grid.Row="3">Óralimit kezdete</Label>
+            <TextBox Grid.Row="3" Grid.Column="1" AcceptsReturn="True" Margin="0,0,0,10" PreviewTextInput="NumberValidationTextBox_4"/>
 
-            <Label Grid.Row="4">Nap limit:</Label>
-            <TextBox Grid.Row="4" Grid.Column="1" AcceptsReturn="True" Margin="0,0,0,10" />
+            <Label ToolTip="Hány óráig használható a bérlet, formátum HH:MM" Grid.Row="4">Óralimit vége</Label>
+            <TextBox Grid.Row="4" Grid.Column="1" AcceptsReturn="True" Margin="0,0,0,10" PreviewTextInput="NumberValidationTextBox_5" />
 
-            <Label Grid.Row="5">Kliens Id:</Label>
-            <TextBox Grid.Row="5" Grid.Column="1" AcceptsReturn="True" Margin="0,0,0,10" />
+            <Label ToolTip="Melyik terembe érvényes (1-es,2-es vagy 3-as terem)" Grid.Row="5">Terem</Label>
+            <Expander Grid.Row="5" Grid.Column="1">
+                <GroupBox >
+                    <StackPanel>
+                        <RadioButton Name="terem1" Content="1-es terem" Click="Terem1_Clicked" />
+                        <RadioButton Name="terem2" Content="2-es terem" Click="Terem2_Clicked" />
+                        <RadioButton Name="terem3" Content="3-as terem" Click="Terem3_Clicked" />
+                    </StackPanel>
+                </GroupBox>
+            </Expander>
+            <Label ToolTip="A kliens kártyájáról olvasható le" Grid.Row="6">Kliens Id:</Label>
+            <TextBox Grid.Row="6" Grid.Column="1" AcceptsReturn="True" Margin="0,0,0,10" />
 
         </Grid>
 
