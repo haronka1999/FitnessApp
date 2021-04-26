@@ -35,7 +35,7 @@ namespace FitnessApp.UI
         {
 
             ObservableCollection<Kliens> kliensek = new ObservableCollection<Kliens>();
-            SqlConnection sqlCon = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\.Net_Project\FitnessApp\FitnessApp\FitnessApp\FitnessApp\Database\db_local.mdf;Integrated Security=True");
+            SqlConnection sqlCon = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=E:\egyetem\felev2\.net\gyakok\projekt\FitnessApp\FitnessApp\FitnessApp\FitnessApp\Database\db_local.mdf;Integrated Security=True");
             try
             {
                 string query = "SELECT * from Kliensek;";

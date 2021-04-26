@@ -110,7 +110,7 @@ namespace FitnessApp.UI
 
             //MessageBox.Show("Adatok: " + megnevezes + " " + ar + " " + napokErvenyesseg + " " + belepesekErvenyesseg + " " + torolve + " " + teremId + " " + hanyOratol + " " + hanyOraig + " " + napiMaxHasznalat + " " + " " + letrehozasi_datum);
 
-            SqlConnection sqlCon = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\.Net_Project\FitnessApp\FitnessApp\FitnessApp\FitnessApp\Database\db_local.mdf;Integrated Security=True");
+            SqlConnection sqlCon = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=E:\egyetem\felev2\.net\gyakok\projekt\FitnessApp\FitnessApp\FitnessApp\FitnessApp\Database\db_local.mdf;Integrated Security=True");
 
             string query = "INSERT INTO Berletek (megnevezes, ar, " +
             "ervenyesseg_nap, ervenyesseg_belepesek_szama, torolve, terem_id, " +
@@ -231,7 +231,7 @@ namespace FitnessApp.UI
 
         private void deleteRowsIfNeeded()
         {
-            SqlConnection sqlCon = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\.Net_Project\FitnessApp\FitnessApp\FitnessApp\FitnessApp\Database\db_local.mdf;Integrated Security=True");
+            SqlConnection sqlCon = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=E:\egyetem\felev2\.net\gyakok\projekt\FitnessApp\FitnessApp\FitnessApp\FitnessApp\Database\db_local.mdf;Integrated Security=True");
             string query = "DELETE FROM Berletek";
 
             try
