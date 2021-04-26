@@ -18,9 +18,6 @@ using System.Windows.Shapes;
 
 namespace FitnessApp.UI
 {
-
-
-
     public partial class UjBerlet : UserControl
     {
         /*
