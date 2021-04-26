@@ -3,28 +3,30 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:FitnessApp"
+        xmlns:local="clr-namespace:FitnessApp.UI"
         xmlns:uc="clr-namespace:FitnessApp.UI"
         mc:Ignorable="d"
         WindowState="Maximized"
         Title="FitnesApp" Height="450" Width="800">
     <StackPanel>
 
-        <TabControl>
+
+     
+        <TabControl >
             <TabItem Header="Főoldal">
-                <uc:FoOldal></uc:FoOldal> 
+                <uc:FoOldal x:Name="Home" ></uc:FoOldal> 
             </TabItem>
 
             <TabItem Header="Új kliens">
-                <uc:UjKliens></uc:UjKliens>
+                <uc:UjKliens x:Name="NewClient"></uc:UjKliens>
             </TabItem>
 
             <TabItem Header="Kliensek">
-                <uc:Kliensek></uc:Kliensek>
+                <uc:Kliensek x:Name="Clients"></uc:Kliensek>
             </TabItem>
 
             <TabItem Header="Bérlet hozzáadása">
-                <uc:UjBerlet></uc:UjBerlet>
+                <uc:UjBerlet x:Name="NewAbonament"></uc:UjBerlet>
             </TabItem>
 
         </TabControl>

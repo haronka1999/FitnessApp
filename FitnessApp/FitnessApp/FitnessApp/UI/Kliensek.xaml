@@ -20,21 +20,29 @@
         </StackPanel>
 
         <Grid Margin="10">
-            <DataGrid Grid.Row="2"
+            <DataGrid Name="KliensGrid"
+                        Grid.Row="2"
                       Grid.Column="0"
                       Grid.ColumnSpan="3"
-                      AutoGenerateColumns="False"
+                      AutoGenerateColumns="False" 
+                      ItemsSource="{Binding users}"
                       IsReadOnly="True">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="ID" Width="*"/>
-                    <DataGridTextColumn Header="Név" Width="2*"/>
-                    <DataGridTextColumn Header="Telefonszám" Width="2*"/>
-                    <DataGridTextColumn Header="e-mail" Width="2*"/>
-                    <DataGridTextColumn Header="CNP" Width="2*"/>
-                    <DataGridTextColumn Header="Lakcím" Width="2*"/>
-                    <DataGridTextColumn Header="Regisztrációs dátum" Width="2*"/>
-                    <DataGridTextColumn Header="Megjegyzés" Width="3*"/>
+                    <DataGridTextColumn Header="ID" Width="*" Binding="{Binding kliens_id}"/>
+                    <DataGridTextColumn Header="Név" Width="2*" Binding="{Binding nev}"/>
+                    <DataGridTextColumn Header=" Telefonszám" Width="2*" Binding="{Binding telefon}"/>
+                    <DataGridTextColumn Header="e-mail" Width="2*" Binding="{Binding email}" />
+                    <DataGridTextColumn Header="torolve" Width="2*" Binding="{Binding is_deleted}" />
+                    <DataGridTextColumn Header="foto" Width="2*" Binding="{Binding photo}" />
+                    <DataGridTextColumn Header="letrehozasi_datum" Width="2*" Binding="{Binding inserted_date}" />
+                    <DataGridTextColumn Header="CNP" Width="2*" Binding="{Binding szemelyi}" />
+                    <DataGridTextColumn Header="Lakcím" Width="2*" Binding="{Binding cim}"/>
+                    <DataGridTextColumn Header="vonalkod" Width="2*" Binding="{Binding vonalkod}"/>
+                    <DataGridTextColumn Header="Megjegyzés" Width="3*" Binding="{Binding megjegyzes}"/>
                 </DataGrid.Columns>
+                
+                
+                
                 <!--<DataGridTemplateColumn >
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
