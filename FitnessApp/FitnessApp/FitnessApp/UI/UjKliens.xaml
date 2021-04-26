@@ -26,23 +26,23 @@
                 </Grid.RowDefinitions>
 
             <Label Grid.Row="0">Név:</Label>
-            <TextBox Grid.Row="0" Grid.Column="1" AcceptsReturn="True" Margin="0,0,0,10"/>
+            <TextBox Name ="UserName" Grid.Row="0" Grid.Column="1" AcceptsReturn="True" Margin="0,0,0,10"/>
         
             <Label Grid.Row="1">Telefonszám:</Label>
-            <TextBox Grid.Row="1" Grid.Column="1" AcceptsReturn="True" Margin="0,0,0,10"/>
+            <TextBox Name ="Number" Grid.Row="1" Grid.Column="1" AcceptsReturn="True" Margin="0,0,0,10"/>
 
             <Label Grid.Row="2">E-mail:</Label>
-            <TextBox Grid.Row="2" Grid.Column="1" AcceptsReturn="True" Margin="0,0,0,10"/>
+            <TextBox Name ="Email" Grid.Row="2" Grid.Column="1" AcceptsReturn="True" Margin="0,0,0,10"/>
         
             <Label Grid.Row="3">Fotó:</Label>
             <Button Name="BtnUpload" Grid.Row="3" Grid.Column="1" Margin="0,0,0,10" Width="100" Click="BtnUpload_click" Content="Feltölt" />
             <Image  Name="imgPhoto" Grid.Row="3" Grid.Column="2"  />
 
             <Label Grid.Row="4">CNP:</Label>
-            <TextBox Grid.Row="4" Grid.Column="1" AcceptsReturn="True" Margin="0,0,0,10"/>
+            <TextBox Name="CNP" Grid.Row="4" Grid.Column="1" AcceptsReturn="True" Margin="0,0,0,10"/>
         
             <Label Grid.Row="5">Cím:</Label>
-            <TextBox Grid.Row="5" Grid.Column="1" AcceptsReturn="True" Margin="0,0,0,10"/>
+            <TextBox Name="address" Grid.Row="5" Grid.Column="1" AcceptsReturn="True" Margin="0,0,0,10"/>
 
             <Label Grid.Row="6">Bérlet típusa:</Label>
                 <Expander Grid.Row="6" Grid.Column="1">
@@ -56,12 +56,12 @@
                 </Expander>
 
                 <Label Grid.Row="7">Megjegyzés:</Label>
-            <TextBox Grid.Row="7" Grid.Column="1" AcceptsReturn="True" Margin="0,0,0,10"/>
+            <TextBox Name="Comment" Grid.Row="7" Grid.Column="1" AcceptsReturn="True" Margin="0,0,0,10"/>
         </Grid>
 
         <WrapPanel>
-            <Button Margin="10" Width="100" Content="Mentés"/>
-            <Button Margin="10" Width="100" Content="Mégse"/>
+            <Button Name="BtnOk" Click="BtnOk_click" Margin="10" Width="100" Content="Mentés"/>
+            <Button Name ="BtnCancel" Click="BtnCancel_click" Margin="10" Width="100" Content="Mégse"/>
         </WrapPanel>
     </StackPanel>
 

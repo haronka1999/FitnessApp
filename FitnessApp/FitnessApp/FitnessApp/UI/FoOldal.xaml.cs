@@ -24,5 +24,12 @@ namespace FitnessApp.UI
         {
             InitializeComponent();
         }
+
+        private void BtnOk_click(object sender, RoutedEventArgs e)
+        {
+           // this.Visibility = Visibility.Hidden;
+            beleptetes.Visibility = Visibility.Visible;
+
+        }
     }
 }
