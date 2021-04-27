@@ -37,12 +37,67 @@ namespace FitnessApp.UI
         private string photo = "placeholder";
         private string comment;
 
+        private List<Berlet> berletek;
+
         //egyeb valtozok
         private string date_str;
 
         public UjKliens()
         {
             InitializeComponent();
+            berletek = new List<Berlet>();
+            berletek = getBerletekFromDatabase();
+
+        }
+
+        private List<Berlet> getBerletekFromDatabase()
+        {
+            List<Berlet> abonaments = new List<Berlet>();
+
+
+            //SqlConnection sqlCon = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\.Net_Project\FitnessApp\FitnessApp\FitnessApp\FitnessApp\Database\db_local.mdf;Integrated Security=True");
+
+            //string query = "SELECT * FROM Berletek;";
+            //try
+            //{
+            //    SqlCommand sqlCmd = new SqlCommand(query, sqlCon);
+            //    if (sqlCon.State == ConnectionState.Closed)
+            //    {
+            //        sqlCon.Open();
+            //    }
+
+            //    using (SqlDataReader reader = sqlCmd.ExecuteReader())
+            //    {
+
+            //        while (reader.Read())
+            //        {
+            //            Berlet berlet = new Berlet(Int32.Parse(reader["berlet_id"].ToString()),
+            //                                        Int32.Parse(reader["megnevezes"].ToString()),
+            //                                        float.Parse(reader["telefon"].ToString()),
+            //                                        Int32.Parse(reader["ervenyesseg_nap"].ToString()),
+            //                                        Int32.Parse(reader["ervenyesseg_belepesek_szama"].ToString()),
+            //                                        bool.Parse(reader["torolve"].ToString()),
+            //                                        Int32.Parse(reader["terem_id"].ToString()),
+            //                                        Int32.Parse(reader["hany_oratol"].ToString()),
+            //                                        Int32.Parse(reader["hany_oraig"].ToString()),
+            //                                        Int32.Parse(reader["napi_max_hasznalat"].ToString()),
+            //                                        Convert.ToDateTime(reader["letrehozasi_datum"].ToString()));
+                                                                                           
+                                                    
+            //            abonaments.Add(berlet);
+            //        }
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+            //    System.Windows.MessageBox.Show(ex.Message);
+            //}
+            //finally
+            //{
+            //    sqlCon.Close();
+            //}
+
+            return abonaments;
         }
 
         private void BtnUpload_click(object sender, RoutedEventArgs e)
@@ -71,19 +126,20 @@ namespace FitnessApp.UI
             date_str = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
             DateTime date = Convert.ToDateTime(date_str);
             int deleted = 0;
-            insertClientIntoDataBase(name,phone,email,deleted,photo,date,cnp,my_address,barcode,comment);         
+            insertClientIntoDataBase(name, phone, email, deleted, photo, date, cnp, my_address, barcode, comment);
         }
+
+
 
         private void insertClientIntoDataBase(string name, string phone, string email, int deleted, string photo, DateTime date, string cnp, string my_address, string barcode, string comment)
         {
             SqlConnection sqlCon = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\.Net_Project\FitnessApp\FitnessApp\FitnessApp\FitnessApp\Database\db_local.mdf;Integrated Security=True");
-           
+
             string query = "INSERT INTO Kliensek (nev, telefon, email, " +
             "is_deleted, photo, inserted_date, szemelyi, cim, vonalkod, megjegyzes)" +
             " VALUES ( @name, @phone, @email, @deleted, @photo, @date, @cnp, @my_address, @barcode, @comment );";
             try
             {
-
 
                 SqlCommand sqlCmd = new SqlCommand(query, sqlCon);
                 sqlCmd.Parameters.AddWithValue("@name", name);
@@ -96,7 +152,6 @@ namespace FitnessApp.UI
                 sqlCmd.Parameters.AddWithValue("@my_address", my_address);
                 sqlCmd.Parameters.AddWithValue("@barcode", barcode);
                 sqlCmd.Parameters.AddWithValue("@comment", comment);
-
 
                 if (sqlCon.State == ConnectionState.Closed)
                 {
@@ -117,7 +172,7 @@ namespace FitnessApp.UI
             }
             finally
             {
-                  sqlCon.Close();
+                sqlCon.Close();
             }
         }
 

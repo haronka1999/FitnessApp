@@ -15,7 +15,6 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
             <Label ToolTip="Hány napig érvényes" Grid.Row="0">Időtartam:</Label>
@@ -36,19 +35,14 @@
             <Label Grid.Row="5" ToolTip="Hány óráig használható a bérlet, formátum HH:MM" >Óralimit vége</Label>
             <TextBox Grid.Row="5"  Name="veg" Grid.Column="1" AcceptsReturn="True" Margin="0,0,0,10"  />
 
-            <Label Grid.Row="6" ToolTip="Melyik terembe érvényes (1-es,2-es vagy 3-as terem)" >Terem</Label>
-
+            <Label Grid.Row="6" ToolTip="Melyik terembe érvényes (1-es,2-es vagy 3-as terem)">Terem</Label>
             <GroupBox Grid.Row="6" Grid.Column="1">
                 <StackPanel>
-                    <RadioButton Name="terem1" Content="1-es terem"  IsChecked="True" />
-                    <RadioButton Name="terem2" Content="2-es terem"  />
-                    <RadioButton Name="terem3" Content="3-as terem"  />
+                    <RadioButton Name="terem1" Content="1-es terem" IsChecked="True" />
+                    <RadioButton Name="terem2" Content="2-es terem" />
+                    <RadioButton Name="terem3" Content="3-as terem" />
                 </StackPanel>
             </GroupBox>
-
-            <Label Grid.Row="7" ToolTip="A kliens kártyájáról olvasható le" >Kliens Id:</Label>
-            <TextBox Grid.Row="7" Grid.Column="1" AcceptsReturn="True" Margin="0,0,0,10" />
-
         </Grid>
 
         <WrapPanel>

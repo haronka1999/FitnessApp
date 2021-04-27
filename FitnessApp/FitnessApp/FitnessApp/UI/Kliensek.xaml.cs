@@ -31,6 +31,8 @@ namespace FitnessApp.UI
             this.KliensGrid.ItemsSource = users;
         }
 
+
+
         private ObservableCollection<Kliens> getUsersFromDatabase()
         {
 
