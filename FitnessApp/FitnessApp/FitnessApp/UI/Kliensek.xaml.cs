@@ -29,6 +29,7 @@ namespace FitnessApp.UI
             users = new ObservableCollection<Kliens>();
             users = getUsersFromDatabase();
             this.KliensGrid.ItemsSource = users;
+          
         }
 
 
@@ -110,6 +111,7 @@ namespace FitnessApp.UI
                     System.Windows.MessageBox.Show("Kliens sikeresen torolve");
 
 
+                Refresh();
             }
             catch (Exception ex)
             {
@@ -119,6 +121,12 @@ namespace FitnessApp.UI
             {
                 sqlCon.Close();
             }
+        }
+
+        private void Refresh()
+        {
+            users = getUsersFromDatabase();
+            this.KliensGrid.ItemsSource = users;
         }
     }
 }
