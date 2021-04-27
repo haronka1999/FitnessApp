@@ -9,7 +9,7 @@
         <Grid Margin="10">
             <DataGrid Name="KliensGrid" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" AutoGenerateColumns="False" IsReadOnly="True">
                 <DataGrid.Columns>
-                    <DataGridTextColumn  Header="ID" Width="*" Binding="{Binding kliens_id}" />
+                    <DataGridTextColumn Header="ID" Width="*" Binding="{Binding kliens_id}" />
                     <DataGridTextColumn Header="Név" Width="2*" Binding="{Binding nev}" />
                     <DataGridTextColumn Header=" Telefonszám" Width="2*" Binding="{Binding telefon}" />
                     <DataGridTextColumn Header="e-mail" Width="2*" Binding="{Binding email}" />
@@ -22,15 +22,7 @@
                     <DataGridTemplateColumn>
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Button Margin="10" Width="100">Szerkesztés</Button>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-
-                    <DataGridTemplateColumn>
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <Button Click="Delete_User"  Margin="10" Width="100">Törlés</Button>
+                                <Button Click="Delete_User" Margin="10" Width="100">Törlés</Button>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
@@ -38,5 +30,11 @@
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>
+
+        <WrapPanel>
+            <Button Name="editButton" Click="Edit_User" Content="Szerkesztés" Margin="20" Width="100" HorizontalAlignment="Left" />
+            <Button Name="saveEditButton" Click="Save_Edited_Users" Visibility="Hidden" Content="Mentés" Margin="20" Width="100" HorizontalAlignment="Right" />
+        </WrapPanel>
+
     </StackPanel>
 </UserControl>

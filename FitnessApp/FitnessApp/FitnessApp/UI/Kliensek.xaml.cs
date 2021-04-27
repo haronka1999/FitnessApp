@@ -28,10 +28,8 @@ namespace FitnessApp.UI
             DataContext = this;
             users = new ObservableCollection<Kliens>();
             users = getUsersFromDatabase();
-            this.KliensGrid.ItemsSource = users;
-          
+            this.KliensGrid.ItemsSource = users;        
         }
-
 
 
         private ObservableCollection<Kliens> getUsersFromDatabase()
@@ -74,7 +72,7 @@ namespace FitnessApp.UI
             }
             catch (Exception ex)
             {
-                System.Windows.MessageBox.Show(ex.Message);
+                System.Windows.MessageBox.Show("Hiba read kliensek " + ex.Message);
             }
             finally
             {
@@ -115,7 +113,7 @@ namespace FitnessApp.UI
             }
             catch (Exception ex)
             {
-                System.Windows.MessageBox.Show(ex.Message);
+                System.Windows.MessageBox.Show("Hiba kliens torles: " + ex.Message);
             }
             finally
             {
@@ -123,10 +121,33 @@ namespace FitnessApp.UI
             }
         }
 
-        private void Refresh()
+        private void Edit_User(object sender, RoutedEventArgs e)
         {
+            saveEditButton.Visibility = Visibility.Visible;
+            KliensGrid.IsReadOnly = false;
+           
+            //meghatarozzuk melyik oszlopok editalhatoak
+            //KliensGrid.Columns[1].IsReadOnly = false;
+            //KliensGrid.Columns[2].IsReadOnly = false;
+            //KliensGrid.Columns[3].IsReadOnly = false;
+            //KliensGrid.Columns[6].IsReadOnly = false;
+            //KliensGrid.Columns[8].IsReadOnly = false;
+        }
+
+
+        private void Refresh()
+        {           
             users = getUsersFromDatabase();
             this.KliensGrid.ItemsSource = users;
+        }
+
+        private void Save_Edited_Users(object sender, RoutedEventArgs e)
+        {
+
+            foreach (Kliens kliens in KliensGrid.Items)
+            {
+                string query = @"UPDATE Kliensek set is_deleted=1 WHERE kliens_id = @kliens_id;";
+            }
         }
     }
 }

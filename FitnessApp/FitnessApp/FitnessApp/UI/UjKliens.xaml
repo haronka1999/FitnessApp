@@ -40,13 +40,23 @@
             
             <!--ezt  at kell alakitani ugy hogy a berletek az adatbazisbol jojjenek be-->
             <Label Grid.Row="6">Bérlet típusa:</Label>
-            <GroupBox Grid.Row="6" Grid.Column="1">
+
+            <ItemsControl Grid.Row="6" Grid.Column="1" ItemsSource="{Binding Message_to_display}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <RadioButton Content="{Binding OptionName}" IsChecked="{Binding IsChecked}" />
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+
+            <!--<GroupBox Grid.Row="6" Grid.Column="1">
                 <StackPanel>
                     <RadioButton Content="30 napos" GroupName="Gender" IsChecked="True" />
                     <RadioButton Content="15 napos" GroupName="Gender" />
                     <RadioButton Content="10 belépéses" GroupName="Gender" />
                 </StackPanel>
-            </GroupBox>
+            </GroupBox>-->
 
             <Label Grid.Row="7">Megjegyzés:</Label>
             <TextBox Name="Comment" Grid.Row="7" Grid.Column="1" AcceptsReturn="True" Margin="0,0,0,10" />

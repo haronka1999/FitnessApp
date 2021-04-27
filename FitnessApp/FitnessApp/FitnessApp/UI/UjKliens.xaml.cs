@@ -19,9 +19,7 @@ using FitnessApp.Model;
 
 namespace FitnessApp.UI
 {
-    /// <summary>
-    /// Interaction logic for UjKliens.xaml
-    /// </summary>
+
     public partial class UjKliens : System.Windows.Controls.UserControl
     {
         public const int BARCODE_LENGTH = 4;
@@ -36,66 +34,87 @@ namespace FitnessApp.UI
         private string berletType;
         private string photo = "placeholder";
         private string comment;
-
         private List<Berlet> berletek;
 
+        private List<string> message_to_display = new List<string>();
+           
         //egyeb valtozok
         private string date_str;
 
         public UjKliens()
         {
             InitializeComponent();
+            DataContext = this;
             berletek = new List<Berlet>();
             berletek = getBerletekFromDatabase();
+            message_to_display = getAbonamentStrings();
+        }
 
+        private List<string> getAbonamentStrings()
+        {
+            List<string> temp_list = new List<string>();
+
+            string temp = "";
+            foreach (var berlet in berletek)
+            {
+                if (berlet.ervenyesseg_belepesek_szama == -1)
+                    temp = "Ervenyesseg: " + berlet.ervenyesseg_nap + " nap, " + "ar: " + berlet.ar;
+                else if (berlet.ervenyesseg_nap == -1)
+                    temp = "Ervenyesseg: " + berlet.ervenyesseg_belepesek_szama + " belepes, " + "ar: " + berlet.ar;
+                else
+                    temp = "Ervenyesseg: " + berlet.ervenyesseg_belepesek_szama + " belepes, es " + berlet.ervenyesseg_nap + " nap" + "ar: " + berlet.ar;
+
+
+                //Console.WriteLine(temp);
+                temp_list.Add(temp);
+            }
+
+            
+            return temp_list;
         }
 
         private List<Berlet> getBerletekFromDatabase()
         {
             List<Berlet> abonaments = new List<Berlet>();
+            SqlConnection sqlCon = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\.Net_Project\FitnessApp\FitnessApp\FitnessApp\FitnessApp\Database\db_local.mdf;Integrated Security=True");
 
+            string query = "SELECT * FROM Berletek;";
+            try
+            {
+                SqlCommand sqlCmd = new SqlCommand(query, sqlCon);
+                if (sqlCon.State == ConnectionState.Closed)
+                {
+                    sqlCon.Open();
+                }
 
-            //SqlConnection sqlCon = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\.Net_Project\FitnessApp\FitnessApp\FitnessApp\FitnessApp\Database\db_local.mdf;Integrated Security=True");
+                using (SqlDataReader reader = sqlCmd.ExecuteReader())
+                {
 
-            //string query = "SELECT * FROM Berletek;";
-            //try
-            //{
-            //    SqlCommand sqlCmd = new SqlCommand(query, sqlCon);
-            //    if (sqlCon.State == ConnectionState.Closed)
-            //    {
-            //        sqlCon.Open();
-            //    }
-
-            //    using (SqlDataReader reader = sqlCmd.ExecuteReader())
-            //    {
-
-            //        while (reader.Read())
-            //        {
-            //            Berlet berlet = new Berlet(Int32.Parse(reader["berlet_id"].ToString()),
-            //                                        Int32.Parse(reader["megnevezes"].ToString()),
-            //                                        float.Parse(reader["telefon"].ToString()),
-            //                                        Int32.Parse(reader["ervenyesseg_nap"].ToString()),
-            //                                        Int32.Parse(reader["ervenyesseg_belepesek_szama"].ToString()),
-            //                                        bool.Parse(reader["torolve"].ToString()),
-            //                                        Int32.Parse(reader["terem_id"].ToString()),
-            //                                        Int32.Parse(reader["hany_oratol"].ToString()),
-            //                                        Int32.Parse(reader["hany_oraig"].ToString()),
-            //                                        Int32.Parse(reader["napi_max_hasznalat"].ToString()),
-            //                                        Convert.ToDateTime(reader["letrehozasi_datum"].ToString()));
-                                                                                           
-                                                    
-            //            abonaments.Add(berlet);
-            //        }
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
-            //    System.Windows.MessageBox.Show(ex.Message);
-            //}
-            //finally
-            //{
-            //    sqlCon.Close();
-            //}
+                    while (reader.Read())
+                    {
+                        Berlet berlet = new Berlet(Int32.Parse(reader["berlet_id"].ToString()),
+                                                    Int32.Parse(reader["megnevezes"].ToString()),
+                                                    float.Parse(reader["ar"].ToString()),
+                                                    Int32.Parse(reader["ervenyesseg_nap"].ToString()),
+                                                    Int32.Parse(reader["ervenyesseg_belepesek_szama"].ToString()),
+                                                    bool.Parse(reader["torolve"].ToString()),
+                                                    Int32.Parse(reader["terem_id"].ToString()),
+                                                    reader["hany_oratol"].ToString(),
+                                                    reader["hany_oraig"].ToString(),
+                                                    Int32.Parse(reader["napi_max_hasznalat"].ToString()),
+                                                    Convert.ToDateTime(reader["letrehozasi_datum"].ToString()));
+                        abonaments.Add(berlet);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Hiba getBerletek: " +  ex.Message);
+            }
+            finally
+            {
+                sqlCon.Close();
+            }
 
             return abonaments;
         }
@@ -168,7 +187,7 @@ namespace FitnessApp.UI
             }
             catch (Exception ex)
             {
-                System.Windows.MessageBox.Show(ex.Message);
+                System.Windows.MessageBox.Show("Hiba insert kliensek: "+ ex.Message);
             }
             finally
             {
