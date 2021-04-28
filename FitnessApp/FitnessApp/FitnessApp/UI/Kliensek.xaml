@@ -2,8 +2,8 @@
 
     <StackPanel>
         <StackPanel Margin="10" Orientation="Horizontal">
-            <TextBox IsReadOnly="False" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" SpellCheck.IsEnabled="True" AcceptsReturn="True" Height="20" Width="200" HorizontalAlignment="Left" />
-            <Button Content="Keresés" Margin="20,0,0,0" Width="100" />
+            <TextBox ToolTip="Név szerinti keresés" Name="searchResult" IsReadOnly="False" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" SpellCheck.IsEnabled="True" AcceptsReturn="True" Height="20" Width="200" HorizontalAlignment="Left" />
+            <Button  Click ="Search_Client_Click" Content="Keresés" Margin="20,0,0,0" Width="100" />
         </StackPanel>
 
         <Grid Margin="10">

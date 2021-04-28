@@ -193,5 +193,61 @@ namespace FitnessApp.UI
             }
             return "";
         }
+
+        private void Search_Client_Click(object sender, RoutedEventArgs e)
+        {
+            string search = searchResult.Text;
+            ObservableCollection<Kliens> kliensek = new ObservableCollection<Kliens>();
+
+            if (search != "")
+            {
+                SqlConnection sqlCon = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\.Net_Project\FitnessApp\FitnessApp\FitnessApp\FitnessApp\Database\db_local.mdf;Integrated Security=True");
+                try
+                {
+                    string query = "SELECT * from Kliensek WHERE nev = @value";
+                    SqlCommand sqlCmd = new SqlCommand(query, sqlCon);
+                    sqlCmd.Parameters.AddWithValue("@value", search);
+                    if (sqlCon.State == ConnectionState.Closed)
+                    {
+                        sqlCon.Open();
+                    }
+
+                    using (SqlDataReader reader = sqlCmd.ExecuteReader())
+                    {
+
+                        while (reader.Read())
+                        {
+                            Kliens kliens = new Kliens(Int32.Parse(reader["kliens_id"].ToString()),
+                                                        reader["nev"].ToString(),
+                                                        reader["telefon"].ToString(),
+                                                        reader["email"].ToString(),
+                                                        bool.Parse(reader["is_deleted"].ToString()),
+                                                        reader["photo"].ToString(),
+                                                        Convert.ToDateTime(reader["inserted_date"].ToString()),
+                                                        reader["szemelyi"].ToString(),
+                                                        reader["cim"].ToString(),
+                                                        reader["vonalkod"].ToString(),
+                                                        reader["megjegyzes"].ToString());
+
+                            //csak akkor jelenitsuk meg ha nincs torolve
+                            if (kliens.is_deleted == false)
+                                kliensek.Add(kliens);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    System.Windows.MessageBox.Show("Hiba read kliensek " + ex.Message);
+                }
+                finally
+                {
+                    sqlCon.Close();
+                }
+
+            }
+
+            users = kliensek;
+            Refresh();
+        }
     }
 }
