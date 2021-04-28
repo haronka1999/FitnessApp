@@ -15,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ClosedXML.Excel;
 using FitnessApp.Model;
 
 namespace FitnessApp.UI
@@ -37,7 +38,7 @@ namespace FitnessApp.UI
         private List<Berlet> berletek;
 
         private List<string> message_to_display = new List<string>();
-           
+
         //egyeb valtozok
         private string date_str;
 
@@ -69,7 +70,7 @@ namespace FitnessApp.UI
                 temp_list.Add(temp);
             }
 
-            
+
             return temp_list;
         }
 
@@ -109,7 +110,7 @@ namespace FitnessApp.UI
             }
             catch (Exception ex)
             {
-                System.Windows.MessageBox.Show("Hiba getBerletek: " +  ex.Message);
+                System.Windows.MessageBox.Show("Hiba getBerletek: " + ex.Message);
             }
             finally
             {
@@ -129,6 +130,8 @@ namespace FitnessApp.UI
             if (op.ShowDialog() == DialogResult.OK)
             {
                 //idejon a tobbi kod 
+
+               
                 imgPhoto.Source = new BitmapImage(new Uri(op.FileName));
             }
         }
@@ -187,7 +190,7 @@ namespace FitnessApp.UI
             }
             catch (Exception ex)
             {
-                System.Windows.MessageBox.Show("Hiba insert kliensek: "+ ex.Message);
+                System.Windows.MessageBox.Show("Hiba insert kliensek: " + ex.Message);
             }
             finally
             {
@@ -210,5 +213,7 @@ namespace FitnessApp.UI
             //this.tab = Visibility.Hidden;
 
         }
+
+      
     }
 }

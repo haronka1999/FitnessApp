@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
 using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,25 +11,33 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ClosedXML.Excel;
+using DocumentFormat.OpenXml.Spreadsheet;
 using FitnessApp.Model;
 
 namespace FitnessApp.UI
 {
-    public partial class Kliensek : UserControl
+    public partial class Kliensek : System.Windows.Controls.UserControl
     {
+
+        private string export_path_excel;
+
         public ObservableCollection<Kliens> users { get; set; }
+        public object MessageBpx { get; private set; }
+
         public Kliensek()
         {
             InitializeComponent();
             DataContext = this;
             users = new ObservableCollection<Kliens>();
             users = getUsersFromDatabase();
-            this.KliensGrid.ItemsSource = users;        
+            this.KliensGrid.ItemsSource = users;
         }
 
 
@@ -63,9 +72,9 @@ namespace FitnessApp.UI
                                                     reader["cim"].ToString(),
                                                     reader["vonalkod"].ToString(),
                                                     reader["megjegyzes"].ToString());
-                        
+
                         //csak akkor jelenitsuk meg ha nincs torolve
-                        if (kliens.is_deleted==false)
+                        if (kliens.is_deleted == false)
                             kliensek.Add(kliens);
                     }
                 }
@@ -89,7 +98,7 @@ namespace FitnessApp.UI
             String kliens_id = (drv.kliens_id).ToString();
 
             SqlConnection sqlCon = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\.Net_Project\FitnessApp\FitnessApp\FitnessApp\FitnessApp\Database\db_local.mdf;Integrated Security=True");
-            string query = @"UPDATE Kliensek set is_deleted=1 WHERE kliens_id = @kliens_id;";           
+            string query = @"UPDATE Kliensek set is_deleted=1 WHERE kliens_id = @kliens_id;";
             try
             {
 
@@ -125,7 +134,7 @@ namespace FitnessApp.UI
         {
             saveEditButton.Visibility = Visibility.Visible;
             KliensGrid.IsReadOnly = false;
-           
+
             //meghatarozzuk melyik oszlopok editalhatoak
             //KliensGrid.Columns[1].IsReadOnly = false;
             //KliensGrid.Columns[2].IsReadOnly = false;
@@ -136,7 +145,7 @@ namespace FitnessApp.UI
 
 
         private void Refresh()
-        {           
+        {
             users = getUsersFromDatabase();
             this.KliensGrid.ItemsSource = users;
         }
@@ -148,6 +157,41 @@ namespace FitnessApp.UI
             {
                 string query = @"UPDATE Kliensek set is_deleted=1 WHERE kliens_id = @kliens_id;";
             }
+        }
+
+
+        private void BtnSaveXls_click(object sender, RoutedEventArgs e)
+        {
+
+            export_path_excel= getPath();
+            var wb = new XLWorkbook();
+            string kliens_string = "Kliensek";
+            var ws = wb.Worksheets.Add(kliens_string);
+            string temp = export_path_excel + "\\" + kliens_string + ".xlsx";
+            try
+            {
+                ws.Cell(1, 1).InsertData(users);               
+                wb.SaveAs(temp);
+                System.Windows.MessageBox.Show("Sikeres kimentes a valasztott helyre");
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Hiba a kimentesnel: " + ex.Message);
+            }
+
+        }
+
+        private string getPath()
+        {
+            using (var fbd = new FolderBrowserDialog())
+            {
+                DialogResult result = fbd.ShowDialog();
+                if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath))
+                {
+                    return  fbd.SelectedPath;
+                }
+            }
+            return "";
         }
     }
 }
