@@ -158,7 +158,14 @@ namespace FitnessApp.UI
         private void BtnSaveXls_click(object sender, RoutedEventArgs e)
         {
 
-            export_path_excel= getPath();
+            export_path_excel= getPath(sender);
+
+            //ha a felhasznalo meggondolja magat akkor nem tortenik semmi
+            if (export_path_excel == "")
+            {
+
+                return;
+            }
             var wb = new XLWorkbook();
             string kliens_string = "Kliensek";
             var ws = wb.Worksheets.Add(kliens_string);
@@ -175,8 +182,9 @@ namespace FitnessApp.UI
             }
 
         }
+        
 
-        private string getPath()
+        private string getPath(object sender)
         {
             using (var fbd = new FolderBrowserDialog())
             {
@@ -185,8 +193,13 @@ namespace FitnessApp.UI
                 {
                     return  fbd.SelectedPath;
                 }
+                if (string.Equals((sender as System.Windows.Controls.Button).Name, @"CloseButton"))
+                {
+                    return "";
+                }
+                return "";
             }
-            return "";
+            
         }
 
         private void Search_Client_Click(object sender, RoutedEventArgs e)
