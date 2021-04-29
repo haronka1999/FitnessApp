@@ -8,7 +8,6 @@ namespace FitnessApp
 {
     class Utils
     {
-
         public static string conString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\.Net_Project\FitnessApp\FitnessApp\FitnessApp\FitnessApp\Database\db_local.mdf;Integrated Security=True";
     }
 }

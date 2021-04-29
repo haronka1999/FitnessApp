@@ -145,12 +145,6 @@ namespace FitnessApp.UI
         }
 
 
-        private void Refresh()
-        {
-            users = getUsersFromDatabase();
-            this.KliensGrid.ItemsSource = users;
-        }
-
         private void Save_Edited_Users(object sender, RoutedEventArgs e)
         {
 
@@ -199,7 +193,6 @@ namespace FitnessApp.UI
         {
             string search = searchResult.Text;
             ObservableCollection<Kliens> kliensek = new ObservableCollection<Kliens>();
-
             if (search != "")
             {
                 SqlConnection sqlCon = new SqlConnection(conString);
@@ -232,7 +225,10 @@ namespace FitnessApp.UI
 
                             //csak akkor jelenitsuk meg ha nincs torolve
                             if (kliens.is_deleted == false)
+                            {
                                 kliensek.Add(kliens);
+                            }
+
                         }
                     }
                 }
@@ -248,7 +244,12 @@ namespace FitnessApp.UI
             }
 
             users = kliensek;
-            Refresh();
+            this.KliensGrid.ItemsSource = users;
+        }
+        private void Refresh()
+        {
+            users = getUsersFromDatabase();
+            this.KliensGrid.ItemsSource = users;
         }
     }
 }
