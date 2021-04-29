@@ -211,7 +211,7 @@ namespace FitnessApp.UI
         {
 
             //this.tab = Visibility.Hidden;
-
+            // vissza a fooldalra
         }
 
       
