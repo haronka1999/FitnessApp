@@ -230,7 +230,7 @@ namespace FitnessApp.UI
 
         private void deleteRowsIfNeeded()
         {
-            SqlConnection sqlCon = new SqlConnection(conString);
+            SqlConnection sqlCon = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\.Net_Project\FitnessApp\FitnessApp\FitnessApp\FitnessApp\Database\db_local.mdf;Integrated Security=True");
             string query = "DELETE FROM Berletek";
 
             try
