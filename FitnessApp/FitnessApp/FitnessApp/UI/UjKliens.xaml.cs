@@ -17,6 +17,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ClosedXML.Excel;
 using FitnessApp.Model;
+using static FitnessApp.Utils;
 
 namespace FitnessApp.UI
 {
@@ -77,7 +78,7 @@ namespace FitnessApp.UI
         private List<Berlet> getBerletekFromDatabase()
         {
             List<Berlet> abonaments = new List<Berlet>();
-            SqlConnection sqlCon = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\.Net_Project\FitnessApp\FitnessApp\FitnessApp\FitnessApp\Database\db_local.mdf;Integrated Security=True");
+            SqlConnection sqlCon = new SqlConnection(conString);
 
             string query = "SELECT * FROM Berletek;";
             try
@@ -155,8 +156,7 @@ namespace FitnessApp.UI
 
         private void insertClientIntoDataBase(string name, string phone, string email, int deleted, string photo, DateTime date, string cnp, string my_address, string barcode, string comment)
         {
-            SqlConnection sqlCon = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\.Net_Project\FitnessApp\FitnessApp\FitnessApp\FitnessApp\Database\db_local.mdf;Integrated Security=True");
-
+            SqlConnection sqlCon = new SqlConnection(conString);
             string query = "INSERT INTO Kliensek (nev, telefon, email, " +
             "is_deleted, photo, inserted_date, szemelyi, cim, vonalkod, megjegyzes)" +
             " VALUES ( @name, @phone, @email, @deleted, @photo, @date, @cnp, @my_address, @barcode, @comment );";

@@ -20,6 +20,7 @@ using System.Windows.Shapes;
 using ClosedXML.Excel;
 using DocumentFormat.OpenXml.Spreadsheet;
 using FitnessApp.Model;
+using static FitnessApp.Utils;
 
 namespace FitnessApp.UI
 {
@@ -45,7 +46,7 @@ namespace FitnessApp.UI
         {
 
             ObservableCollection<Kliens> kliensek = new ObservableCollection<Kliens>();
-            SqlConnection sqlCon = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\.Net_Project\FitnessApp\FitnessApp\FitnessApp\FitnessApp\Database\db_local.mdf;Integrated Security=True");
+            SqlConnection sqlCon = new SqlConnection(conString);
             try
             {
                 string query = "SELECT * from Kliensek;";
@@ -97,7 +98,7 @@ namespace FitnessApp.UI
             Kliens drv = (Kliens)KliensGrid.SelectedItem;
             String kliens_id = (drv.kliens_id).ToString();
 
-            SqlConnection sqlCon = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\.Net_Project\FitnessApp\FitnessApp\FitnessApp\FitnessApp\Database\db_local.mdf;Integrated Security=True");
+            SqlConnection sqlCon = new SqlConnection(conString);
             string query = @"UPDATE Kliensek set is_deleted=1 WHERE kliens_id = @kliens_id;";
             try
             {
@@ -201,7 +202,7 @@ namespace FitnessApp.UI
 
             if (search != "")
             {
-                SqlConnection sqlCon = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\.Net_Project\FitnessApp\FitnessApp\FitnessApp\FitnessApp\Database\db_local.mdf;Integrated Security=True");
+                SqlConnection sqlCon = new SqlConnection(conString);
                 try
                 {
                     string query = "SELECT * from Kliensek WHERE nev = @value";

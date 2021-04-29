@@ -15,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using static FitnessApp.Utils;
 
 namespace FitnessApp.UI
 {
@@ -108,9 +109,7 @@ namespace FitnessApp.UI
         private void insertBerletIntoDataBase(int megnevezes, float ar, int napokErvenyesseg, int belepesekErvenyesseg, bool torolve, int teremId, string hanyOratol, string hanyOraig, int napiMaxHasznalat, DateTime letrehozasi_datum)
         {
 
-            //MessageBox.Show("Adatok: " + megnevezes + " " + ar + " " + napokErvenyesseg + " " + belepesekErvenyesseg + " " + torolve + " " + teremId + " " + hanyOratol + " " + hanyOraig + " " + napiMaxHasznalat + " " + " " + letrehozasi_datum);
-
-            SqlConnection sqlCon = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\.Net_Project\FitnessApp\FitnessApp\FitnessApp\FitnessApp\Database\db_local.mdf;Integrated Security=True");
+            SqlConnection sqlCon = new SqlConnection(conString);
 
             string query = "INSERT INTO Berletek (megnevezes, ar, " +
             "ervenyesseg_nap, ervenyesseg_belepesek_szama, torolve, terem_id, " +
@@ -231,7 +230,7 @@ namespace FitnessApp.UI
 
         private void deleteRowsIfNeeded()
         {
-            SqlConnection sqlCon = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\.Net_Project\FitnessApp\FitnessApp\FitnessApp\FitnessApp\Database\db_local.mdf;Integrated Security=True");
+            SqlConnection sqlCon = new SqlConnection(conString);
             string query = "DELETE FROM Berletek";
 
             try
