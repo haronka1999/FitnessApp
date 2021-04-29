@@ -10,6 +10,7 @@
     
     
     <StackPanel>
+        
         <local:BeleptetesInfo Visibility="Hidden" x:Name="beleptetes" />
 
         <Image HorizontalAlignment="Left" Width="90" Height="70" Margin="10">
