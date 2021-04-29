@@ -10,17 +10,20 @@ namespace FitnessApp.Model
 {
     public class Kliens : INotifyPropertyChanged
     {
-        public int kliens_id;
-        public string nev;
-        public string telefon;
-        public string email;
-        public bool is_deleted;
-        public string photo;
-        public DateTime inserted_date;
-        public string szemelyi;
-        public string cim;
-        public string vonalkod;
-        public string megjegyzes;
+        public int kliens_id { get; set; }
+        public string nev  { get; set; }
+        public string telefon { get; set; }
+        public string email { get; set; }
+        public bool is_deleted { get; set; }
+        public string photo { get; set; }
+        public DateTime inserted_date { get; set; }
+        public string szemelyi { get; set; }
+        public string cim { get; set; }
+        public string vonalkod { get; set; }
+        public string megjegyzes { get; set; }
+
+
+
 
         public Kliens(int kliens_id, string nev, string telefon, string email, bool is_deleted, string photo, DateTime inserted_date, string szemelyi, string cim, string vonalkod, string megjegyzes)
         {
