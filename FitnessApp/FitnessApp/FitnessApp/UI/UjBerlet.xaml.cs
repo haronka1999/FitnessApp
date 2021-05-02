@@ -1,20 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using static FitnessApp.Utils;
 
 namespace FitnessApp.UI
@@ -60,13 +50,10 @@ namespace FitnessApp.UI
 
         Regex regex = new Regex("[^0-9]+");
 
-
         public UjBerlet()
         {
             InitializeComponent();
         }
-
-
 
         private void BtnSave_click(object sender, RoutedEventArgs e)
         {
@@ -96,11 +83,9 @@ namespace FitnessApp.UI
                 //error message should be displayed
             }
 
-
-             //kesobbre kell ha vissza akarom alakitani datumra
-             //hanyOraig = DateTime.ParseExact(hanyOraig_str, "HH:mm", System.Globalization.CultureInfo.InvariantCulture);
-             //hanyOratol = DateTime.ParseExact(hanyOraig_str, "HH:mm", System.Globalization.CultureInfo.InvariantCulture);
-
+            //kesobbre kell ha vissza akarom alakitani datumra
+            //hanyOraig = DateTime.ParseExact(hanyOraig_str, "HH:mm", System.Globalization.CultureInfo.InvariantCulture);
+            //hanyOratol = DateTime.ParseExact(hanyOraig_str, "HH:mm", System.Globalization.CultureInfo.InvariantCulture);
 
             //deleteRowsIfNeeded();
             insertBerletIntoDataBase(megnevezes, ar, napokErvenyesseg, belepesekErvenyesseg, torolve, teremId, hanyOratol_str, hanyOraig_str, napiMaxHasznalat, letrehozasi_datum);
@@ -138,7 +123,6 @@ namespace FitnessApp.UI
 
                 int result = sqlCmd.ExecuteNonQuery();
 
-
                 if (result < 0)
                     System.Windows.MessageBox.Show("Adatbázis hiba új berlet hozzáadásnál");
                 else
@@ -152,8 +136,13 @@ namespace FitnessApp.UI
             {
                 sqlCon.Close();
             }
-        }
 
+            NapErvenyesseg.Text = "";
+            BelepesErvenyesseg.Text = "";
+            NapErvenyesseg.Text = "";
+            kezdet.Text = "";
+            veg.Text = "";
+        }
 
         private void setMegnevezes()
         {
@@ -163,7 +152,6 @@ namespace FitnessApp.UI
                 megnevezes = 1;
             else
                 megnevezes = 3;
-
 
             //hiba kezeles
             if (megnevezes == -1)
@@ -244,7 +232,6 @@ namespace FitnessApp.UI
 
                 int result = sqlCmd.ExecuteNonQuery();
 
-
                 if (result < 0)
                     System.Windows.MessageBox.Show("hiba a sorok torlesenel");
                 else
@@ -261,7 +248,6 @@ namespace FitnessApp.UI
         }
 
         //VALIDATION FUNCTION----------------------------
-
         private void NumberValidationTextBox_3(object sender, TextCompositionEventArgs e)
         {
             e.Handled = regex.IsMatch(e.Text);
@@ -272,6 +258,11 @@ namespace FitnessApp.UI
         {
             e.Handled = regex.IsMatch(e.Text);
             teremId = Int32.Parse(e.Text);
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

@@ -1,71 +1,81 @@
-﻿<UserControl x:Class="FitnessApp.UI.UjKliens" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:local="clr-namespace:FitnessApp.UI" mc:Ignorable="d" d:DesignHeight="450" d:DesignWidth="800">
+﻿<UserControl 
+    x:Class="FitnessApp.UI.UjKliens" 
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+    xmlns:local="clr-namespace:FitnessApp.UI" 
+    mc:Ignorable="d" 
+    d:DesignHeight="450" 
+    d:DesignWidth="800">
 
     <StackPanel>
         <Grid Margin="10">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
             <Label Grid.Row="0">Név:</Label>
-            <TextBox Name="UserName" Grid.Row="0" Grid.Column="1" AcceptsReturn="True" Margin="0,0,0,10" />
+            <TextBox Name="UserName" Grid.Row="0" Grid.Column="1" AcceptsReturn="True" Margin="0,0,0,10"/>
 
             <Label Grid.Row="1">Telefonszám:</Label>
-            <TextBox Name="Number" Grid.Row="1" Grid.Column="1" AcceptsReturn="True" Margin="0,0,0,10" />
+            <TextBox Name="Number" Grid.Row="1" Grid.Column="1" AcceptsReturn="True" Margin="0,0,0,10"/>
 
             <Label Grid.Row="2">E-mail:</Label>
-            <TextBox Name="Email" Grid.Row="2" Grid.Column="1" AcceptsReturn="True" Margin="0,0,0,10" />
+            <TextBox Name="Email" Grid.Row="2" Grid.Column="1" AcceptsReturn="True" Margin="0,0,0,10"/>
 
             <Label Grid.Row="3">Fotó:</Label>
-            <Button Name="BtnUpload" Grid.Row="3" Grid.Column="1" Margin="0,0,0,10" Width="100" Click="BtnUpload_click" Content="Feltölt" />
-            <Image Name="imgPhoto" Grid.Row="3" Grid.Column="2" />
+            <Button Name="BtnUpload" Grid.Row="3" Grid.Column="1" Margin="0,0,0,10" Width="100" 
+                    Click="BtnUpload_click" Content="Feltölt"/>
+            <Image Name="imgPhoto" Grid.Row="3" Grid.Column="2"/>
 
             <Label Grid.Row="4">CNP:</Label>
-            <TextBox Name="CNP" Grid.Row="4" Grid.Column="1" AcceptsReturn="True" Margin="0,0,0,10" />
+            <TextBox Name="CNP" Grid.Row="4" Grid.Column="1" AcceptsReturn="True" Margin="0,0,0,10"/>
 
             <Label Grid.Row="5">Cím:</Label>
-            <TextBox Name="address" Grid.Row="5" Grid.Column="1" AcceptsReturn="True" Margin="0,0,0,10" />
+            <TextBox Name="address" Grid.Row="5" Grid.Column="1" AcceptsReturn="True" Margin="0,0,0,10"/>
 
-            
             <!--ezt  at kell alakitani ugy hogy a berletek az adatbazisbol jojjenek be-->
             <Label Grid.Row="6">Bérlet típusa:</Label>
 
             <ItemsControl Grid.Row="6" Grid.Column="1" ItemsSource="{Binding Message_to_display}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <RadioButton Content="{Binding OptionName}" IsChecked="{Binding IsChecked}" />
+                        <RadioButton Content="{Binding OptionName}" IsChecked="{Binding IsChecked}"/>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
 
-
             <!--<GroupBox Grid.Row="6" Grid.Column="1">
                 <StackPanel>
-                    <RadioButton Content="30 napos" GroupName="Gender" IsChecked="True" />
-                    <RadioButton Content="15 napos" GroupName="Gender" />
-                    <RadioButton Content="10 belépéses" GroupName="Gender" />
+                    <RadioButton Content="30 napos" GroupName="Gender" IsChecked="True"/>
+                    <RadioButton Content="15 napos" GroupName="Gender"/>
+                    <RadioButton Content="10 belépéses" GroupName="Gender"/>
                 </StackPanel>
             </GroupBox>-->
 
             <Label Grid.Row="7">Megjegyzés:</Label>
-            <TextBox Name="Comment" Grid.Row="7" Grid.Column="1" AcceptsReturn="True" Margin="0,0,0,10" />
+            <TextBox Name="Comment" Grid.Row="7" Grid.Column="1" AcceptsReturn="True" Margin="0,0,0,10"/>
+        
         </Grid>
 
         <WrapPanel>
-            <Button Name="BtnOk" Click="BtnOk_click" Margin="10" Width="100" Content="Mentés" />
-            <Button Name="BtnCancel" Click="BtnCancel_click" Margin="10" Width="100" Content="Mégse" />
+            <Button Name="BtnOk" Click="BtnOk_click" Margin="10" Width="100" Content="Mentés"/>
+            <Button Name="BtnCancel" Click="BtnCancel_click" Margin="10" Width="100" Content="Mégse"/>
         </WrapPanel>
+        
     </StackPanel>
 
 </UserControl>
