@@ -27,28 +27,30 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
-            <Label Grid.Row="0">Név:</Label>
-            <TextBox Name="UserName" Grid.Row="0" Grid.Column="1" AcceptsReturn="True" Margin="0,0,0,10"/>
+            <Label ToolTip="Teljes név, vagy becenév." Grid.Row="0" Content="Név:"/>
+            <TextBox x:Name="UserName" Grid.Row="0" Grid.Column="1" AcceptsReturn="True" Margin="0,0,0,10"/>
 
-            <Label Grid.Row="1">Telefonszám:</Label>
-            <TextBox Name="Number" Grid.Row="1" Grid.Column="1" AcceptsReturn="True" Margin="0,0,0,10"/>
+            <Label ToolTip="Regisztráló telefonszáma." Grid.Row="1" Content="Telefonszám:"/>
+            <TextBox x:Name="Number" Grid.Row="1" Grid.Column="1" AcceptsReturn="True" Margin="0,0,0,10"/>
 
-            <Label Grid.Row="2">E-mail:</Label>
-            <TextBox Name="Email" Grid.Row="2" Grid.Column="1" AcceptsReturn="True" Margin="0,0,0,10"/>
+            <Label ToolTip="Regisztráló e-mail címe." Grid.Row="2" Content="E-mail:"/>
+            <TextBox x:Name="Email" Grid.Row="2" Grid.Column="1" AcceptsReturn="True" Margin="0,0,0,10"/>
 
-            <Label Grid.Row="3">Fotó:</Label>
-            <Button Name="BtnUpload" Grid.Row="3" Grid.Column="1" Margin="0,0,0,10" Width="100" 
+            <Label ToolTip="Regisztráló fényképe." Grid.Row="3" Content="Fotó:"/>
+            <Button ToolTip="Fénykép hozzáadása." x:Name="BtnUpload" Grid.Row="3" Grid.Column="1" 
+                    Margin="0,0,0,10" Width="100" 
                     Click="BtnUpload_click" Content="Feltölt"/>
-            <Image Name="imgPhoto" Grid.Row="3" Grid.Column="2"/>
+            <Image ToolTip="Photo." x:Name="imgPhoto" Grid.Row="3" Grid.Column="2" Width="35" Height="35" 
+                   Margin="20, 0, 10, 0"/>
 
-            <Label Grid.Row="4">CNP:</Label>
-            <TextBox Name="CNP" Grid.Row="4" Grid.Column="1" AcceptsReturn="True" Margin="0,0,0,10"/>
+            <Label ToolTip="Személyi szám." Grid.Row="4" Content="CNP:"/>
+            <TextBox x:Name="CNP" Grid.Row="4" Grid.Column="1" AcceptsReturn="True" Margin="0,0,0,10"/>
 
-            <Label Grid.Row="5">Cím:</Label>
-            <TextBox Name="address" Grid.Row="5" Grid.Column="1" AcceptsReturn="True" Margin="0,0,0,10"/>
+            <Label ToolTip="Teljes lakcím megadása." Grid.Row="5" Content="Cím:"/>
+            <TextBox x:Name="address" Grid.Row="5" Grid.Column="1" AcceptsReturn="True" Margin="0,0,0,10"/>
 
             <!--ezt  at kell alakitani ugy hogy a berletek az adatbazisbol jojjenek be-->
-            <Label Grid.Row="6">Bérlet típusa:</Label>
+            <Label ToolTip="Válasz bérlet típust." Grid.Row="6" Content="Bérlet típusa:"/>
 
             <ItemsControl Grid.Row="6" Grid.Column="1" ItemsSource="{Binding Message_to_display}">
                 <ItemsControl.ItemTemplate>
@@ -66,13 +68,14 @@
                 </StackPanel>
             </GroupBox>-->
 
-            <Label Grid.Row="7">Megjegyzés:</Label>
-            <TextBox Name="Comment" Grid.Row="7" Grid.Column="1" AcceptsReturn="True" Margin="0,0,0,10"/>
+            <Label ToolTip="Megjegyzés megadáasa." Grid.Row="7" Content="Megjegyzés:"/>
+            <TextBox x:Name="Comment" Grid.Row="7" Grid.Column="1" AcceptsReturn="True" Margin="0,0,0,10"/>
         
         </Grid>
 
         <WrapPanel>
-            <Button Name="BtnOk" Click="BtnOk_click" Margin="10" Width="100" Content="Mentés"/>
+            <Button ToolTip="Mentés az adatbázisba." x:Name="BtnOk" Click="BtnOk_click" 
+                    Margin="10" Width="100" Content="Mentés"/>
         </WrapPanel>
         
     </StackPanel>

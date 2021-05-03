@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Forms;
@@ -24,7 +26,7 @@ namespace FitnessApp.UI
         private string my_address;
         private string barcode;
         private string berletType;
-        private string photo = "placeholder";
+        private string photo = "";
         private string comment;
         private List<Berlet> berletek;
 
@@ -120,10 +122,20 @@ namespace FitnessApp.UI
               "Portable Network Graphic (*.png)|*.png";
             if (op.ShowDialog() == DialogResult.OK)
             {
-                //idejon a tobbi kod 
-
-               
                 imgPhoto.Source = new BitmapImage(new Uri(op.FileName));
+                using (Image image = Image.FromFile(op.FileName))
+                {
+                    using (MemoryStream m = new MemoryStream())
+                    {
+                        image.Save(m, image.RawFormat);
+                        byte[] imageBytes = m.ToArray();
+
+                        // Convert byte[] to Base64 String
+                        photo = Convert.ToBase64String(imageBytes);
+                    }
+                }
+                //System.Windows.MessageBox.Show(base64String);
+
             }
         }
 

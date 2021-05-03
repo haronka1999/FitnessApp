@@ -11,20 +11,27 @@
 
     <StackPanel>
         <StackPanel Margin="10" Orientation="Horizontal">
-            <TextBox ToolTip="Név szerinti keresés" Name="searchResult" IsReadOnly="False" TextWrapping="Wrap" 
+            <TextBox ToolTip="Név szerinti keresés" x:Name="searchResult" IsReadOnly="False" TextWrapping="Wrap" 
                      VerticalScrollBarVisibility="Auto" SpellCheck.IsEnabled="True" AcceptsReturn="True" 
                      Height="20" Width="200" HorizontalAlignment="Left" Margin="0, 20, 0, 0"/>
             <Button Click ="Search_Client_Click" Content="Keresés" Margin="20, 0, 0, 0" Width="100" />
         </StackPanel>
 
         <Grid Margin="10">
-            <DataGrid Name="KliensGrid" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" 
+            <DataGrid x:Name="KliensGrid" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" 
                       AutoGenerateColumns="False" IsReadOnly="True">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="ID" Width="*" Binding="{Binding kliens_id}"/>
+                    <DataGridTextColumn Header="ID" Width="*" Binding="{Binding kliens_id}" IsReadOnly="True"/>
                     <DataGridTextColumn Header="Név" Width="2*" Binding="{Binding nev}"/>
-                    <DataGridTextColumn Header=" Telefonszám" Width="2*" Binding="{Binding telefon}"/>
+                    <DataGridTextColumn Header="Telefonszám" Width="2*" Binding="{Binding telefon}"/>
                     <DataGridTextColumn Header="e-mail" Width="2*" Binding="{Binding email}"/>
+                    <DataGridTemplateColumn Header="Image" Width="2*" IsReadOnly="True">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Image Source="{Binding photo}" Width="20" Height="20"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
                     <DataGridTextColumn Header="letrehozasi_datum" Width="2*" Binding="{Binding inserted_date}"/>
                     <DataGridTextColumn Header="CNP" Width="2*" Binding="{Binding szemelyi}"/>
                     <DataGridTextColumn Header="Lakcím" Width="2*" Binding="{Binding cim}"/>
@@ -34,7 +41,8 @@
                     <DataGridTemplateColumn>
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Button Click="Delete_User" Margin="10" Width="100">Törlés</Button>
+                                <Button Click="Delete_User" Margin="10" Width="100" Content="Törlés" 
+                                        ToolTip="Törlés az adatbázisba."/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
@@ -44,10 +52,12 @@
         </Grid>
 
         <WrapPanel>
-            <Button Name="saveEditButton" Click="Save_Edited_Users" Visibility="Hidden" 
-                    Content="Mentés" Margin="20" Width="100"/>
-            <Button Name="editButton" Click="Edit_User" Content="Szerkesztés" Margin="20" Width="100"/>
-            <Button Name="SaveClients" Click="BtnSaveXls_click" Margin="20" Width="100" Content="Mentés Excel-be"/>
+            <Button x:Name="saveEditButton" Click="Save_Edited_Users" Visibility="Hidden" 
+                    Content="Mentés" Margin="20" Width="100" ToolTip="Mentés az adatbázisba."/>
+            <Button x:Name="editButton" Click="Edit_User" Content="Szerkesztés" Margin="20" 
+                    Width="100" ToolTip="Szerkesztés az adatbázisba."/>
+            <Button x:Name="SaveClients" Click="BtnSaveXls_click" Margin="20" Width="100" 
+                    Content="Mentés Excel-be" ToolTip="Excel-be mentés."/>
         </WrapPanel>
 
     </StackPanel>
