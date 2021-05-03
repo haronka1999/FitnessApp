@@ -2,7 +2,7 @@
     <StackPanel>
 
         <Grid Margin="10">
-            <DataGrid Name="KliensGrid" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" AutoGenerateColumns="False" IsReadOnly="True">
+            <DataGrid Name="BerletGrid" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" AutoGenerateColumns="False" IsReadOnly="True">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="ID" Width="*" Binding="{Binding berlet_id}" />
                     <DataGridTextColumn Header="Megnevezés" Width="2*" Binding="{Binding megnevezes}" />

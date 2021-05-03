@@ -31,7 +31,7 @@ namespace FitnessApp.UI
             DataContext = this;
             berletek = new ObservableCollection<Berlet>();
             berletek = getAbonamentsFromDatabase();
-            this.KliensGrid.ItemsSource = berletek;
+            this.BerletGrid.ItemsSource = berletek;
         }
 
         private ObservableCollection<Berlet> getAbonamentsFromDatabase()
@@ -87,7 +87,38 @@ namespace FitnessApp.UI
 
         private void Delete_Abonament(object sender, RoutedEventArgs e)
         {
+            Berlet drv = (Berlet)BerletGrid.SelectedItem;
+            String berlet_id = (drv.berlet_id).ToString();
 
+            SqlConnection sqlCon = new SqlConnection(conString);
+            string query = @"UPDATE Berletek set torolve=1 WHERE berlet_id = @berlet_id;";
+            try
+            {
+
+                SqlCommand sqlCmd = new SqlCommand(query, sqlCon);
+                sqlCmd.Parameters.AddWithValue("@berlet_id", berlet_id);
+                if (sqlCon.State == ConnectionState.Closed)
+                {
+                    sqlCon.Open();
+                }
+
+                int result = sqlCmd.ExecuteNonQuery();
+
+                if (result < 0)
+                    System.Windows.MessageBox.Show("Adatbázis hiba a berlet torlesenel");
+                else
+                    System.Windows.MessageBox.Show("Berlet sikeresen torolve");
+
+                Refresh();
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Hiba berlet torles: " + ex.Message);
+            }
+            finally
+            {
+                sqlCon.Close();
+            }
         }
 
         private void Save_Edited_Abonament(object sender, RoutedEventArgs e)
@@ -98,6 +129,11 @@ namespace FitnessApp.UI
         private void Edit_Abonament(object sender, RoutedEventArgs e)
         {
 
+        }
+        private void Refresh()
+        {
+            berletek = getAbonamentsFromDatabase();
+            this.BerletGrid.ItemsSource = berletek;
         }
     }
 }
