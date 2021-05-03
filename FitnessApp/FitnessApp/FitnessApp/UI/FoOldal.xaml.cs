@@ -35,10 +35,26 @@ namespace FitnessApp.UI
             {
                 SqlConnection sqlCon = new SqlConnection(conString);
 
+
+                if (!isValidVkod(vKod, sqlCon))
+                {
+                    MessageBox.Show("Ilyen vonalkod nem talalhato!");
+                    return;
+                }
+
+                if (!isVallidBerletId(bId, sqlCon))
+                {
+                    MessageBox.Show("Ilyen berlet nem talalhato!");
+                    return;
+                }
+
+
                 complexQuery(sqlCon);
                 queryClient(sqlCon, vKod);
                 addingANewEntry(sqlCon);
                 countBarcode(sqlCon, vKod);
+
+
 
                 beleptetes.Visibility = Visibility.Visible;
                 switch (megnevezes)
@@ -66,31 +82,42 @@ namespace FitnessApp.UI
                 }
 
 
-                DateTime today = DateTime.Now;
-                DateTime lejarati_datum = berletLetrehozas.AddDays(hanyNapig);
+                // abban az esetben ha a berletnek megvan szabva hogy hany napig ervenyes
+                if (hanyNapig != -1)
+                {
+                    DateTime today = DateTime.Now;
+                    DateTime lejarati_datum = berletLetrehozas.AddDays(hanyNapig);
+                    int kulonbseg = DateTime.Compare(lejarati_datum, today);
 
-                int kulonbseg = DateTime.Compare(lejarati_datum, today);
 
-                if (kulonbseg < 0)
-                    beleptetes.lejarat.Visibility = Visibility.Visible;
-                if (kulonbseg >= 1 && kulonbseg <= 2)
-                    beleptetes.felkialtojelD.Visibility = Visibility.Visible;
-                
-                beleptetes.ervenyessegMezo.Content = kulonbseg;
+                    // ha lejart
+                    if (kulonbseg < 0)
+                        beleptetes.lejarat.Visibility = Visibility.Visible;
 
-                int b = hanyBelepes - belepesekSzama;
-                if (b == 1 || b == 2)
-                    beleptetes.felkialtojel.Visibility = Visibility.Visible;
+                    //ha meg 1 vagy 2 nap van meg hatra
+                    if (kulonbseg >= 1 && kulonbseg <= 2)
+                        beleptetes.felkialtojelD.Visibility = Visibility.Visible;
 
+                    //ha negativ ertek akkor az azt jelenti hogy annyi napja van lejarva a berlet
+                    beleptetes.ervenyessegMezo.Content = kulonbseg;
+
+                }
                 if (hanyBelepes != -1)
-                    beleptetes.hanyadikhasznalatMezo.Content = hanyBelepes + "/" + belepesekSzama;
-                else
-                    beleptetes.hanyadikhasznalatMezoNev.Visibility = Visibility.Hidden;
+                {
+                    int b = hanyBelepes - belepesekSzama;
+                    if (b == 1 || b == 2)
+                        beleptetes.felkialtojel.Visibility = Visibility.Visible;
 
-                beleptetes.nevMezo.Content = nev;
+                    if (hanyBelepes != -1)
+                        beleptetes.hanyadikhasznalatMezo.Content = hanyBelepes + "/" + belepesekSzama;
+                    else
+                        beleptetes.hanyadikhasznalatMezoNev.Visibility = Visibility.Hidden;
 
-                vonalkod.Text = "";
-                berletId.Text = "";
+                    beleptetes.nevMezo.Content = nev;
+
+                    vonalkod.Text = "";
+                    berletId.Text = "";
+                }
             }
             else
             {
@@ -99,10 +126,95 @@ namespace FitnessApp.UI
 
         }
 
+        private bool isVallidBerletId(string bId, SqlConnection sqlCon)
+        {
+            int my_berlet_id = -1;
+            try
+            {
+
+
+                if (sqlCon.State == ConnectionState.Closed)
+                {
+                    sqlCon.Open();
+                }
+
+                string query = "select berlet_id from Berletek where berlet_id = @berletId;";
+                SqlCommand sqlCmd = new SqlCommand(query, sqlCon);
+                sqlCmd.Parameters.AddWithValue("@berletId", bId);
+                using (SqlDataReader reader = sqlCmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        my_berlet_id = Int32.Parse(reader["berlet_id"].ToString());
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Hiba berlet ellenorzes: "  + ex.Message);
+            }
+            finally
+            {
+                sqlCon.Close();
+            }
+
+
+            if (my_berlet_id == -1)
+                return false;
+            else
+                return true;
+
+        }
+
+        private bool isValidVkod(string vKod, SqlConnection sqlCon)
+        {
+
+            int my_kliens_id = -1;
+            try
+            {
+
+                
+                if (sqlCon.State == ConnectionState.Closed)
+                {
+                    sqlCon.Open();
+                }
+
+                string query = "select kliens_id from Kliensek where vonalkod = @vkod;" ;
+                SqlCommand sqlCmd = new SqlCommand(query, sqlCon);
+                sqlCmd.Parameters.AddWithValue("@vkod", vKod);
+                using (SqlDataReader reader = sqlCmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        my_kliens_id = Int32.Parse(reader["kliens_id"].ToString());                     
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Hiba kliens ellenorzesnel: " + ex.Message);
+            }
+            finally
+            {
+                sqlCon.Close();
+            }
+
+
+            if (my_kliens_id == -1)
+                return false;
+            else 
+                return true;
+
+        }
+
         private void complexQuery(SqlConnection sqlCon)
         {
             try
             {
+
+                MessageBox.Show("Itt vagy? ");
                 if (sqlCon.State == ConnectionState.Closed)
                 {
                     sqlCon.Open();
@@ -119,12 +231,14 @@ namespace FitnessApp.UI
                 {
                     while (reader.Read())
                     {
+                        MessageBox.Show("Itt vagy2? ");
                         megnevezes = Int32.Parse(reader["megnevezes"].ToString());
+                        MessageBox.Show("Megnevezes: " + megnevezes);
                         hanyNapig = Int32.Parse(reader["ervenyesseg_nap"].ToString());
                         hanyBelepes = Int32.Parse(reader["ervenyesseg_belepesek_szama"].ToString());
                         berlet = Int32.Parse(reader["berlet_id"].ToString());
                         tId = Int32.Parse(reader["terem_id"].ToString());
-                        //MessageBox.Show(reader["letrehozasi_datum"].ToString());
+                        MessageBox.Show(reader["letrehozasi_datum"].ToString());
                         berletLetrehozas = DateTime.ParseExact(reader["letrehozasi_datum"].ToString(), "MM/dd/yyyy hh:mm:ss tt", System.Globalization.CultureInfo.InvariantCulture);
                     }
                 }
