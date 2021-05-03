@@ -66,31 +66,18 @@ namespace FitnessApp.UI
 
                 string[] temp1 = hanyOratol.Split(':');
                 string[] temp2 = hanyOraig.Split(':');
-                int kezdetOra;
-                int kezdetPerc;
-                int vegOra;
-                int vegPerc;
-                try
+                int kezdetOra = Int32.Parse(temp1[0]);
+                int kezdetPerc = Int32.Parse(temp1[1]);
+                int vegOra = Int32.Parse(temp2[0]);
+                int vegPerc  = Int32.Parse(temp2[1]);
+
+                TimeSpan currentHourMinute;
+                currentHourMinute = DateTime.Now.TimeOfDay;
+                if (currentHourMinute < new TimeSpan(kezdetOra, kezdetPerc, 0) || currentHourMinute > new TimeSpan(vegOra, vegPerc, 0))
                 {
-                     kezdetOra = Int32.Parse(temp1[0]);
-                     kezdetPerc = Int32.Parse(temp1[1]);
-                     vegOra = Int32.Parse(temp2[0]);
-                     vegPerc = Int32.Parse(temp2[1]);
-
-                    TimeSpan currentHourMinute;
-                    currentHourMinute = DateTime.Now.TimeOfDay;
-                    if (currentHourMinute < new TimeSpan(kezdetOra, kezdetPerc, 0) || currentHourMinute > new TimeSpan(vegOra, vegPerc, 0))
-                    {
-                        MessageBox.Show("A berlet most nem hasznalhato!");
-                        return;
-                    }
+                    MessageBox.Show("A berlet most nem hasznalhato!");
+                    return;
                 }
-                catch(Exception ex)
-                {
-                    MessageBox.Show("hiba  ora, perc convert: " + ex.Message);
-                }
-
-
 
 
                 // abban az esetben ha a berletnek megvan szabva hogy hany napig ervenyes
@@ -136,6 +123,8 @@ namespace FitnessApp.UI
                 else
                 {
                     MessageBox.Show("ez az if ag a kombinalt berletre vonatkozik ");
+
+
                 }
             }
             else

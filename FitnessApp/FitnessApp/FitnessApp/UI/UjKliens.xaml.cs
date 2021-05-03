@@ -52,11 +52,11 @@ namespace FitnessApp.UI
             foreach (var berlet in berletek)
             {
                 if (berlet.ervenyesseg_belepesek_szama == -1)
-                    temp = "Érvényesség: " + berlet.ervenyesseg_nap + " nap, " + "ár: " + berlet.ar;
+                    temp = "ID:" + berlet.berlet_id + ", érvényesség: " + berlet.ervenyesseg_nap + " nap, " + "ár: " + berlet.ar;
                 else if (berlet.ervenyesseg_nap == -1)
-                    temp = "Érvényesség: " + berlet.ervenyesseg_belepesek_szama + " belépés, " + "ár: " + berlet.ar;
+                    temp = "ID:" + berlet.berlet_id + ", érvényesség: " + berlet.ervenyesseg_belepesek_szama + " belépés, " + "ár: " + berlet.ar;
                 else
-                    temp = "Érvényesség: " + berlet.ervenyesseg_belepesek_szama + " belépés, és " + berlet.ervenyesseg_nap + " nap" + "ár: " + berlet.ar;
+                    temp = "ID:" + berlet.berlet_id + ", érvényesség: " + berlet.ervenyesseg_belepesek_szama + " belépés, és " + berlet.ervenyesseg_nap + " nap" + "ár: " + berlet.ar;
 
 
                 //Console.WriteLine(temp);

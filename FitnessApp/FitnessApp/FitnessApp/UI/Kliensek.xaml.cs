@@ -132,12 +132,12 @@ namespace FitnessApp.UI
             saveEditButton.Visibility = Visibility.Visible;
             KliensGrid.IsReadOnly = false;
 
-            //meghatarozzuk melyik oszlopok editalhatoak
-            //KliensGrid.Columns[1].IsReadOnly = false;
-            //KliensGrid.Columns[2].IsReadOnly = false;
-            //KliensGrid.Columns[3].IsReadOnly = false;
-            //KliensGrid.Columns[6].IsReadOnly = false;
-            //KliensGrid.Columns[8].IsReadOnly = false;
+
+
+
+
+
+
         }
 
         private void Save_Edited_Users(object sender, RoutedEventArgs e)
