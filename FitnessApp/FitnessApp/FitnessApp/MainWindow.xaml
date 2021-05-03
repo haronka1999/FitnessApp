@@ -30,6 +30,10 @@
                 <uc:UjBerlet x:Name="NewAbonament"></uc:UjBerlet>
             </TabItem>
 
+            <TabItem Header="Bérletek" Background="GreenYellow" Foreground="Blue" BorderBrush="Pink" x:Name="Berletek">
+                <uc:Berletek x:Name="Abonaments"></uc:Berletek>
+            </TabItem>
+
         </TabControl>
 
     </StackPanel>

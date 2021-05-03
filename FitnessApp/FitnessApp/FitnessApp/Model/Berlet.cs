@@ -4,17 +4,17 @@ namespace FitnessApp.Model
 {
     public class Berlet
     {
-        public int berlet_id;
-        public int megnevezes;
-        public float ar;
-        public int ervenyesseg_nap;
-        public int ervenyesseg_belepesek_szama;
-        public bool torolve;
-        public int terem_id;
-        public string hany_oratol;
-        public string hany_oraig;
-        public int napi_max_hasznalat;
-        public DateTime letrehozasi_datum;
+        public int berlet_id { get; set; }
+        public int megnevezes { get; set; }
+        public float ar { get; set; }
+        public int ervenyesseg_nap { get; set; }
+        public int ervenyesseg_belepesek_szama { get; set; }
+        public bool torolve { get; set; }
+        public int terem_id { get; set; }
+        public string hany_oratol { get; set; }
+        public string hany_oraig { get; set; }
+        public int napi_max_hasznalat { get; set; }
+        public DateTime letrehozasi_datum { get; set; }
 
         public Berlet(int berlet_id, int megnevezes, float ar, int ervenyesseg_nap, int ervenyesseg_belepesek_szama, bool torolve, int terem_id, string hany_oratol, string hany_oraig, int napi_max_hasznalat, DateTime letrehozasi_datum)
         {

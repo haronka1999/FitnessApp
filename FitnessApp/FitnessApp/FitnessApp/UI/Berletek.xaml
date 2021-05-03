@@ -1,0 +1,36 @@
+﻿<UserControl x:Class="FitnessApp.UI.Berletek" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:local="clr-namespace:FitnessApp.UI" mc:Ignorable="d" d:DesignHeight="450" d:DesignWidth="800">
+    <StackPanel>
+
+        <Grid Margin="10">
+            <DataGrid Name="KliensGrid" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" AutoGenerateColumns="False" IsReadOnly="True">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="ID" Width="*" Binding="{Binding berlet_id}" />
+                    <DataGridTextColumn Header="Megnevezés" Width="2*" Binding="{Binding megnevezes}" />
+                    <DataGridTextColumn Header="Ár" Width="2*" Binding="{Binding ar}" />
+                    <DataGridTextColumn Header="Érvényesség" Width="2*" Binding="{Binding ervenyesseg_nap}" />
+                    <DataGridTextColumn Header="Belépés limit" Width="2*" Binding="{Binding ervenyesseg_belepesek_szama}" />
+                    <DataGridTextColumn Header="Terem" Width="2*" Binding="{Binding terem_id}" />
+                    <DataGridTextColumn Header="Hány órától" Width="2*" Binding="{Binding hany_oratol}" />
+                    <DataGridTextColumn Header="Hány óráig" Width="2*" Binding="{Binding hany_oraig}" />
+                    <DataGridTextColumn Header="Napi belépés limit" Width="2*" Binding="{Binding napi_max_hasznalat}" />
+                    <DataGridTextColumn Header="Létrehozás" Width="3*" Binding="{Binding letrehozasi_datum}" />
+
+                    <DataGridTemplateColumn>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Click="Delete_Abonament" Margin="10" Width="100">Törlés</Button>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+
+        <WrapPanel>
+            <Button Name="saveEditButton" Click="Save_Edited_Abonament" Visibility="Hidden" Content="Mentés" Margin="20" Width="100" />
+            <Button Name="editButton" Click="Edit_Abonament" Content="Szerkesztés" Margin="20" Width="100" />
+        </WrapPanel>
+
+    </StackPanel>
+</UserControl>
