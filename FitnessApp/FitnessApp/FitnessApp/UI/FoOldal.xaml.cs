@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data;
 using System.Data.SqlClient;
+using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
 using static FitnessApp.Utils;
@@ -20,11 +21,15 @@ namespace FitnessApp.UI
         private string nev = "";
         private int belepesekSzama = -1;
         private DateTime berletLetrehozas;
+        private string berletLetrehozas_str;
 
         public FoOldal()
         {
             InitializeComponent();
+
         }
+
+        
 
         private void BtnOk_click(object sender, RoutedEventArgs e)
         {
@@ -86,6 +91,16 @@ namespace FitnessApp.UI
                 if (hanyNapig != -1)
                 {
                     DateTime today = DateTime.Now;
+                    try
+                    {                        
+                        CultureInfo culture = new CultureInfo("en-US");
+                        berletLetrehozas = Convert.ToDateTime(berletLetrehozas_str,  culture);
+                    }
+                    catch(Exception ex)
+                    {
+                        MessageBox.Show("berlet datum convert hiba:" + ex.Message);
+                    }
+                    
                     DateTime lejarati_datum = berletLetrehozas.AddDays(hanyNapig);
                     int kulonbseg = DateTime.Compare(lejarati_datum, today);
 
@@ -104,6 +119,8 @@ namespace FitnessApp.UI
                 }
                 if (hanyBelepes != -1)
                 {
+                    MessageBox.Show("if: hany belepes: ");
+
                     int b = hanyBelepes - belepesekSzama;
                     if (b == 1 || b == 2)
                         beleptetes.felkialtojel.Visibility = Visibility.Visible;
@@ -126,95 +143,11 @@ namespace FitnessApp.UI
 
         }
 
-        private bool isVallidBerletId(string bId, SqlConnection sqlCon)
-        {
-            int my_berlet_id = -1;
-            try
-            {
-
-
-                if (sqlCon.State == ConnectionState.Closed)
-                {
-                    sqlCon.Open();
-                }
-
-                string query = "select berlet_id from Berletek where berlet_id = @berletId;";
-                SqlCommand sqlCmd = new SqlCommand(query, sqlCon);
-                sqlCmd.Parameters.AddWithValue("@berletId", bId);
-                using (SqlDataReader reader = sqlCmd.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        my_berlet_id = Int32.Parse(reader["berlet_id"].ToString());
-                    }
-                }
-
-            }
-            catch (Exception ex)
-            {
-                System.Windows.MessageBox.Show("Hiba berlet ellenorzes: "  + ex.Message);
-            }
-            finally
-            {
-                sqlCon.Close();
-            }
-
-
-            if (my_berlet_id == -1)
-                return false;
-            else
-                return true;
-
-        }
-
-        private bool isValidVkod(string vKod, SqlConnection sqlCon)
-        {
-
-            int my_kliens_id = -1;
-            try
-            {
-
-                
-                if (sqlCon.State == ConnectionState.Closed)
-                {
-                    sqlCon.Open();
-                }
-
-                string query = "select kliens_id from Kliensek where vonalkod = @vkod;" ;
-                SqlCommand sqlCmd = new SqlCommand(query, sqlCon);
-                sqlCmd.Parameters.AddWithValue("@vkod", vKod);
-                using (SqlDataReader reader = sqlCmd.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        my_kliens_id = Int32.Parse(reader["kliens_id"].ToString());                     
-                    }
-                }
-
-            }
-            catch (Exception ex)
-            {
-                System.Windows.MessageBox.Show("Hiba kliens ellenorzesnel: " + ex.Message);
-            }
-            finally
-            {
-                sqlCon.Close();
-            }
-
-
-            if (my_kliens_id == -1)
-                return false;
-            else 
-                return true;
-
-        }
 
         private void complexQuery(SqlConnection sqlCon)
         {
             try
             {
-
-                MessageBox.Show("Itt vagy? ");
                 if (sqlCon.State == ConnectionState.Closed)
                 {
                     sqlCon.Open();
@@ -231,28 +164,27 @@ namespace FitnessApp.UI
                 {
                     while (reader.Read())
                     {
-                        MessageBox.Show("Itt vagy2? ");
                         megnevezes = Int32.Parse(reader["megnevezes"].ToString());
-                        MessageBox.Show("Megnevezes: " + megnevezes);
                         hanyNapig = Int32.Parse(reader["ervenyesseg_nap"].ToString());
                         hanyBelepes = Int32.Parse(reader["ervenyesseg_belepesek_szama"].ToString());
                         berlet = Int32.Parse(reader["berlet_id"].ToString());
                         tId = Int32.Parse(reader["terem_id"].ToString());
-                        MessageBox.Show(reader["letrehozasi_datum"].ToString());
-                        berletLetrehozas = DateTime.ParseExact(reader["letrehozasi_datum"].ToString(), "MM/dd/yyyy hh:mm:ss tt", System.Globalization.CultureInfo.InvariantCulture);
+                        berletLetrehozas_str = reader["letrehozasi_datum"].ToString();
                     }
                 }
 
             }
             catch (Exception ex)
             {
-                System.Windows.MessageBox.Show("1) Hiba read " + ex.Message);
+                System.Windows.MessageBox.Show("1) Hiba complex query: " + ex.Message);
             }
             finally
             {
                 sqlCon.Close();
             }
         }
+
+
         private void queryClient(SqlConnection sqlCon, string vKod)
         {
             try
@@ -348,6 +280,86 @@ namespace FitnessApp.UI
             {
                 sqlCon.Close();
             }
+        }
+        private bool isVallidBerletId(string bId, SqlConnection sqlCon)
+        {
+            int my_berlet_id = -1;
+            try
+            {
+                if (sqlCon.State == ConnectionState.Closed)
+                {
+                    sqlCon.Open();
+                }
+
+                string query = "select berlet_id from Berletek where berlet_id = @berletId;";
+                SqlCommand sqlCmd = new SqlCommand(query, sqlCon);
+                sqlCmd.Parameters.AddWithValue("@berletId", bId);
+                using (SqlDataReader reader = sqlCmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        my_berlet_id = Int32.Parse(reader["berlet_id"].ToString());
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Hiba berlet ellenorzes: " + ex.Message);
+            }
+            finally
+            {
+                sqlCon.Close();
+            }
+
+
+            if (my_berlet_id == -1)
+                return false;
+            else
+                return true;
+
+        }
+
+        private bool isValidVkod(string vKod, SqlConnection sqlCon)
+        {
+
+            int my_kliens_id = -1;
+            try
+            {
+
+
+                if (sqlCon.State == ConnectionState.Closed)
+                {
+                    sqlCon.Open();
+                }
+
+                string query = "select kliens_id from Kliensek where vonalkod = @vkod;";
+                SqlCommand sqlCmd = new SqlCommand(query, sqlCon);
+                sqlCmd.Parameters.AddWithValue("@vkod", vKod);
+                using (SqlDataReader reader = sqlCmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        my_kliens_id = Int32.Parse(reader["kliens_id"].ToString());
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Hiba kliens ellenorzesnel: " + ex.Message);
+            }
+            finally
+            {
+                sqlCon.Close();
+            }
+
+
+            if (my_kliens_id == -1)
+                return false;
+            else
+                return true;
+
         }
 
     }
