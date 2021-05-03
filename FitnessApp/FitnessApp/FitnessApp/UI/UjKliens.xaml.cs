@@ -50,11 +50,11 @@ namespace FitnessApp.UI
             foreach (var berlet in berletek)
             {
                 if (berlet.ervenyesseg_belepesek_szama == -1)
-                    temp = "Ervenyesseg: " + berlet.ervenyesseg_nap + " nap, " + "ar: " + berlet.ar;
+                    temp = "Érvényesség: " + berlet.ervenyesseg_nap + " nap, " + "ár: " + berlet.ar;
                 else if (berlet.ervenyesseg_nap == -1)
-                    temp = "Ervenyesseg: " + berlet.ervenyesseg_belepesek_szama + " belepes, " + "ar: " + berlet.ar;
+                    temp = "Érvényesség: " + berlet.ervenyesseg_belepesek_szama + " belépés, " + "ár: " + berlet.ar;
                 else
-                    temp = "Ervenyesseg: " + berlet.ervenyesseg_belepesek_szama + " belepes, es " + berlet.ervenyesseg_nap + " nap" + "ar: " + berlet.ar;
+                    temp = "Érvényesség: " + berlet.ervenyesseg_belepesek_szama + " belépés, és " + berlet.ervenyesseg_nap + " nap" + "ár: " + berlet.ar;
 
 
                 //Console.WriteLine(temp);
@@ -210,9 +210,5 @@ namespace FitnessApp.UI
               .Select(s => s[random.Next(s.Length)]).ToArray());
         }
 
-        private void BtnCancel_click(object sender, RoutedEventArgs e)
-        {
-            //myTabControl.SelectedIndex = 1;
-        }
     }
 }

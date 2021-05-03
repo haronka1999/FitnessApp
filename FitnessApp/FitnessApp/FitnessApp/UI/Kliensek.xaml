@@ -47,8 +47,7 @@
             <Button Name="saveEditButton" Click="Save_Edited_Users" Visibility="Hidden" 
                     Content="Mentés" Margin="20" Width="100"/>
             <Button Name="editButton" Click="Edit_User" Content="Szerkesztés" Margin="20" Width="100"/>
-            <Button Name="SaveClients" Click="BtnSaveXls_click" Margin="20" Width="100" Content="Mentés excelbe"/>
-            <Button Margin="20" Width="100" Content="Mégse" Click="Button_Click"/>
+            <Button Name="SaveClients" Click="BtnSaveXls_click" Margin="20" Width="100" Content="Mentés Excel-be"/>
         </WrapPanel>
 
     </StackPanel>

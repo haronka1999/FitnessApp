@@ -260,9 +260,5 @@ namespace FitnessApp.UI
             teremId = Int32.Parse(e.Text);
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
     }
 }

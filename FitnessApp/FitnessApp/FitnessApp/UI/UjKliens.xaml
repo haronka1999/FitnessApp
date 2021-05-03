@@ -73,7 +73,6 @@
 
         <WrapPanel>
             <Button Name="BtnOk" Click="BtnOk_click" Margin="10" Width="100" Content="Mentés"/>
-            <Button Name="BtnCancel" Click="BtnCancel_click" Margin="10" Width="100" Content="Mégse"/>
         </WrapPanel>
         
     </StackPanel>

@@ -240,9 +240,5 @@ namespace FitnessApp.UI
             this.KliensGrid.ItemsSource = users;
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
     }
 }

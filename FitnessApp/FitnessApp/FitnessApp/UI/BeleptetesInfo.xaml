@@ -23,23 +23,36 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
-            <Label x:Name="lejarat" Visibility="Hidden" Grid.Row="0" Grid.Column="2" Foreground="Red">LEJÁRT:</Label>
+            <Label x:Name="lejarat" Visibility="Hidden" Grid.Row="0" Grid.Column="2" 
+                   Foreground="Red" Content="LEJÁRT:" FontSize="20"
+                   FontStyle="Italic" FontFamily="Times New Roman"/>
 
-            <Label Grid.Row="1" Grid.Column="2">Bérlet:</Label>
+            <Label Grid.Row="1" Grid.Column="2" Content="Bérlet:" 
+                   FontStyle="Italic" FontFamily="Times New Roman" FontSize="15"/>
             <Label x:Name="berletMezo" Grid.Row="1" Grid.Column="3" Margin="0,0,0,10"/>
-            
-            <Label x:Name="felkialtojelD" Visibility="Hidden" Grid.Row="2" Grid.Column="1" Foreground="Red">!</Label>
-            <Label Grid.Row="2" Grid.Column="2">Érvényesség:</Label>
+
+            <Label x:Name="felkialtojelD" Visibility="Hidden" Grid.Row="2" Grid.Column="1" 
+                   Foreground="Red" Content="!"/>
+            <Label Grid.Row="2" Grid.Column="2" Content="Érvényesség:" 
+                   FontStyle="Italic" FontFamily="Times New Roman" FontSize="15"/>
             <Label x:Name="ervenyessegMezo" Grid.Row="2" Grid.Column="3" Margin="0,0,0,10"/>
 
-            <Label x:Name="felkialtojel" Visibility="Hidden" Grid.Row="3" Grid.Column="1" Foreground="Red">!</Label>
-            <Label x:Name="hanyadikhasznalatMezoNev" Grid.Row="3" Grid.Column="2">Hányadik használat:</Label>
+            <Label x:Name="felkialtojel" Visibility="Hidden" Grid.Row="3" Grid.Column="1" 
+                   Foreground="Red" Content="!"/>
+            <Label x:Name="hanyadikhasznalatMezoNev" Grid.Row="3" Grid.Column="2" Content="Hányadik használat:"
+                   FontStyle="Italic" FontFamily="Times New Roman" FontSize="15"/>
             <Label x:Name="hanyadikhasznalatMezo" Grid.Row="3" Grid.Column="3" Margin="0,0,0,10"/>
 
-            <Label Grid.Row="4" Grid.Column="2">Név:</Label>
+            <Label Grid.Row="4" Grid.Column="2" Content="Név:" FontStyle="Italic" 
+                   FontFamily="Times New Roman" FontSize="15"/>
             <Label x:Name="nevMezo" Grid.Row="4" Grid.Column="3" Margin="0,0,0,10"/>
+            
+            <Button x:Name="BtnTunes" Grid.Row="5" Grid.Column="2" FontFamily="Times New Roman" 
+                    Margin="0, 10, 0, 10" Width="100" Content="Eltüntet" FontSize="12" 
+                    Foreground="White" Background="Black" Click="BtnTunes_Click"/>
 
         </Grid>
     </StackPanel>
