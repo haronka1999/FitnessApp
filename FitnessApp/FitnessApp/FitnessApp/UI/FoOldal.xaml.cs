@@ -390,8 +390,6 @@ namespace FitnessApp.UI
             int my_kliens_id = -1;
             try
             {
-
-
                 if (sqlCon.State == ConnectionState.Closed)
                 {
                     sqlCon.Open();
@@ -417,7 +415,6 @@ namespace FitnessApp.UI
             {
                 sqlCon.Close();
             }
-
 
             if (my_kliens_id == -1)
                 return false;

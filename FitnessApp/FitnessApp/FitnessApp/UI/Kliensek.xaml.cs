@@ -2,8 +2,12 @@
 using System.Collections.ObjectModel;
 using System.Data;
 using System.Data.SqlClient;
+using System.Drawing;
+using System.IO;
+using System.Text;
 using System.Windows;
 using System.Windows.Forms;
+using System.Windows.Media.Imaging;
 using ClosedXML.Excel;
 using FitnessApp.Model;
 using static FitnessApp.Utils;
@@ -28,7 +32,6 @@ namespace FitnessApp.UI
 
         private ObservableCollection<Kliens> getUsersFromDatabase()
         {
-
             ObservableCollection<Kliens> kliensek = new ObservableCollection<Kliens>();
             SqlConnection sqlCon = new SqlConnection(conString);
             try
@@ -46,12 +49,23 @@ namespace FitnessApp.UI
 
                     while (reader.Read())
                     {
+                        BitmapImage bi = new BitmapImage();
+                        bi.BeginInit();
+                        bi.StreamSource = new MemoryStream(System.Convert.FromBase64String(reader["photo"].ToString()));
+                        bi.EndInit();
+
+                        //System.Windows.MessageBox.Show(reader["photo"].ToString());
+                        byte[] data = Convert.FromBase64String(reader["photo"].ToString());
+                        //System.Windows.MessageBox.Show(data.ToString());
+                        string decodedPhoto = Encoding.UTF8.GetString(data);
+                        //System.Windows.MessageBox.Show(decodedPhoto);
+
                         Kliens kliens = new Kliens(Int32.Parse(reader["kliens_id"].ToString()),
                                                     reader["nev"].ToString(),
                                                     reader["telefon"].ToString(),
                                                     reader["email"].ToString(),
                                                     bool.Parse(reader["is_deleted"].ToString()),
-                                                    reader["photo"].ToString(),
+                                                    decodedPhoto,
                                                     Convert.ToDateTime(reader["inserted_date"].ToString()),
                                                     reader["szemelyi"].ToString(),
                                                     reader["cim"].ToString(),
@@ -200,12 +214,15 @@ namespace FitnessApp.UI
                     {
                         while (reader.Read())
                         {
+                            byte[] data = Convert.FromBase64String(reader["photo"].ToString());
+                            string decodedPhoto = Encoding.UTF8.GetString(data);
+
                             Kliens kliens = new Kliens(Int32.Parse(reader["kliens_id"].ToString()),
                                                         reader["nev"].ToString(),
                                                         reader["telefon"].ToString(),
                                                         reader["email"].ToString(),
                                                         bool.Parse(reader["is_deleted"].ToString()),
-                                                        reader["photo"].ToString(),
+                                                        decodedPhoto,
                                                         Convert.ToDateTime(reader["inserted_date"].ToString()),
                                                         reader["szemelyi"].ToString(),
                                                         reader["cim"].ToString(),
@@ -230,6 +247,10 @@ namespace FitnessApp.UI
                 }
 
                 users = kliensek;
+            }
+            else
+            {
+                getUsersFromDatabase();
             }
             this.KliensGrid.ItemsSource = users;
         }
