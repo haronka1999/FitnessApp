@@ -2,7 +2,6 @@
 using System.Collections.ObjectModel;
 using System.Data;
 using System.Data.SqlClient;
-using System.Drawing;
 using System.IO;
 using System.Text;
 using System.Windows;
@@ -242,8 +241,12 @@ namespace FitnessApp.UI
                     {
                         while (reader.Read())
                         {
-                            byte[] data = Convert.FromBase64String(reader["photo"].ToString());
-                            string decodedPhoto = Encoding.UTF8.GetString(data);
+                            string decodedPhoto = "";
+                            if (reader["photo"].ToString() != "")
+                            {
+                                byte[] data = Convert.FromBase64String(reader["photo"].ToString());
+                                decodedPhoto = Encoding.UTF8.GetString(data);
+                            }
 
                             Kliens kliens = new Kliens(Int32.Parse(reader["kliens_id"].ToString()),
                                                         reader["nev"].ToString(),

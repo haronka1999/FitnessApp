@@ -130,12 +130,9 @@ namespace FitnessApp.UI
                         image.Save(m, image.RawFormat);
                         byte[] imageBytes = m.ToArray();
 
-                        // Convert byte[] to Base64 String
                         photo = Convert.ToBase64String(imageBytes);
                     }
                 }
-                //System.Windows.MessageBox.Show(base64String);
-
             }
         }
 

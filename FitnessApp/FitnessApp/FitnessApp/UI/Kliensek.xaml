@@ -44,7 +44,7 @@
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <Button x:Name="editButton" Click="Edit_User" Content="Szerkesztés" Margin="10" 
-                                        Width="100" ToolTip="Szerkesztés az adatbázisba."/>
+                                        Width="100" ToolTip="Szerkesztés az adatbázisban."/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
@@ -52,7 +52,7 @@
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <Button Click="Delete_User" Margin="10" Width="100" Content="Törlés" 
-                                        ToolTip="Törlés az adatbázisba."/>
+                                        ToolTip="Törlés az adatbázisból."/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
@@ -67,6 +67,5 @@
             <Button x:Name="saveEditButton" Click="Save_Edited_Users" Visibility="Hidden" 
                     Content="Mentés" Margin="20" Width="100" ToolTip="Mentés az adatbázisba."/>
         </WrapPanel>
-
     </StackPanel>
 </UserControl>
