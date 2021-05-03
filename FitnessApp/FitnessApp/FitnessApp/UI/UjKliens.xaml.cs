@@ -29,37 +29,44 @@ namespace FitnessApp.UI
         private string photo = "";
         private string comment;
         private List<Berlet> berletek;
+        private string date_str;
+        List<string> options = new List<string>();
 
-        private ObservableCollection<string> message_to_display { get; set; }
+        public IEnumerable<string> Options
+        {
+            get { return options; }
+        }
+
 
         //egyeb valtozok
-        private string date_str;
+
 
         public UjKliens()
         {
             InitializeComponent();
             DataContext = this;
             berletek = new List<Berlet>();
-            berletek = getBerletekFromDatabase();
-            message_to_display = new ObservableCollection<string>();
-            // for (int i =0; i < message_to_display.i)
-            //MessageBox.Show(message_to_display[index]); 
-            message_to_display = getAbonamentStrings();
+            berletek = getBerletekFromDatabase();             
+            options = getAbonamentStrings();
+
+           
+            
         }
 
-        private ObservableCollection<string> getAbonamentStrings()
+
+        private List<string> getAbonamentStrings()
         {
-            ObservableCollection<string> temp_list = new ObservableCollection<string>();
+            List<string> temp_list = new List<string>();
 
             string temp = "";
             foreach (var berlet in berletek)
             {
                 if (berlet.ervenyesseg_belepesek_szama == -1)
-                    temp = "ID:" + berlet.berlet_id + ", érvényesség: " + berlet.ervenyesseg_nap + " nap, " + "ár: " + berlet.ar;
+                    temp = berlet.berlet_id + ".), érvényesség: " + berlet.ervenyesseg_nap + " nap, " + "ár: " + berlet.ar;
                 else if (berlet.ervenyesseg_nap == -1)
-                    temp = "ID:" + berlet.berlet_id + ", érvényesség: " + berlet.ervenyesseg_belepesek_szama + " belépés, " + "ár: " + berlet.ar;
+                    temp = berlet.berlet_id + ".), érvényesség: " + berlet.ervenyesseg_belepesek_szama + " belépés, " + "ár: " + berlet.ar;
                 else
-                    temp = "ID:" + berlet.berlet_id + ", érvényesség: " + berlet.ervenyesseg_belepesek_szama + " belépés, és " + berlet.ervenyesseg_nap + " nap" + "ár: " + berlet.ar;
+                    temp = berlet.berlet_id + ".), érvényesség: " + berlet.ervenyesseg_belepesek_szama + " belépés, és " + berlet.ervenyesseg_nap + " nap" + "ár: " + berlet.ar;
 
 
                 //Console.WriteLine(temp);

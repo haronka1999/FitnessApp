@@ -131,13 +131,6 @@ namespace FitnessApp.UI
         {
             saveEditButton.Visibility = Visibility.Visible;
             KliensGrid.IsReadOnly = false;
-
-
-
-
-
-
-
         }
 
         private void Save_Edited_Users(object sender, RoutedEventArgs e)
