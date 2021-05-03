@@ -56,13 +56,18 @@ namespace FitnessApp.UI
                 {
                     while (reader.Read())
                     {
-                        //DateTime letrehozasi_datum = Convert.ToDateTime(berlet.letrehozasi_datum, new CultureInfo("en-US"));
-                        //DateTime lejarati_datum = letrehozasi_datum.AddDays(berlet.ervenyesseg_nap);
-                        //int kulonbseg = (int)Math.Round((lejarati_datum - today).TotalDays);
-                        //if (kulonbseg > 0)
-                        //{
-
-                        //}
+                        DateTime letrehozasi_datum = Convert.ToDateTime(reader["letrehozasi_datum"].ToString(), new CultureInfo("en-US"));
+                        DateTime lejarati_datum = letrehozasi_datum.AddDays(Int32.Parse(reader["ervenyesseg_nap"].ToString()));
+                        int kulonbseg = (int)Math.Round((lejarati_datum - today).TotalDays);
+                        string ervenyesseg;
+                        if (kulonbseg > 0)
+                        {
+                            ervenyesseg = "aktív " + kulonbseg + " napig";
+                        }
+                        else
+                        {
+                            ervenyesseg = "lejárt " + -kulonbseg + " napja";
+                        }
 
                         Berlet berlet = new Berlet(Int32.Parse(reader["berlet_id"].ToString()),
                                                        Int32.Parse(reader["megnevezes"].ToString()),
@@ -74,7 +79,10 @@ namespace FitnessApp.UI
                                                        reader["hany_oratol"].ToString(),
                                                        reader["hany_oraig"].ToString(),
                                                        Int32.Parse(reader["napi_max_hasznalat"].ToString()),
-                                                       Convert.ToDateTime(reader["letrehozasi_datum"].ToString()));
+                                                       letrehozasi_datum,
+                                                       ervenyesseg);
+
+                        instertErvenyesseg(ervenyesseg, Int32.Parse(reader["berlet_id"].ToString()));
 
                         //csak akkor jelenitsuk meg ha nincs torolve
                         if (berlet.torolve == false)
@@ -140,6 +148,43 @@ namespace FitnessApp.UI
 
             saveEditButton.Visibility = Visibility.Hidden;
             BerletGrid.IsReadOnly = true;
+        }
+
+        private void instertErvenyesseg(string ervenyesseg, int berlet_id)
+        {
+            SqlConnection sqlCon = new SqlConnection(conString);
+            string query = "UPDATE Berletek set ervenyesseg=@ervenyesseg WHERE berlet_id = @berlet_id;";
+
+            if (sqlCon.State == ConnectionState.Closed)
+            {
+                sqlCon.Open();
+            }
+
+            try
+            {
+                SqlCommand sqlCmd = new SqlCommand(query, sqlCon);
+                sqlCmd.Parameters.AddWithValue("@ervenyesseg", ervenyesseg);
+                sqlCmd.Parameters.AddWithValue("@berlet_id", berlet_id);
+
+                if (sqlCon.State == ConnectionState.Closed)
+                {
+                    sqlCon.Open();
+                }
+
+                int result = sqlCmd.ExecuteNonQuery();
+
+                if (result < 0)
+                    System.Windows.MessageBox.Show("Adatbázis hiba új berlet érvényessége hozzáadásnál");
+                //else System.Windows.MessageBox.Show("Bérlet érvényessége sikeresen hozzáadva");
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                sqlCon.Close();
+            }
         }
 
         private void Refresh()

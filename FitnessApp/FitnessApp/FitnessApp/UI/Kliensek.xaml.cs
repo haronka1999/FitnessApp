@@ -96,7 +96,7 @@ namespace FitnessApp.UI
             String kliens_id = (drv.kliens_id).ToString();
 
             SqlConnection sqlCon = new SqlConnection(conString);
-            string query = @"UPDATE Kliensek set is_deleted=1 WHERE kliens_id = @kliens_id;";
+            string query = "UPDATE Kliensek set is_deleted=1 WHERE kliens_id = @kliens_id;";
             try
             {
 

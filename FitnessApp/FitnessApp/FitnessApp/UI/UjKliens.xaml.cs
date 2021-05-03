@@ -95,7 +95,8 @@ namespace FitnessApp.UI
                                                     reader["hany_oratol"].ToString(),
                                                     reader["hany_oraig"].ToString(),
                                                     Int32.Parse(reader["napi_max_hasznalat"].ToString()),
-                                                    Convert.ToDateTime(reader["letrehozasi_datum"].ToString()));
+                                                    Convert.ToDateTime(reader["letrehozasi_datum"].ToString()),
+                                                    reader["ervenyesseg"].ToString());
                         abonaments.Add(berlet);
                     }
                 }

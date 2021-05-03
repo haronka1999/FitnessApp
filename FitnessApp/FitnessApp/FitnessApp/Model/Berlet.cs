@@ -15,8 +15,9 @@ namespace FitnessApp.Model
         public string hany_oraig { get; set; }
         public int napi_max_hasznalat { get; set; }
         public DateTime letrehozasi_datum { get; set; }
+        public string ervenyesseg { get; set; }
 
-        public Berlet(int berlet_id, int megnevezes, float ar, int ervenyesseg_nap, int ervenyesseg_belepesek_szama, bool torolve, int terem_id, string hany_oratol, string hany_oraig, int napi_max_hasznalat, DateTime letrehozasi_datum)
+        public Berlet(int berlet_id, int megnevezes, float ar, int ervenyesseg_nap, int ervenyesseg_belepesek_szama, bool torolve, int terem_id, string hany_oratol, string hany_oraig, int napi_max_hasznalat, DateTime letrehozasi_datum, string ervenyesseg)
         {
             this.berlet_id = berlet_id;
             this.megnevezes = megnevezes;
@@ -29,6 +30,7 @@ namespace FitnessApp.Model
             this.hany_oraig = hany_oraig;
             this.napi_max_hasznalat = napi_max_hasznalat;
             this.letrehozasi_datum = letrehozasi_datum;
+            this.ervenyesseg = ervenyesseg;
         }
 
         public override string ToString()
@@ -43,7 +45,8 @@ namespace FitnessApp.Model
             this.hany_oratol + " " +
             this.hany_oraig + " " +
             this.napi_max_hasznalat + " " +
-            this.letrehozasi_datum;
+            this.letrehozasi_datum + " " + 
+            this.ervenyesseg;
         }
     }
 }
