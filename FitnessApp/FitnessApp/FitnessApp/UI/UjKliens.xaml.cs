@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
@@ -25,12 +26,11 @@ namespace FitnessApp.UI
         private string cnp;
         private string my_address;
         private string barcode;
-        private string berletType;
         private string photo = "";
         private string comment;
         private List<Berlet> berletek;
 
-        private List<string> message_to_display = new List<string>();
+        private ObservableCollection<string> message_to_display { get; set; }
 
         //egyeb valtozok
         private string date_str;
@@ -41,12 +41,15 @@ namespace FitnessApp.UI
             DataContext = this;
             berletek = new List<Berlet>();
             berletek = getBerletekFromDatabase();
+            message_to_display = new ObservableCollection<string>();
+            // for (int i =0; i < message_to_display.i)
+            //MessageBox.Show(message_to_display[index]); 
             message_to_display = getAbonamentStrings();
         }
 
-        private List<string> getAbonamentStrings()
+        private ObservableCollection<string> getAbonamentStrings()
         {
-            List<string> temp_list = new List<string>();
+            ObservableCollection<string> temp_list = new ObservableCollection<string>();
 
             string temp = "";
             foreach (var berlet in berletek)

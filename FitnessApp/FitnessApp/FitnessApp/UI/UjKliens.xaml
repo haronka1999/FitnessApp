@@ -52,13 +52,22 @@
             <!--ezt  at kell alakitani ugy hogy a berletek az adatbazisbol jojjenek be-->
             <Label ToolTip="Válasz bérlet típust." Grid.Row="6" Content="Bérlet típusa:"/>
 
-            <ItemsControl Grid.Row="6" Grid.Column="1" ItemsSource="{Binding Message_to_display}">
+
+            <ListBox Name="RadioButtonList" Grid.Row="6" Grid.Column="1">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <RadioButton GroupName="radioList" Tag="{Binding}" Content="{Binding Message_to_display}" />
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+
+            <!--<ItemsControl Grid.Row="6" Grid.Column="1" ItemsSource="{Binding Message_to_display}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <RadioButton Content="{Binding OptionName}" IsChecked="{Binding IsChecked}"/>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
-            </ItemsControl>
+            </ItemsControl>-->
 
             <!--<GroupBox Grid.Row="6" Grid.Column="1">
                 <StackPanel>
