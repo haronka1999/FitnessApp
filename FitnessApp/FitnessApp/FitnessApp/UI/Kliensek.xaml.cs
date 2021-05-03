@@ -241,12 +241,8 @@ namespace FitnessApp.UI
                     {
                         while (reader.Read())
                         {
-                            string decodedPhoto = "";
-                            if (reader["photo"].ToString() != "")
-                            {
-                                byte[] data = Convert.FromBase64String(reader["photo"].ToString());
-                                decodedPhoto = Encoding.UTF8.GetString(data);
-                            }
+                            byte[] data = Convert.FromBase64String(reader["photo"].ToString());
+                            string decodedPhoto = Encoding.UTF8.GetString(data);
 
                             Kliens kliens = new Kliens(Int32.Parse(reader["kliens_id"].ToString()),
                                                         reader["nev"].ToString(),

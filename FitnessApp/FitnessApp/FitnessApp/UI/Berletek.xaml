@@ -24,7 +24,7 @@
                     <DataGridTextColumn Header="Hány óráig" Width="2*" Binding="{Binding hany_oraig}"/>
                     <DataGridTextColumn Header="Napi belépés limit" Width="2*" Binding="{Binding napi_max_hasznalat}"/>
                     <DataGridTextColumn Header="Létrehozás" Width="3*" Binding="{Binding letrehozasi_datum}" IsReadOnly="True"/>
-                    <DataGridTextColumn Header="Aktív/Lejárt" Width="2*" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="Érvényesség" Width="2*" IsReadOnly="True"/>
 
                     <DataGridTemplateColumn>
                         <DataGridTemplateColumn.CellTemplate>

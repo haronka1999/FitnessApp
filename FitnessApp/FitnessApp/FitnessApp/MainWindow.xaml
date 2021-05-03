@@ -34,6 +34,10 @@
                 <uc:Berletek x:Name="Abonaments"></uc:Berletek>
             </TabItem>
 
+            <TabItem Header="E-mail" Background="GreenYellow" Foreground="Blue" BorderBrush="Pink" x:Name="Email">
+                <uc:Email x:Name="EmailWriter"></uc:Email>
+            </TabItem>
+            
         </TabControl>
 
     </StackPanel>

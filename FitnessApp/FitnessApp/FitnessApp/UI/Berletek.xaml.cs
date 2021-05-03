@@ -50,10 +50,20 @@ namespace FitnessApp.UI
                     sqlCon.Open();
                 }
 
+                DateTime today = DateTime.Now;
+
                 using (SqlDataReader reader = sqlCmd.ExecuteReader())
                 {
                     while (reader.Read())
                     {
+                        //DateTime letrehozasi_datum = Convert.ToDateTime(berlet.letrehozasi_datum, new CultureInfo("en-US"));
+                        //DateTime lejarati_datum = letrehozasi_datum.AddDays(berlet.ervenyesseg_nap);
+                        //int kulonbseg = (int)Math.Round((lejarati_datum - today).TotalDays);
+                        //if (kulonbseg > 0)
+                        //{
+
+                        //}
+
                         Berlet berlet = new Berlet(Int32.Parse(reader["berlet_id"].ToString()),
                                                        Int32.Parse(reader["megnevezes"].ToString()),
                                                        float.Parse(reader["ar"].ToString()),
@@ -81,21 +91,8 @@ namespace FitnessApp.UI
                 sqlCon.Close();
             }
 
-            DateTime today = DateTime.Now;
-            
-            foreach(Berlet berlet in berletek)
-            {
-                DateTime letrehozasi_datum = Convert.ToDateTime(berlet.letrehozasi_datum, new CultureInfo("en-US"));
-                DateTime lejarati_datum = letrehozasi_datum.AddDays(berlet.ervenyesseg_nap);
-                int kulonbseg = (int)Math.Round((lejarati_datum - today).TotalDays);
-                if (kulonbseg > 0)
-                {
-                    //BerletGrid
-                }
-            }
-
             berletek = abonaments;
-            return berletek;    
+            return berletek;
         }
 
         private void Save_Edited_Berlet(object sender, RoutedEventArgs e)

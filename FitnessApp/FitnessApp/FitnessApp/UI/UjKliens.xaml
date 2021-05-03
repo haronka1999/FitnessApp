@@ -70,10 +70,6 @@
                 </ListBox.ItemTemplate>
             </ListBox>-->
 
-                
-                
-                
-
             <!--<ItemsControl Grid.Row="6" Grid.Column="1"  ItemsSource="{Binding Options}">
                 <ItemsControl.ItemTemplate >
                     <DataTemplate>
