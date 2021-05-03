@@ -10,11 +10,13 @@
     d:DesignWidth="800">
 
     <StackPanel>
+
         <StackPanel Margin="10" Orientation="Horizontal">
-            <TextBox ToolTip="Név szerinti keresés" x:Name="searchResult" IsReadOnly="False" TextWrapping="Wrap" 
+            <TextBox x:Name="searchResult" IsReadOnly="False" TextWrapping="Wrap" 
                      VerticalScrollBarVisibility="Auto" SpellCheck.IsEnabled="True" AcceptsReturn="True" 
                      Height="20" Width="200" HorizontalAlignment="Left" Margin="0, 20, 0, 0"/>
-            <Button Click ="Search_Client_Click" Content="Keresés" Margin="20, 0, 0, 0" Width="100" />
+            <Button ToolTip="Név szerinti keresés" Click ="Search_Client_Click" Content="Keresés"
+                    Margin="20, 0, 0, 0" Width="100" />
         </StackPanel>
 
         <Grid Margin="10">
