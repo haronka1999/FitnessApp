@@ -118,7 +118,7 @@ namespace FitnessApp.UI
                 }
                 else if (hanyBelepes != -1)
                 {
-                    beleptetes.ervenyessegMezonev.Visibility = Visibility.Hidden;
+                    beleptetes.ervenyessegMezo.Visibility = Visibility.Hidden;
                     
                     MessageBox.Show("if: hany belepes: ");
 
