@@ -63,7 +63,8 @@ namespace FitnessApp.UI
             teremId = getTeremId();
             setBelepesek();
             setNapokervenyesseg();
-            setAr();
+            if (!setAr())
+                return;
             setMegnevezes();
 
 
@@ -159,16 +160,19 @@ namespace FitnessApp.UI
 
         }
 
-        private void setAr()
+        private bool setAr()
         {
             try
             {
                 ar = float.Parse(price.Text);
+             
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Hiba az ar alakitasnal: " + ex.Message);
+                return false;
             }
+            return true;
         }
 
         private void setNapokervenyesseg()

@@ -29,7 +29,7 @@ namespace FitnessApp.UI
 
         }
 
-        
+
 
         private void BtnOk_click(object sender, RoutedEventArgs e)
         {
@@ -53,87 +53,66 @@ namespace FitnessApp.UI
                     return;
                 }
 
-
-                complexQuery(sqlCon);
-                queryClient(sqlCon, vKod);
-                addingANewEntry(sqlCon);
+                complexQuery(sqlCon,vKod, bId);
+                queryClient(sqlCon, vKod);             
                 countBarcode(sqlCon, vKod);
+                setMegnevezes();
 
 
-
+                //beleptetes infok megjelenitese
                 beleptetes.Visibility = Visibility.Visible;
-                switch (megnevezes)
-                {
-                    case 1:
-                        {
-                            beleptetes.berletMezo.Content = "Napszam";
-                            break;
-                        }
-                    case 2:
-                        {
-                            beleptetes.berletMezo.Content = "Belepes szam";
-                            break;
-                        }
-                    case 3:
-                        {
-                            beleptetes.berletMezo.Content = "Kombinalt";
-                            break;
-                        }
-                    default:
-                        {
-                            MessageBox.Show("Megnevezes hiba!");
-                            break;
-                        }
-                }
-
+               
+                //a nev beallitasa
+                beleptetes.nevMezo.Content = nev;
 
                 // abban az esetben ha a berletnek megvan szabva hogy hany napig ervenyes
                 if (hanyNapig != -1)
                 {
+                    beleptetes.hanyadikhasznalatMezoNev.Visibility = Visibility.Hidden;
+
                     DateTime today = DateTime.Now;
-                    try
-                    {                        
-                        CultureInfo culture = new CultureInfo("en-US");
-                        berletLetrehozas = Convert.ToDateTime(berletLetrehozas_str,  culture);
-                    }
-                    catch(Exception ex)
-                    {
-                        MessageBox.Show("berlet datum convert hiba:" + ex.Message);
-                    }
-                    
+                    CultureInfo culture = new CultureInfo("en-US");
+                    berletLetrehozas = Convert.ToDateTime(berletLetrehozas_str, culture);                   
                     DateTime lejarati_datum = berletLetrehozas.AddDays(hanyNapig);
-                    int kulonbseg = DateTime.Compare(lejarati_datum, today);
-
-
-                    // ha lejart
-                    if (kulonbseg < 0)
+                    double kulonbseg = (int)Math.Round((lejarati_datum - today).TotalDays);
+                    // ha lejart a berlet
+                    if (kulonbseg < 1)
                         beleptetes.lejarat.Visibility = Visibility.Visible;
 
-                    //ha meg 1 vagy 2 nap van meg hatra
-                    if (kulonbseg >= 1 && kulonbseg <= 2)
+                    //ha hamarosam lejart
+                    else if (kulonbseg >= 1 && kulonbseg <= 2)
+                    {
                         beleptetes.felkialtojelD.Visibility = Visibility.Visible;
-
-                    //ha negativ ertek akkor az azt jelenti hogy annyi napja van lejarva a berlet
-                    beleptetes.ervenyessegMezo.Content = kulonbseg;
-
+                        addingANewEntry(sqlCon);
+                    }
+                    //ha rendben van
+                    else
+                    {
+                        addingANewEntry(sqlCon);
+                        beleptetes.ervenyessegMezo.Content = lejarati_datum + " (még " + kulonbseg + " nap)";
+                    }
+                  
                 }
-                if (hanyBelepes != -1)
+                else if (hanyBelepes != -1)
                 {
+                    beleptetes.ervenyessegMezonev.Visibility = Visibility.Hidden;
+                    
                     MessageBox.Show("if: hany belepes: ");
 
                     int b = hanyBelepes - belepesekSzama;
                     if (b == 1 || b == 2)
                         beleptetes.felkialtojel.Visibility = Visibility.Visible;
-
-                    if (hanyBelepes != -1)
-                        beleptetes.hanyadikhasznalatMezo.Content = hanyBelepes + "/" + belepesekSzama;
                     else
-                        beleptetes.hanyadikhasznalatMezoNev.Visibility = Visibility.Hidden;
+                        addingANewEntry(sqlCon);
 
-                    beleptetes.nevMezo.Content = nev;
-
+                    beleptetes.hanyadikhasznalatMezo.Content = hanyBelepes + "/" + belepesekSzama;
+                  
                     vonalkod.Text = "";
                     berletId.Text = "";
+                }
+                else
+                {
+                    MessageBox.Show("ez az if ag a kombinalt berletre vonatkozik ");
                 }
             }
             else
@@ -143,8 +122,34 @@ namespace FitnessApp.UI
 
         }
 
+        private void setMegnevezes()
+        {
+            switch (megnevezes)
+            {
+                case 1:
+                    {
+                        beleptetes.berletMezo.Content = "Napszam";
+                        break;
+                    }
+                case 2:
+                    {
+                        beleptetes.berletMezo.Content = "Belepes szam";
+                        break;
+                    }
+                case 3:
+                    {
+                        beleptetes.berletMezo.Content = "Kombinalt";
+                        break;
+                    }
+                default:
+                    {
+                        MessageBox.Show("Megnevezes hiba!");
+                        break;
+                    }
+            }
+        }
 
-        private void complexQuery(SqlConnection sqlCon)
+        private void complexQuery(SqlConnection sqlCon, string vKod, string bId)
         {
             try
             {
@@ -153,12 +158,45 @@ namespace FitnessApp.UI
                     sqlCon.Open();
                 }
 
-                string query = "select be.megnevezes, be.ervenyesseg_nap, be.ervenyesseg_belepesek_szama, be.terem_id, be.letrehozasi_datum, " +
-                    "be.berlet_id from Kliensek k " +
-                    "join Belepesek b on b.kliens_id = k.kliens_id " +
-                    "join Berletek be on be.berlet_id = b.berlet_id " +
-                    "where k.vonalkod = b.barcode;";
+                string query = "Select kliens_id,vonalkod,nev from Kliensek where vonalkod  =  @vKod;";            
+                SqlCommand sqlCmd = new SqlCommand(query, sqlCon);                           
+                sqlCmd.Parameters.AddWithValue("@vKod", vKod);
+
+                using (SqlDataReader reader = sqlCmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        kId = Int32.Parse(reader["kliens_id"].ToString());
+                        vonalKod = reader["vonalkod"].ToString();
+                        nev = reader["nev"].ToString();                   
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("1) Hiba complex query kliensek: " + ex.Message);
+            }
+            finally
+            {
+                sqlCon.Close();
+            }
+
+
+
+            //masodik lekerdezes a Berletek ertekere ertekre
+            try
+            {
+                if (sqlCon.State == ConnectionState.Closed)
+                {
+                    sqlCon.Open();
+                }
+
+                string query = "Select megnevezes,ervenyesseg_nap,ervenyesseg_belepesek_szama, " +
+                    "terem_id, letrehozasi_datum, berlet_id " +
+                    "from Berletek where berlet_id  =  @bId;";
                 SqlCommand sqlCmd = new SqlCommand(query, sqlCon);
+                sqlCmd.Parameters.AddWithValue("@bId", bId);
 
                 using (SqlDataReader reader = sqlCmd.ExecuteReader())
                 {
@@ -167,21 +205,29 @@ namespace FitnessApp.UI
                         megnevezes = Int32.Parse(reader["megnevezes"].ToString());
                         hanyNapig = Int32.Parse(reader["ervenyesseg_nap"].ToString());
                         hanyBelepes = Int32.Parse(reader["ervenyesseg_belepesek_szama"].ToString());
-                        berlet = Int32.Parse(reader["berlet_id"].ToString());
                         tId = Int32.Parse(reader["terem_id"].ToString());
                         berletLetrehozas_str = reader["letrehozasi_datum"].ToString();
+                        berlet = Int32.Parse(reader["berlet_id"].ToString());                      
                     }
                 }
 
             }
             catch (Exception ex)
             {
-                System.Windows.MessageBox.Show("1) Hiba complex query: " + ex.Message);
+                System.Windows.MessageBox.Show("1) Hiba complex query berletek: " + ex.Message);
             }
             finally
             {
                 sqlCon.Close();
             }
+
+
+
+
+
+
+
+
         }
 
 
@@ -274,7 +320,7 @@ namespace FitnessApp.UI
             }
             catch (Exception ex)
             {
-                System.Windows.MessageBox.Show("3) Hiba read kliensek " + ex.Message);
+                System.Windows.MessageBox.Show("3) Hiba a belepesek osszegzesenel: " + ex.Message);
             }
             finally
             {

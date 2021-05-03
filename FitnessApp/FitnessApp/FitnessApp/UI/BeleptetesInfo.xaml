@@ -27,11 +27,11 @@
 
             <Label x:Name="lejarat" Visibility="Hidden" Grid.Row="0" Grid.Column="2" Foreground="Red">LEJÁRT:</Label>
 
-            <Label Grid.Row="1" Grid.Column="2">Bérlet:</Label>
+            <Label Grid.Row="1" Grid.Column="2">Bérlet típusa:</Label>
             <Label x:Name="berletMezo" Grid.Row="1" Grid.Column="3" Margin="0,0,0,10"/>
             
             <Label x:Name="felkialtojelD" Visibility="Hidden" Grid.Row="2" Grid.Column="1" Foreground="Red">!</Label>
-            <Label Grid.Row="2" Grid.Column="2">Érvényesség:</Label>
+            <Label x:Name="ervenyessegMezonev" Grid.Row="2" Grid.Column="2">Érvényesség:</Label>
             <Label x:Name="ervenyessegMezo" Grid.Row="2" Grid.Column="3" Margin="0,0,0,10"/>
 
             <Label x:Name="felkialtojel" Visibility="Hidden" Grid.Row="3" Grid.Column="1" Foreground="Red">!</Label>
