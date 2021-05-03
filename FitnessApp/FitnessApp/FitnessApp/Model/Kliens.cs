@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Media;
 
 namespace FitnessApp.Model
 {
@@ -21,9 +16,6 @@ namespace FitnessApp.Model
         public string cim { get; set; }
         public string vonalkod { get; set; }
         public string megjegyzes { get; set; }
-
-
-
 
         public Kliens(int kliens_id, string nev, string telefon, string email, bool is_deleted, string photo, DateTime inserted_date, string szemelyi, string cim, string vonalkod, string megjegyzes)
         {

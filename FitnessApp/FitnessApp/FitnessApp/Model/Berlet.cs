@@ -1,14 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FitnessApp.Model
 {
     public class Berlet
     {
-
         public int berlet_id;
         public int megnevezes;
         public float ar;
@@ -51,10 +46,4 @@ namespace FitnessApp.Model
             this.letrehozasi_datum;
         }
     }
-
-
-
-
-
-
 }

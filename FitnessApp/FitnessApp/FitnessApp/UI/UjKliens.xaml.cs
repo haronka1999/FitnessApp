@@ -3,19 +3,9 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Forms;
-using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using ClosedXML.Excel;
 using FitnessApp.Model;
 using static FitnessApp.Utils;
 
@@ -158,9 +148,14 @@ namespace FitnessApp.UI
             }
 
             insertClientIntoDataBase(name, phone, email, deleted, photo, date, cnp, my_address, barcode, comment);
+
+            UserName.Text = "";
+            Number.Text = "";
+            Email.Text = "";
+            CNP.Text = "";
+            address.Text = "";
+            Comment.Text = "";
         }
-
-
 
         private void insertClientIntoDataBase(string name, string phone, string email, int deleted, string photo, DateTime date, string cnp, string my_address, string barcode, string comment)
         {
@@ -217,11 +212,7 @@ namespace FitnessApp.UI
 
         private void BtnCancel_click(object sender, RoutedEventArgs e)
         {
-
-            //this.tab = Visibility.Hidden;
-            // vissza a fooldalra
+            //myTabControl.SelectedIndex = 1;
         }
-
-      
     }
 }

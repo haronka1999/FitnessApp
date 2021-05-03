@@ -1,36 +1,36 @@
-﻿<Window x:Class="FitnessApp.MainWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:FitnessApp.UI"
-        xmlns:uc="clr-namespace:FitnessApp.UI"
-        mc:Ignorable="d"
-        WindowState="Maximized"
-        Title="FitnesApp" Height="450" Width="800">
+﻿<Window 
+    x:Class="FitnessApp.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="clr-namespace:FitnessApp.UI"
+    xmlns:uc="clr-namespace:FitnessApp.UI"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    mc:Ignorable="d"
+    WindowState="Maximized"
+    Title="FitnesApp" Height="600" Width="1024" ResizeMode="CanResizeWithGrip" WindowStartupLocation="CenterScreen" WindowStyle="SingleBorderWindow" Background="WhiteSmoke">
+    
     <StackPanel>
 
-
-     
-        <TabControl >
-            <TabItem Header="Főoldal">
-                <uc:FoOldal x:Name="Home" ></uc:FoOldal> 
+        <TabControl x:Name="myTabControl" Background="WhiteSmoke">
+            <TabItem Header="Főoldal" Background="GreenYellow" Foreground="Blue" BorderBrush="Pink" IsSelected="True" x:Name="FoOldal">
+                <uc:FoOldal x:Name="Home"></uc:FoOldal>
             </TabItem>
 
-            <TabItem Header="Új kliens">
+            <TabItem Header="Új kliens" Background="GreenYellow" Foreground="Blue" BorderBrush="Pink" x:Name="UjKliens">
                 <uc:UjKliens x:Name="NewClient"></uc:UjKliens>
             </TabItem>
 
-            <TabItem Header="Kliensek">
+            <TabItem Header="Kliensek" Background="GreenYellow" Foreground="Blue" BorderBrush="Pink" x:Name="Kliensek">
                 <uc:Kliensek x:Name="Clients"></uc:Kliensek>
             </TabItem>
 
-            <TabItem Header="Bérlet hozzáadása">
+            <TabItem Header="Bérlet hozzáadása" Background="GreenYellow" Foreground="Blue" BorderBrush="Pink" x:Name="UjBerlet">
                 <uc:UjBerlet x:Name="NewAbonament"></uc:UjBerlet>
             </TabItem>
 
         </TabControl>
 
-        
     </StackPanel>
 </Window>

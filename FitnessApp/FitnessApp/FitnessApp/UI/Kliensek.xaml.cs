@@ -1,24 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
 using System.Data.SqlClient;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Forms;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using ClosedXML.Excel;
-using DocumentFormat.OpenXml.Spreadsheet;
 using FitnessApp.Model;
 using static FitnessApp.Utils;
 
@@ -26,7 +12,6 @@ namespace FitnessApp.UI
 {
     public partial class Kliensek : System.Windows.Controls.UserControl
     {
-
         private string export_path_excel;
 
         public ObservableCollection<Kliens> users { get; set; }
@@ -40,7 +25,6 @@ namespace FitnessApp.UI
             users = getUsersFromDatabase();
             this.KliensGrid.ItemsSource = users;
         }
-
 
         private ObservableCollection<Kliens> getUsersFromDatabase()
         {
@@ -112,12 +96,10 @@ namespace FitnessApp.UI
 
                 int result = sqlCmd.ExecuteNonQuery();
 
-
                 if (result < 0)
                     System.Windows.MessageBox.Show("Adatbázis hiba a kliens torlesenel");
                 else
                     System.Windows.MessageBox.Show("Kliens sikeresen torolve");
-
 
                 Refresh();
             }
@@ -144,26 +126,22 @@ namespace FitnessApp.UI
             //KliensGrid.Columns[8].IsReadOnly = false;
         }
 
-
         private void Save_Edited_Users(object sender, RoutedEventArgs e)
         {
-
             foreach (Kliens kliens in KliensGrid.Items)
             {
                 string query = @"UPDATE Kliensek set is_deleted=1 WHERE kliens_id = @kliens_id;";
             }
+            saveEditButton.Visibility = Visibility.Hidden;
         }
-
 
         private void BtnSaveXls_click(object sender, RoutedEventArgs e)
         {
-
-            export_path_excel= getPath(sender);
+            export_path_excel = getPath(sender);
 
             //ha a felhasznalo meggondolja magat akkor nem tortenik semmi
             if (export_path_excel == "")
             {
-
                 return;
             }
             var wb = new XLWorkbook();
@@ -172,7 +150,7 @@ namespace FitnessApp.UI
             string temp = export_path_excel + "\\" + kliens_string + ".xlsx";
             try
             {
-                ws.Cell(1, 1).InsertData(users);               
+                ws.Cell(1, 1).InsertData(users);
                 wb.SaveAs(temp);
                 System.Windows.MessageBox.Show("Sikeres kimentes a valasztott helyre");
             }
@@ -182,7 +160,6 @@ namespace FitnessApp.UI
             }
 
         }
-        
 
         private string getPath(object sender)
         {
@@ -191,7 +168,7 @@ namespace FitnessApp.UI
                 DialogResult result = fbd.ShowDialog();
                 if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath))
                 {
-                    return  fbd.SelectedPath;
+                    return fbd.SelectedPath;
                 }
                 if (string.Equals((sender as System.Windows.Controls.Button).Name, @"CloseButton"))
                 {
@@ -199,7 +176,7 @@ namespace FitnessApp.UI
                 }
                 return "";
             }
-            
+
         }
 
         private void Search_Client_Click(object sender, RoutedEventArgs e)
@@ -211,9 +188,9 @@ namespace FitnessApp.UI
                 SqlConnection sqlCon = new SqlConnection(conString);
                 try
                 {
-                    string query = "SELECT * from Kliensek WHERE nev = @value";
+                    string query = "SELECT * from Kliensek WHERE nev like @value";
                     SqlCommand sqlCmd = new SqlCommand(query, sqlCon);
-                    sqlCmd.Parameters.AddWithValue("@value", search);
+                    sqlCmd.Parameters.AddWithValue("@value", "%" + search + "%");
                     if (sqlCon.State == ConnectionState.Closed)
                     {
                         sqlCon.Open();
@@ -221,7 +198,6 @@ namespace FitnessApp.UI
 
                     using (SqlDataReader reader = sqlCmd.ExecuteReader())
                     {
-
                         while (reader.Read())
                         {
                             Kliens kliens = new Kliens(Int32.Parse(reader["kliens_id"].ToString()),
@@ -241,7 +217,6 @@ namespace FitnessApp.UI
                             {
                                 kliensek.Add(kliens);
                             }
-
                         }
                     }
                 }
@@ -254,15 +229,20 @@ namespace FitnessApp.UI
                     sqlCon.Close();
                 }
 
+                users = kliensek;
             }
-
-            users = kliensek;
             this.KliensGrid.ItemsSource = users;
         }
+
         private void Refresh()
         {
             users = getUsersFromDatabase();
             this.KliensGrid.ItemsSource = users;
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
