@@ -7,38 +7,50 @@
     mc:Ignorable="d" 
     d:DesignHeight="450" 
     d:DesignWidth="800">
-    
+
     <StackPanel>
 
         <Grid Margin="10">
             <DataGrid x:Name="BerletGrid" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" 
-                      AutoGenerateColumns="False" IsReadOnly="True">
+                      Foreground="DarkOliveGreen" AutoGenerateColumns="False" IsReadOnly="True" 
+                      BorderBrush="AliceBlue" Background="LemonChiffon" ToolTip="Bérlet adatok">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="ID" Width="*" Binding="{Binding berlet_id}" IsReadOnly="True"/>
-                    <DataGridTextColumn Header="Megnevezés" Width="2*" Binding="{Binding megnevezes}"/>
+                    <DataGridTextColumn Header="ID" Width="*" IsReadOnly="True" 
+                                        Binding="{Binding berlet_id}"/>
+                    <DataGridTextColumn Header="Megnevezés" Width="2*" 
+                                        Binding="{Binding megnevezes}"/>
                     <DataGridTextColumn Header="Ár" Width="2*" Binding="{Binding ar}"/>
-                    <DataGridTextColumn Header="Érvényesség" Width="2*" Binding="{Binding ervenyesseg_nap}"/>
-                    <DataGridTextColumn Header="Belépés limit" Width="2*" Binding="{Binding ervenyesseg_belepesek_szama}"/>
-                    <DataGridTextColumn Header="Terem" Width="2*" Binding="{Binding terem_id}"/>
-                    <DataGridTextColumn Header="Hány órától" Width="2*" Binding="{Binding hany_oratol}"/>
-                    <DataGridTextColumn Header="Hány óráig" Width="2*" Binding="{Binding hany_oraig}"/>
-                    <DataGridTextColumn Header="Napi belépés limit" Width="2*" Binding="{Binding napi_max_hasznalat}"/>
-                    <DataGridTextColumn Header="Létrehozás" Width="3*" Binding="{Binding letrehozasi_datum}" IsReadOnly="True"/>
-                    <DataGridTextColumn Header="Érvényesség" Width="2*" Binding="{Binding ervenyesseg}" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="Érvényesség" Width="2*" 
+                                        Binding="{Binding ervenyesseg_nap}"/>
+                    <DataGridTextColumn Header="Belépés limit" Width="2*" 
+                                        Binding="{Binding ervenyesseg_belepesek_szama}"/>
+                    <DataGridTextColumn Header="Terem" Width="2*" 
+                                        Binding="{Binding terem_id}"/>
+                    <DataGridTextColumn Header="Hány órától" Width="2*" 
+                                        Binding="{Binding hany_oratol}"/>
+                    <DataGridTextColumn Header="Hány óráig" Width="2*" 
+                                        Binding="{Binding hany_oraig}"/>
+                    <DataGridTextColumn Header="Napi belépés limit" Width="2*" 
+                                        Binding="{Binding napi_max_hasznalat}"/>
+                    <DataGridTextColumn Header="Létrehozás" Width="3*" IsReadOnly="True" 
+                                        Binding="{Binding letrehozasi_datum}"/>
+                    <DataGridTextColumn Header="Érvényesség" Width="2*" IsReadOnly="True" 
+                                        Binding="{Binding ervenyesseg}"/>
 
                     <DataGridTemplateColumn>
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <Button x:Name="editButton" Click="Edit_Berlet" Content="Szerkesztés" Margin="10" 
-                                        Width="100" ToolTip="Szerkesztés az adatbázisban."/>
+                                        Width="100" ToolTip="Szerkesztés az adatbázisban."
+                                        Foreground="Silver" Background="Black" BorderBrush="Green"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                     <DataGridTemplateColumn>
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Button Click="Delete_Berlet" Margin="10" Width="100" Content="Törlés" 
-                                        ToolTip="Törlés az adatbázisból."/>
+                                <Button Click="Delete_Berlet" Foreground="Silver" Background="Black" BorderBrush="Green"
+                                        Margin="10" Width="100" Content="Törlés" ToolTip="Törlés az adatbázisból."/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
@@ -49,7 +61,8 @@
 
         <WrapPanel>
             <Button x:Name="saveEditButton" Click="Save_Edited_Berlet" Visibility="Hidden" 
-                    Content="Mentés" Margin="20" Width="100" ToolTip="Mentés az adatbázisba."/>
+                    Content="Mentés" Margin="20" Width="120" ToolTip="Mentés az adatbázisba."
+                    Foreground="Silver" Background="Black" BorderBrush="Green"/>
         </WrapPanel>
     </StackPanel>
 </UserControl>

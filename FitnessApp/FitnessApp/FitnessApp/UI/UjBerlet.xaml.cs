@@ -142,6 +142,7 @@ namespace FitnessApp.UI
             NapErvenyesseg.Text = "";
             BelepesErvenyesseg.Text = "";
             NapErvenyesseg.Text = "";
+            price.Text = "";
             kezdet.Text = "";
             veg.Text = "";
         }

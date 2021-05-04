@@ -10,15 +10,15 @@
     d:DesignWidth="800">
 
     <StackPanel>
-        <TextBlock HorizontalAlignment="Center" FontFamily="Times New Roman" Padding="30" Text="Fitnes App" 
-                   FontSize="40" FontWeight="Bold" Margin="0, 20, 0, 20"/>
+        <TextBlock HorizontalAlignment="Center" FontFamily="Times New Roman" Padding="30" Text="Fitness App" 
+                   FontSize="40" FontWeight="Bold" Margin="0, 20, 0, 20" Foreground="DodgerBlue"/>
         <Image HorizontalAlignment="Center" Width="90" Height="70" Margin="0, 20, 0, 20">
             <Image.Source>
                 <FormatConvertedBitmap Source="/icon.ico"/>
             </Image.Source>
         </Image>
 
-        <Border Background="AntiqueWhite" BorderThickness="1" BorderBrush="Black" Width="400" Height="200" 
+        <Border Background="AntiqueWhite" BorderThickness="1" BorderBrush="Black" Width="400" Height="220" 
                 Margin="0,20,0,20" Padding="30" VerticalAlignment="Center">
             <Border.Effect>
                 <DropShadowEffect BlurRadius="30" Color="LightGray" ShadowDepth="0"/>
@@ -38,20 +38,20 @@
 
                 <Border Grid.Row="0" Grid.Column="0" CornerRadius="10" BorderThickness="2" BorderBrush="Azure" 
                         Background="Bisque" Margin="5, 0, 0, 5">
-                    <Label Content="Vonalkód:" FontStyle="Italic" FontFamily="Times New Roman" 
-                           FontSize="15" ToolTip="Vonalkód megadása."/>
+                    <Label Content="Vonalkód:" FontStyle="Italic" ToolTip="Vonalkód megadása"/>
                 </Border>
-                <TextBox x:Name="vonalkod" Grid.Row="0" Grid.Column="1" Margin="20, 0, 0, 5" Background="Khaki">FXMJ</TextBox>
+                <TextBox x:Name="vonalkod" Grid.Row="0" Grid.Column="1" Margin="20, 0, 0, 5" 
+                         Background="Khaki" MaxLength="10" ToolTip="Vonalkód"/>
 
                 <Border Grid.Row="1" Grid.Column="0" CornerRadius="10" BorderThickness="2" BorderBrush="Azure" 
                         Background="Bisque" Margin="5, 5, 0, 0">
-                    <Label Content="Bérlet ID:" FontStyle="Italic" FontFamily="Times New Roman" 
-                           FontSize="15" ToolTip="Bérlet ID megadása."/>
+                    <Label Content="Bérlet ID:" FontStyle="Italic" ToolTip="Bérlet ID megadása"/>
                 </Border>
-                <TextBox x:Name="berletId" Grid.Row="1" Grid.Column="1" Margin="20, 5, 0, 0" Background="Khaki">10</TextBox>
+                <TextBox x:Name="berletId" Grid.Row="1" Grid.Column="1" Margin="20, 5, 0, 0" 
+                         Background="Khaki" MaxLength="10" ToolTip="ID"/>
 
-                <Button x:Name="BtnOk" Click="BtnOk_click" Grid.Row="2" Grid.Column="1" FontFamily="Times New Roman" 
-                        Margin="0, 10, 0, 10" Width="100" Content="OK" FontSize="12" Foreground="White" 
+                <Button x:Name="BtnOk" Click="BtnOk_click" Grid.Row="2" Grid.Column="1" BorderBrush="Green"
+                        Margin="0, 20, 0, 10" Width="100" Content="OK" Foreground="Silver"
                         Background="Black" ToolTip="Beszúrás, illetve megjelenítés."/>
             </Grid>
         </Border>

@@ -280,6 +280,7 @@ namespace FitnessApp.UI
                 getUsersFromDatabase();
             }
             this.KliensGrid.ItemsSource = users;
+            searchResult.Text = "";
         }
 
         private void Refresh()
