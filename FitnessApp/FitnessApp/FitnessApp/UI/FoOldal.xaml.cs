@@ -107,8 +107,12 @@ namespace FitnessApp.UI
                 {
                     beleptetes.ervenyessegMezo.Visibility = Visibility.Hidden;
 
-                    MessageBox.Show("if: hany belepes: ");
+                    MessageBox.Show("if: hany belepes: maradek belepes:  " + maradek_belepes);
 
+                    if (maradek_belepes < 1 )
+                    {
+                        beleptetes.lejarat.Visibility = Visibility.Visible;
+                    }
 
                     if (maradek_belepes == 1 || maradek_belepes == 2)
                         beleptetes.felkialtojel.Visibility = Visibility.Visible;
@@ -122,7 +126,8 @@ namespace FitnessApp.UI
                 }
                 else
                 {
-                    if (kulonbseg < 1)
+                    MessageBox.Show("if: kombinalt: maradek belepes:  " + maradek_belepes);
+                    if (kulonbseg < 1 || maradek_belepes < 1)
                     {
                         beleptetes.lejarat.Visibility = Visibility.Visible;
                     }
