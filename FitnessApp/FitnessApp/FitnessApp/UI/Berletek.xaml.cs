@@ -1,20 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using FitnessApp.Model;
 using static FitnessApp.Utils;
 
@@ -49,10 +39,25 @@ namespace FitnessApp.UI
                     sqlCon.Open();
                 }
 
+                DateTime today = DateTime.Now;
+
                 using (SqlDataReader reader = sqlCmd.ExecuteReader())
                 {
                     while (reader.Read())
                     {
+                        DateTime letrehozasi_datum = Convert.ToDateTime(reader["letrehozasi_datum"].ToString(), new CultureInfo("en-US"));
+                        DateTime lejarati_datum = letrehozasi_datum.AddDays(Int32.Parse(reader["ervenyesseg_nap"].ToString()));
+                        int kulonbseg = (int)Math.Round((lejarati_datum - today).TotalDays);
+                        string ervenyesseg;
+                        if (kulonbseg > 0)
+                        {
+                            ervenyesseg = "aktív " + kulonbseg + " napig";
+                        }
+                        else
+                        {
+                            ervenyesseg = "lejárt " + -kulonbseg + " napja";
+                        }
+
                         Berlet berlet = new Berlet(Int32.Parse(reader["berlet_id"].ToString()),
                                                        Int32.Parse(reader["megnevezes"].ToString()),
                                                        float.Parse(reader["ar"].ToString()),
@@ -63,7 +68,10 @@ namespace FitnessApp.UI
                                                        reader["hany_oratol"].ToString(),
                                                        reader["hany_oraig"].ToString(),
                                                        Int32.Parse(reader["napi_max_hasznalat"].ToString()),
-                                                       Convert.ToDateTime(reader["letrehozasi_datum"].ToString()));
+                                                       letrehozasi_datum,
+                                                       ervenyesseg);
+
+                        instertErvenyesseg(ervenyesseg, Int32.Parse(reader["berlet_id"].ToString()));
 
                         //csak akkor jelenitsuk meg ha nincs torolve
                         if (berlet.torolve == false)
@@ -80,18 +88,107 @@ namespace FitnessApp.UI
                 sqlCon.Close();
             }
 
-
             berletek = abonaments;
-            return berletek;    
+            return berletek;
         }
 
-        private void Delete_Abonament(object sender, RoutedEventArgs e)
+        private void Save_Edited_Berlet(object sender, RoutedEventArgs e)
+        {
+            Berlet berlet = (Berlet)BerletGrid.SelectedItem;
+
+            SqlConnection sqlCon = new SqlConnection(conString);
+            string query = "UPDATE Berletek set megnevezes=@megnevezes, ar=@ar, ervenyesseg_nap=@ervenyesseg_nap, " +
+                "ervenyesseg_belepesek_szama=@ervenyesseg_belepesek_szama, terem_id=@terem_id, hany_oratol=@hany_oratol, " +
+                "hany_oraig=@hany_oraig, napi_max_hasznalat=@napi_max_hasznalat WHERE berlet_id = @berlet_id;";
+            try
+            {
+                SqlCommand sqlCmd = new SqlCommand(query, sqlCon);
+                sqlCmd.Parameters.AddWithValue("@berlet_id", berlet.berlet_id);
+                sqlCmd.Parameters.AddWithValue("@megnevezes", berlet.megnevezes);
+                sqlCmd.Parameters.AddWithValue("@ar", berlet.ar);
+                sqlCmd.Parameters.AddWithValue("@ervenyesseg_nap", berlet.ervenyesseg_nap);
+                sqlCmd.Parameters.AddWithValue("@ervenyesseg_belepesek_szama", berlet.ervenyesseg_belepesek_szama);
+                sqlCmd.Parameters.AddWithValue("@terem_id", berlet.terem_id);
+                sqlCmd.Parameters.AddWithValue("@hany_oratol", berlet.hany_oratol);
+                sqlCmd.Parameters.AddWithValue("@hany_oraig", berlet.hany_oraig);
+                sqlCmd.Parameters.AddWithValue("@napi_max_hasznalat", berlet.napi_max_hasznalat);
+
+                if (sqlCon.State == ConnectionState.Closed)
+                {
+                    sqlCon.Open();
+                }
+
+                int result = sqlCmd.ExecuteNonQuery();
+
+                if (result < 0)
+                    System.Windows.MessageBox.Show("Adatbázis hiba a bérletek szerkesztésnél");
+                //else System.Windows.MessageBox.Show("Bérlet sikeresen szerkesztve");
+
+                Refresh();
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Hiba bérlet szerkesztésnél: " + ex.Message);
+            }
+            finally
+            {
+                sqlCon.Close();
+            }
+
+            saveEditButton.Visibility = Visibility.Hidden;
+            BerletGrid.IsReadOnly = true;
+        }
+
+        private void instertErvenyesseg(string ervenyesseg, int berlet_id)
+        {
+            SqlConnection sqlCon = new SqlConnection(conString);
+            string query = "UPDATE Berletek set ervenyesseg=@ervenyesseg WHERE berlet_id = @berlet_id;";
+
+            if (sqlCon.State == ConnectionState.Closed)
+            {
+                sqlCon.Open();
+            }
+
+            try
+            {
+                SqlCommand sqlCmd = new SqlCommand(query, sqlCon);
+                sqlCmd.Parameters.AddWithValue("@ervenyesseg", ervenyesseg);
+                sqlCmd.Parameters.AddWithValue("@berlet_id", berlet_id);
+
+                if (sqlCon.State == ConnectionState.Closed)
+                {
+                    sqlCon.Open();
+                }
+
+                int result = sqlCmd.ExecuteNonQuery();
+
+                if (result < 0)
+                    System.Windows.MessageBox.Show("Adatbázis hiba új berlet érvényessége hozzáadásnál");
+                //else System.Windows.MessageBox.Show("Bérlet érvényessége sikeresen hozzáadva");
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                sqlCon.Close();
+            }
+        }
+
+        private void Refresh()
+        {
+            berletek = getAbonamentsFromDatabase();
+            this.BerletGrid.ItemsSource = berletek;
+        }
+
+        private void Delete_Berlet(object sender, RoutedEventArgs e)
         {
             Berlet drv = (Berlet)BerletGrid.SelectedItem;
             String berlet_id = (drv.berlet_id).ToString();
 
             SqlConnection sqlCon = new SqlConnection(conString);
-            string query = @"UPDATE Berletek set torolve=1 WHERE berlet_id = @berlet_id;";
+            string query = "UPDATE Berletek set torolve=1 WHERE berlet_id = @berlet_id;";
             try
             {
 
@@ -121,19 +218,10 @@ namespace FitnessApp.UI
             }
         }
 
-        private void Save_Edited_Abonament(object sender, RoutedEventArgs e)
+        private void Edit_Berlet(object sender, RoutedEventArgs e)
         {
-
-        }
-
-        private void Edit_Abonament(object sender, RoutedEventArgs e)
-        {
-
-        }
-        private void Refresh()
-        {
-            berletek = getAbonamentsFromDatabase();
-            this.BerletGrid.ItemsSource = berletek;
+            saveEditButton.Visibility = Visibility.Visible;
+            BerletGrid.IsReadOnly = false;
         }
     }
 }

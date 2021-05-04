@@ -9,32 +9,71 @@
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     mc:Ignorable="d"
     WindowState="Maximized"
-    Title="FitnesApp" Height="600" Width="1024" ResizeMode="CanResizeWithGrip" WindowStartupLocation="CenterScreen" WindowStyle="SingleBorderWindow" Background="WhiteSmoke">
+    Title="FitnesApp" 
+    Height="600" 
+    Width="1024" 
+    ResizeMode="CanResizeWithGrip" 
+    WindowStartupLocation="CenterScreen" 
+    WindowStyle="SingleBorderWindow" 
+    Background="WhiteSmoke">
     
-    <StackPanel>
+    <ScrollViewer>
+        <StackPanel>
+            <TabControl x:Name="myTabControl" Background="WhiteSmoke" Foreground="Blue" 
+                    FontSize="20" FontFamily="Times New Roman">
+                
+                <TabControl.Resources>
+                    <Style TargetType="TabItem">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="TabItem">
+                                    <Border Name="Border" BorderThickness="1,1,1,0" BorderBrush="Pink" 
+                                        CornerRadius="4,4,0,0" Margin="2,0">
+                                        <ContentPresenter x:Name="ContentSite"
+                                        VerticalAlignment="Center"
+                                        HorizontalAlignment="Center"
+                                        ContentSource="Header"
+                                        Margin="10,2"/>
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsSelected" Value="True">
+                                            <Setter TargetName="Border" Property="Background" Value="LightSkyBlue"/>
+                                        </Trigger>
+                                        <Trigger Property="IsSelected" Value="False">
+                                            <Setter TargetName="Border" Property="Background" Value="GreenYellow"/>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </TabControl.Resources>
 
-        <TabControl x:Name="myTabControl" Background="WhiteSmoke">
-            <TabItem Header="Főoldal" Background="GreenYellow" Foreground="Blue" BorderBrush="Pink" IsSelected="True" x:Name="FoOldal">
-                <uc:FoOldal x:Name="Home"></uc:FoOldal>
-            </TabItem>
+                <TabItem Header="Főoldal" IsSelected="True" x:Name="FoOldal" ToolTip="Bejelentkezés">
+                    <uc:FoOldal x:Name="Home"></uc:FoOldal>
+                </TabItem>
 
-            <TabItem Header="Új kliens" Background="GreenYellow" Foreground="Blue" BorderBrush="Pink" x:Name="UjKliens">
-                <uc:UjKliens x:Name="NewClient"></uc:UjKliens>
-            </TabItem>
+                <TabItem Header="Kliens hozzáadása" x:Name="UjKliens" ToolTip="Kliens hozzáadás">
+                    <uc:UjKliens x:Name="NewClient"></uc:UjKliens>
+                </TabItem>
 
-            <TabItem Header="Kliensek" Background="GreenYellow" Foreground="Blue" BorderBrush="Pink" x:Name="Kliensek">
-                <uc:Kliensek x:Name="Clients"></uc:Kliensek>
-            </TabItem>
+                <TabItem Header="Kliensek" x:Name="Kliensek" ToolTip="Kliensek listázása és keresés">
+                    <uc:Kliensek x:Name="Clients"></uc:Kliensek>
+                </TabItem>
 
-            <TabItem Header="Bérlet hozzáadása" Background="GreenYellow" Foreground="Blue" BorderBrush="Pink" x:Name="UjBerlet">
-                <uc:UjBerlet x:Name="NewAbonament"></uc:UjBerlet>
-            </TabItem>
+                <TabItem Header="Bérlet hozzáadása" x:Name="UjBerlet" ToolTip="Bérlet hozzáadás">
+                    <uc:UjBerlet x:Name="NewAbonament"></uc:UjBerlet>
+                </TabItem>
 
-            <TabItem Header="Bérletek" Background="GreenYellow" Foreground="Blue" BorderBrush="Pink" x:Name="Berletek">
-                <uc:Berletek x:Name="Abonaments"></uc:Berletek>
-            </TabItem>
+                <TabItem Header="Bérletek" x:Name="Berletek" ToolTip="Bérletek listázása">
+                    <uc:Berletek x:Name="Abonaments"></uc:Berletek>
+                </TabItem>
 
-        </TabControl>
+                <TabItem Header="E-mail" x:Name="Email" ToolTip="E-mail küldés">
+                    <uc:Email x:Name="EmailWriter"></uc:Email>
+                </TabItem>
 
-    </StackPanel>
+            </TabControl>
+        </StackPanel>
+    </ScrollViewer>
 </Window>

@@ -2,7 +2,6 @@
 using System.Collections.ObjectModel;
 using System.Data;
 using System.Data.SqlClient;
-using System.Drawing;
 using System.IO;
 using System.Text;
 using System.Windows;
@@ -97,7 +96,7 @@ namespace FitnessApp.UI
             String kliens_id = (drv.kliens_id).ToString();
 
             SqlConnection sqlCon = new SqlConnection(conString);
-            string query = @"UPDATE Kliensek set is_deleted=1 WHERE kliens_id = @kliens_id;";
+            string query = "UPDATE Kliensek set is_deleted=1 WHERE kliens_id = @kliens_id;";
             try
             {
 
@@ -135,11 +134,46 @@ namespace FitnessApp.UI
 
         private void Save_Edited_Users(object sender, RoutedEventArgs e)
         {
-            foreach (Kliens kliens in KliensGrid.Items)
+            Kliens kliens = (Kliens)KliensGrid.SelectedItem;
+
+            SqlConnection sqlCon = new SqlConnection(conString);
+            string query = "UPDATE Kliensek SET nev=@nev, telefon=@telefon, email=@email, szemelyi=@szemelyi, " +
+                "cim=@cim, megjegyzes=@megjegyzes WHERE kliens_id=@kliens_id;";
+            try
             {
-                string query = @"UPDATE Kliensek set is_deleted=1 WHERE kliens_id = @kliens_id;";
+                SqlCommand sqlCmd = new SqlCommand(query, sqlCon);
+                sqlCmd.Parameters.AddWithValue("@kliens_id", kliens.kliens_id);
+                sqlCmd.Parameters.AddWithValue("@nev", kliens.nev);
+                sqlCmd.Parameters.AddWithValue("@telefon", kliens.telefon);
+                sqlCmd.Parameters.AddWithValue("@email", kliens.email);
+                sqlCmd.Parameters.AddWithValue("@szemelyi", kliens.szemelyi);
+                sqlCmd.Parameters.AddWithValue("@cim", kliens.cim);
+                sqlCmd.Parameters.AddWithValue("@megjegyzes", kliens.megjegyzes);
+
+                if (sqlCon.State == ConnectionState.Closed)
+                {
+                    sqlCon.Open();
+                }
+
+                int result = sqlCmd.ExecuteNonQuery();
+
+                if (result < 0)
+                    System.Windows.MessageBox.Show("Adatbázis hiba a kliens szerkesztésnél");
+                //else System.Windows.MessageBox.Show("Kliens sikeresen szerkesztve");
+
+                Refresh();
             }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Hiba kliens szerkesztésnél: " + ex.Message);
+            }
+            finally
+            {
+                sqlCon.Close();
+            }
+
             saveEditButton.Visibility = Visibility.Hidden;
+            KliensGrid.IsReadOnly = true;
         }
 
         private void BtnSaveXls_click(object sender, RoutedEventArgs e)
@@ -246,6 +280,7 @@ namespace FitnessApp.UI
                 getUsersFromDatabase();
             }
             this.KliensGrid.ItemsSource = users;
+            searchResult.Text = "";
         }
 
         private void Refresh()

@@ -8,8 +8,7 @@
     mc:Ignorable="d" 
     d:DesignHeight="450" 
     d:DesignWidth="800">
-    
-    
+
     <StackPanel>
         <Grid Margin="10">
             <Grid.ColumnDefinitions>
@@ -28,31 +27,34 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
-            <Label ToolTip="Teljes név, vagy becenév." Grid.Row="0" Content="Név:"/>
-            <TextBox x:Name="UserName" Grid.Row="0" Grid.Column="1" AcceptsReturn="True" Margin="0,0,0,10"/>
+            <Label ToolTip="Teljes név, vagy becenév" Grid.Row="0" Content="Név:"/>
+            <TextBox x:Name="UserName" Grid.Row="0" Grid.Column="1" AcceptsReturn="True" 
+                     Margin="0,0,0,10" MaxLength="20" ToolTip="Név"/>
 
-            <Label ToolTip="Regisztráló telefonszáma." Grid.Row="1" Content="Telefonszám:"/>
-            <TextBox x:Name="Number" Grid.Row="1" Grid.Column="1" AcceptsReturn="True" Margin="0,0,0,10"/>
+            <Label ToolTip="Regisztráló telefonszáma" Grid.Row="1" Content="Telefonszám:"/>
+            <TextBox x:Name="Number" Grid.Row="1" Grid.Column="1" AcceptsReturn="True" 
+                     Margin="0,0,0,10" MaxLength="15" ToolTip="Telefonszám"/>
 
-            <Label ToolTip="Regisztráló e-mail címe." Grid.Row="2" Content="E-mail:"/>
-            <TextBox x:Name="Email" Grid.Row="2" Grid.Column="1" AcceptsReturn="True" Margin="0,0,0,10"/>
+            <Label ToolTip="Regisztráló e-mail címe" Grid.Row="2" Content="E-mail:"/>
+            <TextBox x:Name="Email" Grid.Row="2" Grid.Column="1" AcceptsReturn="True" 
+                     Margin="0,0,0,10" MaxLength="20" ToolTip="E-mail."/>
 
-            <Label ToolTip="Regisztráló fényképe." Grid.Row="3" Content="Fotó:"/>
+            <Label ToolTip="Regisztráló fényképe" Grid.Row="3" Content="Fotó:"/>
             <Button ToolTip="Fénykép hozzáadása." x:Name="BtnUpload" Grid.Row="3" Grid.Column="1" 
-                    Margin="0,0,0,10" Width="100" 
-                    Click="BtnUpload_click" Content="Feltölt"/>
-            <Image ToolTip="Photo." x:Name="imgPhoto" Grid.Row="3" Grid.Column="2" Width="35" Height="35" 
-                   Margin="20, 0, 10, 0"/>
+                    Margin="0,0,0,10" Width="150" Click="BtnUpload_click" Content="Feltölt"
+                    Foreground="Silver" Background="Gold" BorderBrush="Green">
+                <!--<Image Source="image_add.png" Width="50" Height="30" Stretch="Uniform"/>-->
+            </Button>
+            <Image ToolTip="Photo" x:Name="imgPhoto" Grid.Row="3" Grid.Column="2" 
+                   Width="35" Height="35" Margin="20, 0, 10, 0"/>
 
-            <Label ToolTip="Személyi szám." Grid.Row="4" Content="CNP:"/>
-            <TextBox x:Name="CNP" Grid.Row="4" Grid.Column="1" AcceptsReturn="True" Margin="0,0,0,10"/>
+            <Label ToolTip="Személyi szám" Grid.Row="4" Content="CNP:"/>
+            <TextBox x:Name="CNP" Grid.Row="4" Grid.Column="1" AcceptsReturn="True" 
+                     Margin="0,0,0,10" MaxLength="13" ToolTip="Személyi szám."/>
 
-            <Label ToolTip="Teljes lakcím megadása." Grid.Row="5" Content="Cím:"/>
-            <TextBox x:Name="address" Grid.Row="5" Grid.Column="1" AcceptsReturn="True" Margin="0,0,0,10"/>
-
-            <!--ezt  at kell alakitani ugy hogy a berletek az adatbazisbol jojjenek be-->
-            <Label ToolTip="Válasz bérlet típust." Grid.Row="6" Content="Bérlet típusa:"/>
-
+            <Label ToolTip="Teljes lakcím megadása" Grid.Row="5" Content="Cím:"/>
+            <TextBox x:Name="address" Grid.Row="5" Grid.Column="1" AcceptsReturn="True" 
+                     Margin="0,0,0,10" MaxLength="25" ToolTip="Lakcím"/>
 
      
             <Label ToolTip="Megjegyzés megadáasa." Grid.Row="7" Content="Megjegyzés:"/>
@@ -61,10 +63,9 @@
         </Grid>
 
         <WrapPanel>
-            <Button ToolTip="Mentés az adatbázisba." x:Name="BtnOk" Click="BtnOk_click" 
-                    Margin="10" Width="100" Content="Mentés"/>
+            <Button ToolTip="Mentés az adatbázisba" x:Name="BtnOk" Click="BtnOk_click" 
+                    Margin="10" Width="120" Content="Mentés" Foreground="Silver" 
+                    Background="DarkBlue" BorderBrush="Green"/>
         </WrapPanel>
-        
     </StackPanel>
-
 </UserControl>

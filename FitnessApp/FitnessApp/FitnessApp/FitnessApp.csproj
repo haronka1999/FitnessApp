@@ -110,6 +110,9 @@
     <Compile Include="UI\Berletek.xaml.cs">
       <DependentUpon>Berletek.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UI\Email.xaml.cs">
+      <DependentUpon>Email.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\FoOldal.xaml.cs">
       <DependentUpon>FoOldal.xaml</DependentUpon>
     </Compile>
@@ -140,6 +143,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UI\Berletek.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Email.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

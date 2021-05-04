@@ -99,9 +99,9 @@ namespace FitnessApp.UI
 
             string query = "INSERT INTO Berletek (megnevezes, ar, " +
             "ervenyesseg_nap, ervenyesseg_belepesek_szama, torolve, terem_id, " +
-            "hany_oratol, hany_oraig, napi_max_hasznalat,letrehozasi_datum)" +
+            "hany_oratol, hany_oraig, napi_max_hasznalat,letrehozasi_datum, ervenyesseg)" +
             " VALUES (@megnevezes, @ar, @ervenyesseg_nap, @ervenyesseg_belepesek_szama, " +
-            "@torolve, @terem_id, @hany_oratol, @hany_oraig, @napi_max_hasznalat, @letrehozasi_datum );";
+            "@torolve, @terem_id, @hany_oratol, @hany_oraig, @napi_max_hasznalat, @letrehozasi_datum, @ervenyesseg );";
 
             try
             {
@@ -116,6 +116,7 @@ namespace FitnessApp.UI
                 sqlCmd.Parameters.AddWithValue("@hany_oraig", hanyOraig);
                 sqlCmd.Parameters.AddWithValue("@napi_max_hasznalat", napiMaxHasznalat);
                 sqlCmd.Parameters.AddWithValue("@letrehozasi_datum", letrehozasi_datum);
+                sqlCmd.Parameters.AddWithValue("@ervenyesseg", "");
 
                 if (sqlCon.State == ConnectionState.Closed)
                 {
@@ -141,6 +142,7 @@ namespace FitnessApp.UI
             NapErvenyesseg.Text = "";
             BelepesErvenyesseg.Text = "";
             NapErvenyesseg.Text = "";
+            price.Text = "";
             kezdet.Text = "";
             veg.Text = "";
         }
@@ -220,38 +222,6 @@ namespace FitnessApp.UI
             return -1;
         }
 
-        private void deleteRowsIfNeeded()
-        {
-            SqlConnection sqlCon = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\.Net_Project\FitnessApp\FitnessApp\FitnessApp\FitnessApp\Database\db_local.mdf;Integrated Security=True");
-            string query = "DELETE FROM Berletek";
-
-            try
-            {
-                SqlCommand sqlCmd = new SqlCommand(query, sqlCon);
-
-                if (sqlCon.State == ConnectionState.Closed)
-                {
-                    sqlCon.Open();
-                }
-
-                int result = sqlCmd.ExecuteNonQuery();
-
-                if (result < 0)
-                    System.Windows.MessageBox.Show("hiba a sorok torlesenel");
-                else
-                    System.Windows.MessageBox.Show("Sorok sikeresen torolv");
-            }
-            catch (Exception ex)
-            {
-                System.Windows.MessageBox.Show(ex.Message);
-            }
-            finally
-            {
-                sqlCon.Close();
-            }
-        }
-
-        //VALIDATION FUNCTION----------------------------
         private void NumberValidationTextBox_3(object sender, TextCompositionEventArgs e)
         {
             e.Handled = regex.IsMatch(e.Text);
