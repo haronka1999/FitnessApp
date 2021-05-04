@@ -12,26 +12,18 @@ namespace FitnessApp.UI
 {
     public partial class UjBerlet : UserControl
     {
-        /*
-         A berlet megnevezeseket egy szamkent taroljuk el
-         mindegyik szam egy fajta berletet jelol. 
-        Berlet a kovetkezo lehet:
-
+        /* A berlet megnevezeseket egy szamkent taroljuk el mindegyik szam egy fajta berletet jelol. Berlet a kovetkezo lehet:
         1 - "Napszam" --> ha a nap szam van korlatozva
         2 - "Belepes szam" --> ha a nap szam van korlatozva
-        3 - "kombinalt" --> mindketto teljesul
-         */
+        3 - "kombinalt" --> mindketto teljesul */
         public int megnevezes = -1;
-
         public float ar;
         public string ar_str;
 
-        /* 
-         Kezdetben az ervenyessegeket -1 ertekkel lassuk el.
+        /* Kezdetben az ervenyessegeket -1 ertekkel lassuk el.
         Abban az esetben ha valtozik az ertek akkor tudni fogjuk
-        hogy melyik tipusu berlet lepett ervenybe
-         
-         */
+        hogy melyik tipusu berlet lepett ervenybe */
+
         public int napokErvenyesseg = -1;
         public int belepesekErvenyesseg = -1;
         public bool torolve = false;
@@ -41,12 +33,9 @@ namespace FitnessApp.UI
         public DateTime hanyOraig;
         public DateTime hanyOratol;
         public DateTime letrehozasi_datum;
-        public int napiMaxHasznalat;
+        public int napiMaxHasznalat = 1;
 
-        /*    
-         3 terem van az adatbazisban:
-        1-es,2-es,3-as
-         */
+        /* 3 terem van az adatbazisban: 1-es,2-es,3-as */
         public int teremId;
 
         Regex regex = new Regex("[^0-9]+");
@@ -59,6 +48,65 @@ namespace FitnessApp.UI
 
         private void BtnSave_click(object sender, RoutedEventArgs e)
         {
+            bool ok1 = false, ok2 = false;
+            var reg = NapErvenyesseg.Text.Trim();
+            if (!Regex.IsMatch(reg, @"^[0-9]+$"))
+            {
+                if ((BelepesErvenyesseg.Text == "" && NapErvenyesseg.Text == "") || BelepesErvenyesseg.Text == "")
+                {
+                    MessageBox.Show("Helytelen napi érvényesség!");
+                    return;
+                }
+                if (NapErvenyesseg.Text != "")
+                {
+                    ok1 = true;
+                }
+            }
+            reg = BelepesErvenyesseg.Text.Trim();
+            if (!Regex.IsMatch(reg, @"^[0-9]+$"))
+            {
+                if ((NapErvenyesseg.Text == "" && BelepesErvenyesseg.Text == "") || NapErvenyesseg.Text == "")
+                {
+                    MessageBox.Show("Helytelen belépési érvényesség!");
+                    return;
+                }
+                if (BelepesErvenyesseg.Text != "")
+                {
+                    ok2 = true;
+                }
+            }
+            reg = napibelepes.Text.Trim();
+            if (!Regex.IsMatch(reg, @"^[0-9]+$"))
+            {
+                if (napibelepes.Text != "")
+                {
+                    MessageBox.Show("Helytelen napi belépés!");
+                    return;
+                }
+                else
+                {
+                    napiMaxHasznalat = 1;
+                }
+            }
+            reg = price.Text.Trim();
+            if (!Regex.IsMatch(reg, @"^[0-9]+$"))
+            {
+                MessageBox.Show("Helytelen ár!");
+                return;
+            }
+            reg = kezdet.Text.Trim();
+            if (!Regex.IsMatch(reg, @"^(?:[01]?[0-9]|2[0-3]):[0-5][0-9]$"))
+            {
+                MessageBox.Show("Helytelen óra használhat!");
+                return;
+            }
+            reg = veg.Text.Trim();
+            if (!Regex.IsMatch(reg, @"^(?:[01]?[0-9]|2[0-3]):[0-5][0-9]$"))
+            {
+                MessageBox.Show("Helytelen óra használhat!");
+                return;
+            }
+
             letrehozasi_datum = Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
             hanyOraig_str = veg.Text;
             hanyOratol_str = kezdet.Text;
@@ -69,28 +117,29 @@ namespace FitnessApp.UI
                 return;
             setMegnevezes();
 
-
-            //egy kicsi szukites a formnal
-            if (napokErvenyesseg < 5 || napokErvenyesseg > 31)
+            //egy kicsi szukites a formnal;
+            if (ok1 == true)
             {
-                //error message should be displayed
+                if (napokErvenyesseg < 5 || napokErvenyesseg > 31)
+                {
+                    MessageBox.Show("Napok száma túl rövid/hosszú.");
+                    return;
+                }
             }
-
-            if (belepesekErvenyesseg < 5 || belepesekErvenyesseg > 25)
+            if (ok2 == true)
             {
-                //error message should be displayed
+                if (belepesekErvenyesseg < 5 || belepesekErvenyesseg > 25)
+                {
+                    MessageBox.Show("Belépések száma túl rövid/hosszú.");
+                    return;
+                }
             }
-
             if (napiMaxHasznalat < 1)
             {
-                //error message should be displayed
+                MessageBox.Show("Napi max használat min 1.");
+                return;
             }
 
-            //kesobbre kell ha vissza akarom alakitani datumra
-            //hanyOraig = DateTime.ParseExact(hanyOraig_str, "HH:mm", System.Globalization.CultureInfo.InvariantCulture);
-            //hanyOratol = DateTime.ParseExact(hanyOraig_str, "HH:mm", System.Globalization.CultureInfo.InvariantCulture);
-
-            //deleteRowsIfNeeded();
             insertBerletIntoDataBase(megnevezes, ar, napokErvenyesseg, belepesekErvenyesseg, torolve, teremId, hanyOratol_str, hanyOraig_str, napiMaxHasznalat, letrehozasi_datum);
         }
 
@@ -162,7 +211,6 @@ namespace FitnessApp.UI
             //hiba kezeles
             if (megnevezes == -1)
                 MessageBox.Show("Hiba a berlet tipus kivalasztasanal");
-
         }
 
         private bool setAr()
@@ -227,8 +275,15 @@ namespace FitnessApp.UI
 
         private void NumberValidationTextBox_3(object sender, TextCompositionEventArgs e)
         {
-            e.Handled = regex.IsMatch(e.Text);
-            napiMaxHasznalat = Int32.Parse(e.Text);
+            if (e.Text != "")
+            {
+                e.Handled = regex.IsMatch(e.Text);
+                napiMaxHasznalat = Int32.Parse(e.Text);
+            }
+            else
+            {
+                napiMaxHasznalat = 1;
+            }
         }
 
         private void NumberValidationTextBox_6(object sender, TextCompositionEventArgs e)
@@ -236,6 +291,5 @@ namespace FitnessApp.UI
             e.Handled = regex.IsMatch(e.Text);
             teremId = Int32.Parse(e.Text);
         }
-
     }
 }

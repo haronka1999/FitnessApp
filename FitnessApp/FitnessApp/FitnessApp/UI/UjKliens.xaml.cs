@@ -11,10 +11,11 @@ using System.Windows.Forms;
 using System.Windows.Media.Imaging;
 using FitnessApp.Model;
 using static FitnessApp.Utils;
+using AForge.Video;
+using AForge.Video.DirectShow;
 
 namespace FitnessApp.UI
 {
-
     public partial class UjKliens : System.Windows.Controls.UserControl
     {
         public const int BARCODE_LENGTH = 4;
@@ -36,6 +37,9 @@ namespace FitnessApp.UI
         private float  eladasi_ar = 0;
         List<string> options = new List<string>();
 
+        FilterInfoCollection filterInfoCollection;
+        VideoCaptureDevice videoCaptureDevice;
+
         public IEnumerable<string> Options
         {
             get { return options; }
@@ -50,6 +54,7 @@ namespace FitnessApp.UI
             options = getAbonamentStrings();
             upload.ImageSource = new BitmapImage(new Uri(Utils.upload));
             save.ImageSource = new BitmapImage(new Uri(Utils.save));
+            kesz.ImageSource = new BitmapImage(new Uri(Utils.camera));
         }
 
         private void BtnOk_click(object sender, RoutedEventArgs e)
@@ -66,20 +71,61 @@ namespace FitnessApp.UI
             DateTime date = Convert.ToDateTime(date_str);           
             string[] IDs = Regex.Replace(berlet_IDK.Text, @"\s+", "").Split(',');
 
-            if (name == "" || phone == "" || email == "" || cnp == "" || my_address == "" || barcode == "" || date_str == "")
+            if (name == "" || phone == "" || email == "" || cnp == "" || my_address == "" || barcode == "" || date_str == "" || IDs.Length == 0)
             {
                 System.Windows.MessageBox.Show("Nem minden mező került kitöltésre!");
                 return;
             }
 
+            var regex = name.Trim();
+            if (!Regex.IsMatch(regex, @"^[\p{L}\p{M}' \.\-]+$"))
+            {
+                System.Windows.MessageBox.Show("Helytelen név kitöltés!");
+                return;
+            }
+            regex = phone.Trim();
+            if (!Regex.IsMatch(regex, @"\(?\d{3}\)?-? *\d{3}-? *-?\d{4}"))
+            {
+                System.Windows.MessageBox.Show("Helytelen telefonszám kitöltés!");
+                return;
+            }
+            regex = email.Trim();
+            if (!Regex.IsMatch(regex, @"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$"))
+            {
+                System.Windows.MessageBox.Show("Helytelen e-mail cím kitöltés!");
+                return;
+            }
+            regex = cnp.Trim();
+            if (!Regex.IsMatch(regex, @"^[0-9]+$"))
+            {
+                System.Windows.MessageBox.Show("Helytelen CNP kitöltés!");
+                return;
+            }
+            regex = my_address.Trim();
+            if (!Regex.IsMatch(regex, @"(?<street>.*?\.*)\s*(?<number>[1-9][0-9]*)\s*(?<addition>.*)"))
+            {
+                System.Windows.MessageBox.Show("Helytelen lakhely kitöltés!");
+                return;
+            }
+            /*for (int i = 0; i < IDs.Length; i++)
+            {
+                regex = IDs[i].Trim();
+                if (!Regex.IsMatch(regex, @"^\d*[,?]\d?*$"))
+                {
+                    System.Windows.MessageBox.Show("Helytelen bérlet kitöltés!");
+                    return;
+                }
+            }*/
+
+
     
 
             insertClientIntoDataBase(name, phone, email, deleted, photo, date, cnp, my_address, barcode, comment);
             getDatasFromClients(cnp);
-            for(int i = 0; i < IDs.Length; i++)
+            for (int i = 0; i < IDs.Length; i++)
             {
                 int current_id = Int32.Parse(IDs[i]);                            
-                if ( checkIfBerletIdsExist(current_id) ){              
+                if (checkIfBerletIdsExist(current_id)){              
                     insertKliensBerletei(current_id);
                 }              
             }
@@ -90,6 +136,7 @@ namespace FitnessApp.UI
             CNP.Text = "";
             address.Text = "";
             Comment.Text = "";
+            berlet_IDK.Text = "";
         }
 
 
@@ -133,9 +180,6 @@ namespace FitnessApp.UI
 
         private void insertKliensBerletei(int berlet_id)
         {
-
-
-
             SqlConnection sqlCon = new SqlConnection(conString);
             string query = "INSERT INTO KliensBerletei (kliens_id, berlet_id, vasarlas_datum, " +
             "vonalkod, eddigi_belepes_szam, eladasi_ar, elso_hasznalat_datum, terem_id) " +
@@ -161,11 +205,9 @@ namespace FitnessApp.UI
 
                 int result = sqlCmd.ExecuteNonQuery();
 
-
                 if (result < 0)
                     System.Windows.MessageBox.Show("Adatbázis hiba kliens berletei hozzaadasanal!");
-                else
-                    System.Windows.MessageBox.Show("KliensBerletei! sikeresen hozzáadva");
+                //else System.Windows.MessageBox.Show("KliensBerletei! sikeresen hozzáadva");
             }
             catch (Exception ex)
             {
@@ -212,8 +254,6 @@ namespace FitnessApp.UI
             }
 
         }
-
-
 
         private List<string> getAbonamentStrings()
         {
@@ -305,8 +345,6 @@ namespace FitnessApp.UI
             }
         }
 
-      
-
         private void insertClientIntoDataBase(string name, string phone, string email, int deleted, string photo, DateTime date, string cnp, string my_address, string barcode, string comment)
         {
             SqlConnection sqlCon = new SqlConnection(conString);
@@ -359,5 +397,9 @@ namespace FitnessApp.UI
               .Select(s => s[random.Next(s.Length)]).ToArray());
         }
 
+        private void Btnkeszit_click(object sender, RoutedEventArgs e)
+        {
+            
+        }
     }
 }
