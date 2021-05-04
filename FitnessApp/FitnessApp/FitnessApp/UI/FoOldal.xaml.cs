@@ -128,22 +128,22 @@ namespace FitnessApp.UI
                 {
                     beleptetes.ervenyessegMezo.Visibility = Visibility.Hidden;
 
-                    MessageBox.Show("if: hany belepes: maradek belepes:  " + maradek_belepes);
-
                     if (maradek_belepes < 1 )
                     {
                         beleptetes.lejarat.Visibility = Visibility.Visible;
+                        return;
                     }
 
                     if (maradek_belepes == 1 || maradek_belepes == 2)
+                    {
                         beleptetes.felkialtojel.Visibility = Visibility.Visible;
+                        addingANewEntry(sqlCon);
+                    }
                     else
                         addingANewEntry(sqlCon);
 
                     beleptetes.hanyadikhasznalatMezo.Content = hanyBelepes + "/" + belepesekSzama;
 
-                    vonalkod.Text = "";
-                    berletId.Text = "";
                 }
                 else
                 {

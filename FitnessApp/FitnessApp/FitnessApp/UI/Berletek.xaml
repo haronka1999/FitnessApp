@@ -75,5 +75,11 @@
                 </Button.Background>
             </Button>
         </WrapPanel>
+        <StackPanel Margin="20,0,0,0">
+            <Label>Megnevezés jelentése</Label>
+            <Label>1: - napok száma korlátozott</Label>
+            <Label>2: - belépések száma korlátozott</Label>
+            <Label>3: - napok és belépések száma korlátozott</Label>
+        </StackPanel>
     </StackPanel>
 </UserControl>
