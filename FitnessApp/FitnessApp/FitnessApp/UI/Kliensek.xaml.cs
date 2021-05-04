@@ -171,7 +171,7 @@ namespace FitnessApp.UI
         private void BtnSaveXls_click(object sender, RoutedEventArgs e)
         {
             export_path_excel = getPath(sender);
-
+            ObservableCollection<Kliens> clients_to_save = deletePhotos(users);
             //ha a felhasznalo meggondolja magat akkor nem tortenik semmi
             if (export_path_excel == "")
             {
@@ -183,7 +183,7 @@ namespace FitnessApp.UI
             string temp = export_path_excel + "\\" + kliens_string + ".xlsx";
             try
             {
-                ws.Cell(1, 1).InsertData(users);
+                ws.Cell(1, 1).InsertData(clients_to_save);
                 wb.SaveAs(temp);
                 System.Windows.MessageBox.Show("Sikeres kimentes a valasztott helyre");
             }
@@ -191,6 +191,20 @@ namespace FitnessApp.UI
             {
                 System.Windows.MessageBox.Show("Hiba a kimentesnel: " + ex.Message);
             }
+        }
+
+        private ObservableCollection<Kliens> deletePhotos(ObservableCollection<Kliens> users)
+        {
+            ObservableCollection<Kliens> clients_no_photo = new ObservableCollection<Kliens>();
+
+            clients_no_photo = users;
+            foreach (Kliens k in clients_no_photo)
+            {
+                k.photo = "";
+            }
+
+            return clients_no_photo;
+
         }
 
         private string getPath(object sender)
