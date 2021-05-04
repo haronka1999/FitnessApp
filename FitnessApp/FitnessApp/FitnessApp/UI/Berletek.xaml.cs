@@ -5,6 +5,7 @@ using System.Data.SqlClient;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media.Imaging;
 using FitnessApp.Model;
 using static FitnessApp.Utils;
 
@@ -22,6 +23,7 @@ namespace FitnessApp.UI
             berletek = new ObservableCollection<Berlet>();
             berletek = getAbonamentsFromDatabase();
             this.BerletGrid.ItemsSource = berletek;
+            save.ImageSource = new BitmapImage(new Uri(Utils.save));
         }
 
         private ObservableCollection<Berlet> getAbonamentsFromDatabase()
@@ -49,19 +51,27 @@ namespace FitnessApp.UI
                         DateTime lejarati_datum = letrehozasi_datum.AddDays(Int32.Parse(reader["ervenyesseg_nap"].ToString()));
                         int kulonbseg = (int)Math.Round((lejarati_datum - today).TotalDays);
                         string ervenyesseg;
-                        if (kulonbseg > 0)
+                        int napiervenyesseg = Int32.Parse(reader["ervenyesseg_nap"].ToString());
+                        if (napiervenyesseg != -1)
                         {
-                            ervenyesseg = "aktív " + kulonbseg + " napig";
+                            if (kulonbseg > 0)
+                            {
+                                ervenyesseg = "aktív " + kulonbseg + " napig";
+                            }
+                            else
+                            {
+                                ervenyesseg = "lejárt " + -kulonbseg + " napja";
+                            }
                         }
                         else
                         {
-                            ervenyesseg = "lejárt " + -kulonbseg + " napja";
+                            ervenyesseg = "aktív";
                         }
 
                         Berlet berlet = new Berlet(Int32.Parse(reader["berlet_id"].ToString()),
                                                        Int32.Parse(reader["megnevezes"].ToString()),
                                                        float.Parse(reader["ar"].ToString()),
-                                                       Int32.Parse(reader["ervenyesseg_nap"].ToString()),
+                                                       napiervenyesseg,
                                                        Int32.Parse(reader["ervenyesseg_belepesek_szama"].ToString()),
                                                        bool.Parse(reader["torolve"].ToString()),
                                                        Int32.Parse(reader["terem_id"].ToString()),

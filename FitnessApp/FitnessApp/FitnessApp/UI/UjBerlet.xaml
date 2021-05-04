@@ -36,7 +36,7 @@
 
             <Label Grid.Row="2" ToolTip="Naponta maximum hányszor használható a bérlet" Content="Napi belépési limit:"/>
             <TextBox Grid.Row="2" Grid.Column="1" AcceptsReturn="True" Margin="0,0,0,10" 
-                     PreviewTextInput="NumberValidationTextBox_3" MaxLength="1" 
+                     PreviewTextInput="NumberValidationTextBox_3" MaxLength="1" x:Name="napibelepes"
                      ToolTip="Naponta maximum hányszor használható a bérlet"/>
 
             <Label Grid.Row="3" ToolTip="Bérlet ára, pl: 150.1" Content="Ár:"/>
@@ -62,9 +62,12 @@
         </Grid>
 
         <WrapPanel>
-            <Button x:Name="BtnSave" ToolTip="Az adatok elmentése az adatbázisban" 
-                    Click="BtnSave_click" Margin="10" Width="120" Content="Mentés"
-                    Foreground="Silver" Background="DarkBlue" BorderBrush="Green"/>
+            <Button x:Name="BtnSave" Click="BtnSave_click" Margin="10" BorderBrush="WhiteSmoke"
+                    ToolTip="Az adatok elmentése az adatbázisban" Width="50" Height="50">
+                <Button.Background>
+                    <ImageBrush x:Name="save" Stretch="Uniform"/>
+                </Button.Background>
+            </Button>
         </WrapPanel>
         
     </StackPanel>

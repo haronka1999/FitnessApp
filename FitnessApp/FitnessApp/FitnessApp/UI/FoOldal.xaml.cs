@@ -4,6 +4,7 @@ using System.Data.SqlClient;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media.Imaging;
 using static FitnessApp.Utils;
 
 namespace FitnessApp.UI
@@ -30,6 +31,7 @@ namespace FitnessApp.UI
         public FoOldal()
         {
             InitializeComponent();
+            ok.ImageSource = new BitmapImage(new Uri(Utils.ok));
         }
 
         // ******************************************************* //
