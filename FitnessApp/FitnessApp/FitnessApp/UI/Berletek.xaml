@@ -40,10 +40,12 @@
                     <DataGridTemplateColumn>
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Button x:Name="editButton" Click="Edit_Berlet" Margin="10" BorderBrush="WhiteSmoke"
-                                        ToolTip="Szerkesztés az adatbázisban." Width="30" Height="30">
+                                <Button x:Name="editButton" Click="Edit_Berlet" Margin="10" 
+                                        BorderBrush="WhiteSmoke" ToolTip="Szerkesztés az adatbázisban." 
+                                        Width="30" Height="30">
                                     <Button.Background>
-                                        <ImageBrush x:Name="edit" ImageSource="E:/egyetem/felev2/.net/gyakok/projekt/FitnessApp/FitnessApp/FitnessApp/FitnessApp/UI/edit.png" Stretch="Uniform"/>
+                                        <ImageBrush x:Name="edit" Stretch="Uniform"
+                                                    ImageSource="E:/egyetem/felev2/.net/gyakok/projekt/FitnessApp/FitnessApp/FitnessApp/FitnessApp/UI/edit.png"/>
                                     </Button.Background>
                                 </Button>
                             </DataTemplate>
@@ -55,7 +57,8 @@
                                 <Button Click="Delete_Berlet" ToolTip="Törlés az adatbázisból." 
                                         Margin="10" BorderBrush="WhiteSmoke" Width="30" Height="30">
                                     <Button.Background>
-                                        <ImageBrush x:Name="trash" ImageSource="E:/egyetem/felev2/.net/gyakok/projekt/FitnessApp/FitnessApp/FitnessApp/FitnessApp/UI/trash.png" Stretch="Uniform"/>
+                                        <ImageBrush x:Name="trash" Stretch="Uniform"
+                                                    ImageSource="E:/egyetem/felev2/.net/gyakok/projekt/FitnessApp/FitnessApp/FitnessApp/FitnessApp/UI/trash.png"/>
                                     </Button.Background>
                                 </Button>
                             </DataTemplate>
@@ -75,11 +78,13 @@
                 </Button.Background>
             </Button>
         </WrapPanel>
+        
         <StackPanel Margin="20,0,0,0">
-            <Label>Megnevezés jelentése</Label>
-            <Label>1: - napok száma korlátozott</Label>
-            <Label>2: - belépések száma korlátozott</Label>
-            <Label>3: - napok és belépések száma korlátozott</Label>
+            <Label Content="Megnevezés jelentése:"/>
+            <Label Content="1: - napok száma korlátozott"/>
+            <Label Content="2: - belépések száma korlátozott"/>
+            <Label Content="3: - napok és belépések száma korlátozott"/>
         </StackPanel>
+        
     </StackPanel>
 </UserControl>

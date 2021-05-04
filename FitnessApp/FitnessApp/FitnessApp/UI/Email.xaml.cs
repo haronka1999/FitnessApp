@@ -2,7 +2,6 @@
 using System.Net;
 using System.Net.Mail;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Forms;
 using System.Windows.Media.Imaging;
 
@@ -12,9 +11,11 @@ namespace FitnessApp.UI
     {
         private OpenFileDialog op;
         private string fileName = "";
+
         public Email()
         {
             InitializeComponent();
+
             trash.ImageSource = new BitmapImage(new Uri(Utils.trash));
             email.ImageSource = new BitmapImage(new Uri(Utils.email));
             attachment.ImageSource = new BitmapImage(new Uri(Utils.attachment));

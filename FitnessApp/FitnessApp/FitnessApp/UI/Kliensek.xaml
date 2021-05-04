@@ -28,9 +28,9 @@
         </StackPanel>
 
         <Grid Margin="10">
-            <DataGrid ToolTip="Kliens adatok" x:Name="KliensGrid" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" 
-                      Foreground="DarkOliveGreen" AutoGenerateColumns="False" IsReadOnly="True" 
-                      BorderBrush="AliceBlue" Background="LemonChiffon">
+            <DataGrid ToolTip="Kliens adatok" x:Name="KliensGrid" Grid.Row="2" Grid.Column="0" 
+                      Grid.ColumnSpan="3" Foreground="DarkOliveGreen" AutoGenerateColumns="False"
+                      IsReadOnly="True" BorderBrush="AliceBlue" Background="LemonChiffon">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="ID" Width="*" IsReadOnly="True"
                                         Binding="{Binding kliens_id}"/>
@@ -43,7 +43,8 @@
                     <DataGridTemplateColumn Header="Image" Width="2*" IsReadOnly="True">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Image Source="{Binding photo , Converter={StaticResource converter}}" Width="60" Height="60"/>
+                                <Image Source="{Binding photo, Converter={StaticResource converter}}" 
+                                       Width="60" Height="60"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
@@ -61,10 +62,11 @@
                     <DataGridTemplateColumn>
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Button x:Name="editButton" Click="Edit_User" Margin="10" BorderBrush="WhiteSmoke"
-                                        ToolTip="Szerkesztés az adatbázisban." Width="30" Height="30">
+                                <Button x:Name="editButton" Click="Edit_User" Margin="10" Width="30" Height="30"
+                                        BorderBrush="WhiteSmoke" ToolTip="Szerkesztés az adatbázisban." >
                                     <Button.Background>
-                                        <ImageBrush x:Name="edit" ImageSource="E:/egyetem/felev2/.net/gyakok/projekt/FitnessApp/FitnessApp/FitnessApp/FitnessApp/UI/edit.png" Stretch="Uniform"/>
+                                        <ImageBrush x:Name="edit" Stretch="Uniform"
+                                                    ImageSource="E:/egyetem/felev2/.net/gyakok/projekt/FitnessApp/FitnessApp/FitnessApp/FitnessApp/UI/edit.png"/>
                                     </Button.Background>
                                 </Button>
                             </DataTemplate>
@@ -76,7 +78,8 @@
                                 <Button Click="Delete_User" ToolTip="Törlés az adatbázisból." 
                                         Margin="10" BorderBrush="WhiteSmoke" Width="30" Height="30">
                                     <Button.Background>
-                                        <ImageBrush x:Name="trash" ImageSource="E:/egyetem/felev2/.net/gyakok/projekt/FitnessApp/FitnessApp/FitnessApp/FitnessApp/UI/trash.png" Stretch="Uniform"/>
+                                        <ImageBrush x:Name="trash" Stretch="Uniform"
+                                                    ImageSource="E:/egyetem/felev2/.net/gyakok/projekt/FitnessApp/FitnessApp/FitnessApp/FitnessApp/UI/trash.png"/>
                                     </Button.Background>
                                 </Button>
                             </DataTemplate>
@@ -101,5 +104,6 @@
                 </Button.Background>
             </Button>
         </WrapPanel>
+        
     </StackPanel>
 </UserControl>

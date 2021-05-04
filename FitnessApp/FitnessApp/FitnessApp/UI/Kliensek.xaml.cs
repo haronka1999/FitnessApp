@@ -2,8 +2,6 @@
 using System.Collections.ObjectModel;
 using System.Data;
 using System.Data.SqlClient;
-using System.IO;
-using System.Text;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Media.Imaging;
@@ -27,6 +25,7 @@ namespace FitnessApp.UI
             users = new ObservableCollection<Kliens>();
             users = getUsersFromDatabase();
             this.KliensGrid.ItemsSource = users;
+
             search.ImageSource = new BitmapImage(new Uri(Utils.search));
             save.ImageSource = new BitmapImage(new Uri(Utils.save));
             excel.ImageSource = new BitmapImage(new Uri(Utils.excel));
@@ -48,7 +47,6 @@ namespace FitnessApp.UI
 
                 using (SqlDataReader reader = sqlCmd.ExecuteReader())
                 {
-
                     while (reader.Read())
                     {
                         photo = reader["photo"].ToString();
@@ -86,7 +84,7 @@ namespace FitnessApp.UI
         private void Delete_User(object sender, RoutedEventArgs e)
         {
             Kliens drv = (Kliens)KliensGrid.SelectedItem;
-            String kliens_id = (drv.kliens_id).ToString();
+            string kliens_id = (drv.kliens_id).ToString();
 
             SqlConnection sqlCon = new SqlConnection(conString);
             string query = "UPDATE Kliensek set is_deleted=1 WHERE kliens_id = @kliens_id;";
@@ -204,7 +202,6 @@ namespace FitnessApp.UI
             }
 
             return clients_no_photo;
-
         }
 
         private string getPath(object sender)
@@ -222,7 +219,6 @@ namespace FitnessApp.UI
                 }
                 return "";
             }
-
         }
 
         private void Search_Client_Click(object sender, RoutedEventArgs e)
@@ -281,6 +277,7 @@ namespace FitnessApp.UI
             {
                 getUsersFromDatabase();
             }
+
             this.KliensGrid.ItemsSource = users;
             searchResult.Text = "";
         }

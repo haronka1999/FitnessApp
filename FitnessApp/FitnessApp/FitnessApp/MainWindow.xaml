@@ -37,10 +37,12 @@
                                     </Border>
                                     <ControlTemplate.Triggers>
                                         <Trigger Property="IsSelected" Value="True">
-                                            <Setter TargetName="Border" Property="Background" Value="LightSkyBlue"/>
+                                            <Setter TargetName="Border" Property="Background" 
+                                                    Value="LightSkyBlue"/>
                                         </Trigger>
                                         <Trigger Property="IsSelected" Value="False">
-                                            <Setter TargetName="Border" Property="Background" Value="GreenYellow"/>
+                                            <Setter TargetName="Border" Property="Background" 
+                                                    Value="GreenYellow"/>
                                         </Trigger>
                                     </ControlTemplate.Triggers>
                                 </ControlTemplate>
@@ -49,27 +51,33 @@
                     </Style>
                 </TabControl.Resources>
 
-                <TabItem Header="Főoldal" IsSelected="True" x:Name="FoOldal" ToolTip="Bejelentkezés">
+                <TabItem Header="Főoldal" IsSelected="True" 
+                         x:Name="FoOldal" ToolTip="Bejelentkezés">
                     <uc:FoOldal x:Name="Home"></uc:FoOldal>
                 </TabItem>
 
-                <TabItem Header="Kliens hozzáadása" x:Name="UjKliens" ToolTip="Kliens hozzáadás">
+                <TabItem Header="Kliens hozzáadása" 
+                         x:Name="UjKliens" ToolTip="Kliens hozzáadás">
                     <uc:UjKliens x:Name="NewClient"></uc:UjKliens>
                 </TabItem>
 
-                <TabItem Header="Kliensek" x:Name="Kliensek" ToolTip="Kliensek listázása és keresés">
+                <TabItem Header="Kliensek" x:Name="Kliensek" 
+                         ToolTip="Kliensek listázása és keresés">
                     <uc:Kliensek x:Name="Clients"></uc:Kliensek>
                 </TabItem>
 
-                <TabItem Header="Bérlet hozzáadása" x:Name="UjBerlet" ToolTip="Bérlet hozzáadás">
+                <TabItem Header="Bérlet hozzáadása" x:Name="UjBerlet" 
+                         ToolTip="Bérlet hozzáadás">
                     <uc:UjBerlet x:Name="NewAbonament"></uc:UjBerlet>
                 </TabItem>
 
-                <TabItem Header="Bérletek" x:Name="Berletek" ToolTip="Bérletek listázása">
+                <TabItem Header="Bérletek" x:Name="Berletek" 
+                         ToolTip="Bérletek listázása">
                     <uc:Berletek x:Name="Abonaments"></uc:Berletek>
                 </TabItem>
 
-                <TabItem Header="E-mail" x:Name="Email" ToolTip="E-mail küldés">
+                <TabItem Header="E-mail" x:Name="Email"
+                         ToolTip="E-mail küldés">
                     <uc:Email x:Name="EmailWriter"></uc:Email>
                 </TabItem>
 

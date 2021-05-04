@@ -117,9 +117,6 @@ namespace FitnessApp.UI
                 }
             }*/
 
-
-    
-
             insertClientIntoDataBase(name, phone, email, deleted, photo, date, cnp, my_address, barcode, comment);
             getDatasFromClients(cnp);
             for (int i = 0; i < IDs.Length; i++)
@@ -137,8 +134,8 @@ namespace FitnessApp.UI
             address.Text = "";
             Comment.Text = "";
             berlet_IDK.Text = "";
+            imgPhoto.Source = null;
         }
-
 
         private bool checkIfBerletIdsExist(int current_id)
         {
@@ -196,8 +193,6 @@ namespace FitnessApp.UI
                 sqlCmd.Parameters.AddWithValue("@elso_hasznalat_datum", "");
                 sqlCmd.Parameters.AddWithValue("@terem_id", terem_id);
 
-        
-
                 if (sqlCon.State == ConnectionState.Closed)
                 {
                     sqlCon.Open();
@@ -221,7 +216,6 @@ namespace FitnessApp.UI
 
         private void getDatasFromClients(string cnp)
         {
-
             SqlConnection sqlCon = new SqlConnection(conString);
             try
             {
@@ -242,7 +236,6 @@ namespace FitnessApp.UI
                         vonalkod = reader["vonalkod"].ToString();
                     }
                 }
-
             }
             catch (Exception ex)
             {
@@ -252,7 +245,6 @@ namespace FitnessApp.UI
             {
                 sqlCon.Close();
             }
-
         }
 
         private List<string> getAbonamentStrings()
@@ -269,8 +261,6 @@ namespace FitnessApp.UI
                 else
                     temp = berlet.berlet_id + ".), érvényesség: " + berlet.ervenyesseg_belepesek_szama + " belépés, és " + berlet.ervenyesseg_nap + " nap" + "ár: " + berlet.ar;
 
-
-                //Console.WriteLine(temp);
                 temp_list.Add(temp);
             }
             return temp_list;
@@ -292,7 +282,6 @@ namespace FitnessApp.UI
 
                 using (SqlDataReader reader = sqlCmd.ExecuteReader())
                 {
-
                     while (reader.Read())
                     {
                         Berlet berlet = new Berlet(Int32.Parse(reader["berlet_id"].ToString()),
@@ -371,7 +360,6 @@ namespace FitnessApp.UI
                 }
 
                 int result = sqlCmd.ExecuteNonQuery();
-
 
                 if (result < 0)
                     System.Windows.MessageBox.Show("Adatbázis hiba új kliens hozzáadásnál");

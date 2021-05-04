@@ -62,6 +62,7 @@ namespace FitnessApp.UI
                     ok1 = true;
                 }
             }
+
             reg = BelepesErvenyesseg.Text.Trim();
             if (!Regex.IsMatch(reg, @"^[0-9]+$"))
             {
@@ -145,7 +146,6 @@ namespace FitnessApp.UI
 
         private void insertBerletIntoDataBase(int megnevezes, float ar, int napokErvenyesseg, int belepesekErvenyesseg, bool torolve, int teremId, string hanyOratol, string hanyOraig, int napiMaxHasznalat, DateTime letrehozasi_datum)
         {
-
             SqlConnection sqlCon = new SqlConnection(conString);
 
             string query = "INSERT INTO Berletek (megnevezes, ar, " +
@@ -218,7 +218,6 @@ namespace FitnessApp.UI
             try
             {
                 ar = float.Parse(price.Text);
-             
             }
             catch (Exception ex)
             {
@@ -230,7 +229,6 @@ namespace FitnessApp.UI
 
         private void setNapokervenyesseg()
         {
-
             if (NapErvenyesseg.Text != "")
             {
                 try

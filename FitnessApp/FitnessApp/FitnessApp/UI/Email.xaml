@@ -9,6 +9,7 @@
     d:DesignHeight="450" d:DesignWidth="800">
 
     <StackPanel>
+        
         <Grid Margin="10">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
@@ -46,15 +47,15 @@
             <TextBox x:Name="body" Grid.Row="4" Grid.Column="1" AcceptsReturn="True" 
                      Margin="0,0,0,10" TextWrapping="Wrap" Width="500" Height="200" MaxLength="500" 
                      Text="Tisztelettel, " ToolTip="Üzenet"/>
-            
+
             <Label ToolTip="Fájl küldés" Grid.Row="5" Content="File Attachment:"/>
             <Button x:Name="attachment_btn" ToolTip="Fájl" Click="attachmentFile" Width="50" Height="50"
                     Grid.Row="5" Grid.Column="1" BorderBrush="WhiteSmoke">
-            <Button.Background>
-                <ImageBrush x:Name="attachment" Stretch="Uniform"/>
-            </Button.Background>
+                <Button.Background>
+                    <ImageBrush x:Name="attachment" Stretch="Uniform"/>
+                </Button.Background>
             </Button>
-        
+
             <Button x:Name="remove" ToolTip="Törlés" Click="torol" Width="50" Height="50"
                     Grid.Row="6" Grid.Column="0" BorderBrush="WhiteSmoke">
                 <Button.Background>
@@ -68,5 +69,6 @@
                 </Button.Background>
             </Button>
         </Grid>
+        
     </StackPanel>
 </UserControl>

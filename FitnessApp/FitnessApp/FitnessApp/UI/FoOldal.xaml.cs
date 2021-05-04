@@ -11,19 +11,22 @@ namespace FitnessApp.UI
 {
     public partial class FoOldal : UserControl
     {
+        private bool isFirst = false;
+
         private int berlet = -1;
         private int hanyBelepes = -1;
         private int hanyNapig = -1;
-        private string hanyOratol = "";
-        private string hanyOraig = "";
         private int megnevezes = -1;
+        private int belepesekSzama = -1;
         private int tId = -1;
         private int kId = -1;
+
+        private string hanyOratol = "";
+        private string hanyOraig = "";
         private string vonalKod = "";
         private string date_str = "";
         private string nev = "";
-        private int belepesekSzama = -1;       
-        private bool isFirst = false;
+
         private string berletLetrehozas_str;
         private DateTime berletLetrehozas;
         private DateTime today = DateTime.Now;
@@ -31,13 +34,19 @@ namespace FitnessApp.UI
         public FoOldal()
         {
             InitializeComponent();
+
             ok.ImageSource = new BitmapImage(new Uri(Utils.ok));
         }
 
-        // ******************************************************* //
-        // ******************** MENTES *************************** //
         private void BtnOk_click(object sender, RoutedEventArgs e)
         {
+            beleptetes.Visibility = Visibility.Hidden;
+            beleptetes.felkialtojel.Visibility = Visibility.Hidden;
+            beleptetes.felkialtojelD.Visibility = Visibility.Hidden;
+            beleptetes.lejarat.Visibility = Visibility.Hidden;
+            beleptetes.hanyadikhasznalatMezo.Visibility = Visibility.Hidden;
+            beleptetes.ervenyessegMezo.Visibility = Visibility.Hidden;
+
             string vKod = vonalkod.Text;
             string bId = berletId.Text;
 
@@ -63,7 +72,6 @@ namespace FitnessApp.UI
                 queryClient(sqlCon, vKod);
                 countBarcode(sqlCon, vKod);
                 setMegnevezes();
-  
 
                 berletLetrehozas = Convert.ToDateTime(berletLetrehozas_str, new CultureInfo("en-US"));
                 DateTime lejarati_datum = berletLetrehozas.AddDays(hanyNapig);
@@ -92,7 +100,7 @@ namespace FitnessApp.UI
                     return;
                 }
 
-                isFirstEntry(sqlCon, vKod, bId);         
+                isFirstEntry(sqlCon, vKod, bId);
                 updateKliensekBerletetei(vKod);
 
                 //beleptetes infok megjelenitese
@@ -100,12 +108,9 @@ namespace FitnessApp.UI
                 //a nev beallitasa
                 beleptetes.nevMezo.Content = nev;
 
-
                 // abban az esetben ha a berletnek megvan szabva hogy hany napig ervenyes
                 if (hanyNapig != -1 && hanyBelepes == -1)
                 {
-                    beleptetes.hanyadikhasznalatMezoNev.Visibility = Visibility.Hidden;
-
                     // ha lejart a berlet
                     if (kulonbseg < 1)
                         beleptetes.lejarat.Visibility = Visibility.Visible;
@@ -120,48 +125,54 @@ namespace FitnessApp.UI
                     else
                     {
                         addingANewEntry(sqlCon);
+                        beleptetes.ervenyessegMezo.Visibility = Visibility.Visible;
                         beleptetes.ervenyessegMezo.Content = lejarati_datum + " (még " + kulonbseg + " nap)";
                     }
-
                 }
                 else if (hanyBelepes != -1 && hanyNapig == -1)
                 {
                     beleptetes.ervenyessegMezo.Visibility = Visibility.Hidden;
 
-                    if (maradek_belepes < 1 )
+                    if (maradek_belepes < 0)
                     {
                         beleptetes.lejarat.Visibility = Visibility.Visible;
                         return;
                     }
 
-                    if (maradek_belepes == 1 || maradek_belepes == 2)
+                    if ((maradek_belepes == 1 || maradek_belepes == 2) || maradek_belepes == 0)
                     {
+
                         beleptetes.felkialtojel.Visibility = Visibility.Visible;
                         addingANewEntry(sqlCon);
                     }
                     else
                         addingANewEntry(sqlCon);
 
+                    beleptetes.hanyadikhasznalatMezo.Visibility = Visibility.Visible;
                     beleptetes.hanyadikhasznalatMezo.Content = hanyBelepes + "/" + belepesekSzama;
-
                 }
                 else
                 {
-                    if (kulonbseg < 1 || maradek_belepes < 1)
+                    if (kulonbseg < 1 || maradek_belepes < 0)
                     {
                         beleptetes.lejarat.Visibility = Visibility.Visible;
                     }
-                        
-                    else if (( kulonbseg >= 1 && kulonbseg <= 2 ) || (maradek_belepes == 1 || maradek_belepes == 2))
+
+                    else if ((kulonbseg >= 1 && kulonbseg <= 2) || ((maradek_belepes == 1 || maradek_belepes == 2) || maradek_belepes == 0))
                     {
+                        beleptetes.hanyadikhasznalatMezo.Visibility = Visibility.Visible;
+                        beleptetes.ervenyessegMezo.Visibility = Visibility.Visible;
                         beleptetes.felkialtojelD.Visibility = Visibility.Visible;
-                        addingANewEntry(sqlCon);                  
+                        beleptetes.hanyadikhasznalatMezo.Content = hanyBelepes + "/" + belepesekSzama;
+                        addingANewEntry(sqlCon);
                     }
 
                     //ha rendben van
                     else
                     {
                         addingANewEntry(sqlCon);
+                        beleptetes.hanyadikhasznalatMezo.Visibility = Visibility.Visible;
+                        beleptetes.ervenyessegMezo.Visibility = Visibility.Visible;
                         beleptetes.ervenyessegMezo.Content = lejarati_datum + " (még " + kulonbseg + " nap)";
                         beleptetes.hanyadikhasznalatMezo.Content = hanyBelepes + "/" + belepesekSzama;
                     }
@@ -171,7 +182,6 @@ namespace FitnessApp.UI
             {
                 MessageBox.Show("Kérem töltse ki a kért mezőket!");
             }
-
         }
 
         private void isFirstEntry(SqlConnection sqlCon, string vKod, string bId)
@@ -183,7 +193,6 @@ namespace FitnessApp.UI
                 {
                     sqlCon.Open();
                 }
-
 
                 string query = "Select eddigi_belepes_szam from KliensBerletei b  " +
                     "join Kliensek k on k.kliens_id = b.kliens_id " +
@@ -203,7 +212,6 @@ namespace FitnessApp.UI
                         }
                     }
                 }
-
             }
             catch (Exception ex)
             {
@@ -213,13 +221,11 @@ namespace FitnessApp.UI
             {
                 sqlCon.Close();
             }
-       
         }
 
         private void updateKliensekBerletetei(string vKod)
         {
             SqlConnection sqlCon = new SqlConnection(conString);
-
 
             string query = "";
             if (isFirst)
@@ -230,7 +236,7 @@ namespace FitnessApp.UI
             {
                 query = "UPDATE KliensBerletei set eddigi_belepes_szam = 1  WHERE vonalkod = @vKod;";
             }
-            
+
             try
             {
                 SqlCommand sqlCmd = new SqlCommand(query, sqlCon);
@@ -293,6 +299,7 @@ namespace FitnessApp.UI
             {
                 sqlCon.Close();
             }
+
             return hasAbonament;
         }
 
@@ -356,8 +363,6 @@ namespace FitnessApp.UI
                 sqlCon.Close();
             }
 
-
-
             //masodik lekerdezes a Berletek ertekere ertekre
             try
             {
@@ -384,8 +389,6 @@ namespace FitnessApp.UI
                         tId = Int32.Parse(reader["terem_id"].ToString());
                         berletLetrehozas_str = reader["letrehozasi_datum"].ToString();
                         berlet = Int32.Parse(reader["berlet_id"].ToString());
-
-
                     }
                 }
             }
@@ -398,7 +401,6 @@ namespace FitnessApp.UI
                 sqlCon.Close();
             }
         }
-
 
         private void queryClient(SqlConnection sqlCon, string vKod)
         {
@@ -422,7 +424,6 @@ namespace FitnessApp.UI
                         nev = reader["nev"].ToString();
                     }
                 }
-
             }
             catch (Exception ex)
             {
@@ -527,17 +528,14 @@ namespace FitnessApp.UI
                 sqlCon.Close();
             }
 
-
             if (my_berlet_id == -1)
                 return false;
             else
                 return true;
-
         }
 
         private bool isValidVkod(string vKod, SqlConnection sqlCon)
         {
-
             int my_kliens_id = -1;
             try
             {
@@ -556,7 +554,6 @@ namespace FitnessApp.UI
                         my_kliens_id = Int32.Parse(reader["kliens_id"].ToString());
                     }
                 }
-
             }
             catch (Exception ex)
             {
@@ -571,9 +568,6 @@ namespace FitnessApp.UI
                 return false;
             else
                 return true;
-
         }
-
-
     }
 }

@@ -13,7 +13,6 @@ namespace FitnessApp.UI
 {
     public partial class Berletek : UserControl
     {
-
         public ObservableCollection<Berlet> berletek { get; set; }
 
         public Berletek()
@@ -23,6 +22,7 @@ namespace FitnessApp.UI
             berletek = new ObservableCollection<Berlet>();
             berletek = getAbonamentsFromDatabase();
             this.BerletGrid.ItemsSource = berletek;
+
             save.ImageSource = new BitmapImage(new Uri(Utils.save));
         }
 
@@ -201,7 +201,6 @@ namespace FitnessApp.UI
             string query = "UPDATE Berletek set torolve=1 WHERE berlet_id = @berlet_id;";
             try
             {
-
                 SqlCommand sqlCmd = new SqlCommand(query, sqlCon);
                 sqlCmd.Parameters.AddWithValue("@berlet_id", berlet_id);
                 if (sqlCon.State == ConnectionState.Closed)

@@ -1,9 +1,8 @@
 ﻿using System;
-using System.ComponentModel;
 
 namespace FitnessApp.Model
 {
-    public class Kliens : INotifyPropertyChanged
+    public class Kliens
     {
         public int kliens_id { get; set; }
         public string nev  { get; set; }
@@ -32,18 +31,6 @@ namespace FitnessApp.Model
             this.megjegyzes = megjegyzes;
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private int _count;
-        public int Count
-        {
-            get { return _count; }
-            set
-            {
-                _count = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Count"));
-            }
-        }
         public override string ToString()
         {
             return 

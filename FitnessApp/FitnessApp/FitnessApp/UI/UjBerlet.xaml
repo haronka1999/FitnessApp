@@ -34,7 +34,8 @@
             <TextBox Grid.Row="1" x:Name="BelepesErvenyesseg"  Grid.Column="1" AcceptsReturn="True" 
                      Margin="0,0,0,10" MaxLength="3" ToolTip="Hányszor használható a bérlet" />
 
-            <Label Grid.Row="2" ToolTip="Naponta maximum hányszor használható a bérlet" Content="Napi belépési limit:"/>
+            <Label Grid.Row="2" ToolTip="Naponta maximum hányszor használható a bérlet" 
+                   Content="Napi belépési limit:"/>
             <TextBox Grid.Row="2" Grid.Column="1" AcceptsReturn="True" Margin="0,0,0,10" 
                      PreviewTextInput="NumberValidationTextBox_3" MaxLength="1" x:Name="napibelepes"
                      ToolTip="Naponta maximum hányszor használható a bérlet"/>
@@ -43,11 +44,13 @@
             <TextBox Grid.Row="3" x:Name="price" Grid.Column="1" AcceptsReturn="True" 
                      Margin="0,0,0,10" MaxLength="10" ToolTip="Bérlet ár"/>
 
-            <Label Grid.Row="4" ToolTip="Hány órától használható a bérlet, formátum HH:MM." Content="Óralimit kezdete:"/>
+            <Label Grid.Row="4" ToolTip="Hány órától használható a bérlet, formátum HH:MM." 
+                   Content="Óralimit kezdete:"/>
             <TextBox Grid.Row="4" x:Name ="kezdet" Grid.Column="1" AcceptsReturn="True" 
                      Margin="0,0,0,10" MaxLength="5" ToolTip="Hány órától használható a bérlet"/>
 
-            <Label Grid.Row="5" ToolTip="Hány óráig használható a bérlet, formátum HH:MM." Content="Óralimit vége:"/>
+            <Label Grid.Row="5" ToolTip="Hány óráig használható a bérlet, formátum HH:MM." 
+                   Content="Óralimit vége:"/>
             <TextBox Grid.Row="5" x:Name="veg" Grid.Column="1" AcceptsReturn="True" 
                      Margin="0,0,0,10" MaxLength="5" ToolTip="Hány óráig használható a bérlet"/>
 
@@ -69,7 +72,6 @@
                 </Button.Background>
             </Button>
         </WrapPanel>
-        
-    </StackPanel>
 
+    </StackPanel>
 </UserControl>

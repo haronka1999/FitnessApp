@@ -36,22 +36,23 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
-                <Border Grid.Row="0" Grid.Column="0" CornerRadius="10" BorderThickness="2" BorderBrush="Azure" 
-                        Background="Bisque" Margin="5, 0, 0, 5">
+                <Border Grid.Row="0" Grid.Column="0" CornerRadius="10" BorderThickness="2" 
+                        BorderBrush="Azure" Background="Bisque" Margin="5, 0, 0, 5">
                     <Label Content="Vonalkód:" FontStyle="Italic" ToolTip="Vonalkód megadása"/>
                 </Border>
                 <TextBox x:Name="vonalkod" Grid.Row="0" Grid.Column="1" Margin="20, 0, 0, 5" 
                          Background="Khaki" MaxLength="10" ToolTip="Vonalkód"/>
 
-                <Border Grid.Row="1" Grid.Column="0" CornerRadius="10" BorderThickness="2" BorderBrush="Azure" 
-                        Background="Bisque" Margin="5, 5, 0, 0">
+                <Border Grid.Row="1" Grid.Column="0" CornerRadius="10" BorderThickness="2" 
+                        BorderBrush="Azure" Background="Bisque" Margin="5, 5, 0, 0">
                     <Label Content="Bérlet ID:" FontStyle="Italic" ToolTip="Bérlet ID megadása"/>
                 </Border>
                 <TextBox x:Name="berletId" Grid.Row="1" Grid.Column="1" Margin="20, 5, 0, 0" 
                          Background="Khaki" MaxLength="10" ToolTip="ID"/>
 
-                <Button x:Name="BtnOk" Click="BtnOk_click" Grid.Row="2" Grid.Column="1" BorderBrush="WhiteSmoke"
-                        Margin="0, 20, 0, 10" Width="50" Height="50" ToolTip="Beszúrás, illetve megjelenítés.">
+                <Button x:Name="BtnOk" Click="BtnOk_click" Grid.Row="2" Grid.Column="1" 
+                        BorderBrush="WhiteSmoke" Margin="0, 20, 0, 10" Width="50" 
+                        Height="50" ToolTip="Beszúrás, illetve megjelenítés.">
                     <Button.Background>
                         <ImageBrush x:Name="ok" Stretch="UniformToFill"/>
                     </Button.Background>
