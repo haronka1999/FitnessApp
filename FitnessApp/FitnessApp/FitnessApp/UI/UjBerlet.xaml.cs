@@ -5,6 +5,7 @@ using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media.Imaging;
 using static FitnessApp.Utils;
 
 namespace FitnessApp.UI
@@ -53,6 +54,7 @@ namespace FitnessApp.UI
         public UjBerlet()
         {
             InitializeComponent();
+            save.ImageSource = new BitmapImage(new Uri(Utils.save));
         }
 
         private void BtnSave_click(object sender, RoutedEventArgs e)
@@ -145,6 +147,7 @@ namespace FitnessApp.UI
             price.Text = "";
             kezdet.Text = "";
             veg.Text = "";
+            napibelepes.Text = "";
         }
 
         private void setMegnevezes()

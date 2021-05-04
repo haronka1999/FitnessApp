@@ -37,13 +37,14 @@
 
             <Label ToolTip="Regisztráló e-mail címe" Grid.Row="2" Content="E-mail:"/>
             <TextBox x:Name="Email" Grid.Row="2" Grid.Column="1" AcceptsReturn="True" 
-                     Margin="0,0,0,10" MaxLength="20" ToolTip="E-mail."/>
+                     Margin="0,0,0,10" MaxLength="40" ToolTip="E-mail."/>
 
             <Label ToolTip="Regisztráló fényképe" Grid.Row="3" Content="Fotó:"/>
             <Button ToolTip="Fénykép hozzáadása." x:Name="BtnUpload" Grid.Row="3" Grid.Column="1" 
-                    Margin="0,0,0,10" Width="150" Click="BtnUpload_click" Content="Feltölt"
-                    Foreground="Silver" Background="Gold" BorderBrush="Green">
-                <!--<Image Source="image_add.png" Width="50" Height="30" Stretch="Uniform"/>-->
+                    Margin="0,0,0,10" Width="50" Height="50" Click="BtnUpload_click" BorderBrush="WhiteSmoke">
+                <Button.Background>
+                    <ImageBrush x:Name="upload" Stretch="Uniform"/>
+                </Button.Background>
             </Button>
             <Image ToolTip="Photo" x:Name="imgPhoto" Grid.Row="3" Grid.Column="2" 
                    Width="35" Height="35" Margin="20, 0, 10, 0"/>
@@ -87,9 +88,12 @@
         </Grid>
 
         <WrapPanel>
-            <Button ToolTip="Mentés az adatbázisba" x:Name="BtnOk" Click="BtnOk_click" 
-                    Margin="10" Width="120" Content="Mentés" Foreground="Silver" 
-                    Background="DarkBlue" BorderBrush="Green"/>
+            <Button ToolTip="Mentés az adatbázisba" x:Name="BtnOk" Click="BtnOk_click" Margin="10"
+                    BorderBrush="WhiteSmoke" Width="50" Height="50">
+                <Button.Background>
+                    <ImageBrush x:Name="save" Stretch="Uniform"/>
+                </Button.Background>
+            </Button>
         </WrapPanel>
     </StackPanel>
 </UserControl>

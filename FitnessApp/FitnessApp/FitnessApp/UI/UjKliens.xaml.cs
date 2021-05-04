@@ -42,6 +42,8 @@ namespace FitnessApp.UI
             berletek = new List<Berlet>();
             berletek = getBerletekFromDatabase();             
             options = getAbonamentStrings();
+            upload.ImageSource = new BitmapImage(new Uri(Utils.upload));
+            save.ImageSource = new BitmapImage(new Uri(Utils.save));
         }
 
         private List<string> getAbonamentStrings()

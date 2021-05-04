@@ -27,6 +27,10 @@ namespace FitnessApp.UI
             users = new ObservableCollection<Kliens>();
             users = getUsersFromDatabase();
             this.KliensGrid.ItemsSource = users;
+
+            search.ImageSource = new BitmapImage(new Uri(Utils.search));
+            save.ImageSource = new BitmapImage(new Uri(Utils.save));
+            excel.ImageSource = new BitmapImage(new Uri(Utils.excel));
         }
 
         private ObservableCollection<Kliens> getUsersFromDatabase()
@@ -53,11 +57,8 @@ namespace FitnessApp.UI
                         bi.StreamSource = new MemoryStream(System.Convert.FromBase64String(reader["photo"].ToString()));
                         bi.EndInit();
 
-                        //System.Windows.MessageBox.Show(reader["photo"].ToString());
                         byte[] data = Convert.FromBase64String(reader["photo"].ToString());
-                        //System.Windows.MessageBox.Show(data.ToString());
                         string decodedPhoto = Encoding.UTF8.GetString(data);
-                        //System.Windows.MessageBox.Show(decodedPhoto);
 
                         Kliens kliens = new Kliens(Int32.Parse(reader["kliens_id"].ToString()),
                                                     reader["nev"].ToString(),
@@ -85,7 +86,7 @@ namespace FitnessApp.UI
             {
                 sqlCon.Close();
             }
-
+            
             users = kliensek;
             return users;
         }

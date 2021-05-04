@@ -3,6 +3,7 @@ using System.Net;
 using System.Net.Mail;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media.Imaging;
 
 namespace FitnessApp.UI
 {
@@ -11,6 +12,8 @@ namespace FitnessApp.UI
         public Email()
         {
             InitializeComponent();
+            trash.ImageSource = new BitmapImage(new Uri(Utils.trash));
+            email.ImageSource = new BitmapImage(new Uri(Utils.email));
         }
 
         private void kuld(object sender, System.Windows.RoutedEventArgs e)
@@ -28,7 +31,7 @@ namespace FitnessApp.UI
                     clientDetails.Host = "smtp.gmail.com"; // smtp.mail.yahoo.com
                     clientDetails.EnableSsl = true;
                     clientDetails.DeliveryMethod = SmtpDeliveryMethod.Network;
-                    clientDetails.UseDefaultCredentials = false;
+                    clientDetails.UseDefaultCredentials = true;
                     clientDetails.Credentials = new NetworkCredential(mymail.Text.Trim(), pass.Password.Trim());
 
                     MailMessage mailDetails = new MailMessage();

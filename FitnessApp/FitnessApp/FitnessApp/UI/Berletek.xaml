@@ -20,7 +20,7 @@
                     <DataGridTextColumn Header="Megnevezés" Width="2*" 
                                         Binding="{Binding megnevezes}"/>
                     <DataGridTextColumn Header="Ár" Width="2*" Binding="{Binding ar}"/>
-                    <DataGridTextColumn Header="Érvényesség" Width="2*" 
+                    <DataGridTextColumn Header="Nap limit" Width="2*" 
                                         Binding="{Binding ervenyesseg_nap}"/>
                     <DataGridTextColumn Header="Belépés limit" Width="2*" 
                                         Binding="{Binding ervenyesseg_belepesek_szama}"/>
@@ -40,10 +40,11 @@
                     <DataGridTemplateColumn>
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Button x:Name="editButton" Click="Edit_Berlet" Content="Szerkesztés" Margin="10" 
-                                        Width="100" ToolTip="Szerkesztés az adatbázisban."
-                                        Foreground="Silver" Background="Yellow" BorderBrush="Green">
-                                    <!--<Image Source="edit.png" Width="50" Height="30" Stretch="Uniform"/>-->
+                                <Button x:Name="editButton" Click="Edit_Berlet" Margin="10" BorderBrush="WhiteSmoke"
+                                        ToolTip="Szerkesztés az adatbázisban." Width="30" Height="30">
+                                    <Button.Background>
+                                        <ImageBrush x:Name="edit" ImageSource="E:/egyetem/felev2/.net/gyakok/projekt/FitnessApp/FitnessApp/FitnessApp/FitnessApp/UI/edit.png" Stretch="Uniform"/>
+                                    </Button.Background>
                                 </Button>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
@@ -51,9 +52,11 @@
                     <DataGridTemplateColumn>
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Button Click="Delete_Berlet" Foreground="Silver" Background="Red" BorderBrush="Green"
-                                        Margin="10" Width="100" Content="Törlés" ToolTip="Törlés az adatbázisból.">
-                                    <!--<Image Source="trash.png" Width="50" Height="30" Stretch="Uniform"/>-->
+                                <Button Click="Delete_Berlet" ToolTip="Törlés az adatbázisból." 
+                                        Margin="10" BorderBrush="WhiteSmoke" Width="30" Height="30">
+                                    <Button.Background>
+                                        <ImageBrush x:Name="trash" ImageSource="E:/egyetem/felev2/.net/gyakok/projekt/FitnessApp/FitnessApp/FitnessApp/FitnessApp/UI/trash.png" Stretch="Uniform"/>
+                                    </Button.Background>
                                 </Button>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
@@ -65,8 +68,12 @@
 
         <WrapPanel>
             <Button x:Name="saveEditButton" Click="Save_Edited_Berlet" Visibility="Hidden" 
-                    Content="Mentés" Margin="20" Width="120" ToolTip="Mentés az adatbázisba."
-                    Foreground="Silver" Background="DarkBlue" BorderBrush="Green"/>
+                    Content="Mentés" Margin="20" Width="50" Height="50" ToolTip="Mentés az adatbázisba."
+                    BorderBrush="WhiteSmoke">
+                <Button.Background>
+                    <ImageBrush x:Name="save" Stretch="Uniform"/>
+                </Button.Background>
+            </Button>
         </WrapPanel>
     </StackPanel>
 </UserControl>
