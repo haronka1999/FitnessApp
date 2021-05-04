@@ -65,13 +65,14 @@ namespace FitnessApp.UI
             date_str = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
             DateTime date = Convert.ToDateTime(date_str);           
             string[] IDs = Regex.Replace(berlet_IDK.Text, @"\s+", "").Split(',');
-         
-            
+
             if (name == "" || phone == "" || email == "" || cnp == "" || my_address == "" || barcode == "" || date_str == "")
             {
                 System.Windows.MessageBox.Show("Nem minden mező került kitöltésre!");
                 return;
             }
+
+    
 
             insertClientIntoDataBase(name, phone, email, deleted, photo, date, cnp, my_address, barcode, comment);
             getDatasFromClients(cnp);

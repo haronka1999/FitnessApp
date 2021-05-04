@@ -48,12 +48,14 @@ namespace FitnessApp.UI
                 if (!isValidVkod(vKod, sqlCon))
                 {
                     MessageBox.Show("Ilyen vonalkod nem talalhato!");
+                    beleptetes.Visibility = Visibility.Hidden;
                     return;
                 }
 
                 if (!isVallidBerletId(bId, sqlCon))
                 {
                     MessageBox.Show("Ilyen berlet nem talalhato!");
+                    beleptetes.Visibility = Visibility.Hidden;
                     return;
                 }
 
@@ -61,10 +63,7 @@ namespace FitnessApp.UI
                 queryClient(sqlCon, vKod);
                 countBarcode(sqlCon, vKod);
                 setMegnevezes();
-                //beleptetes infok megjelenitese
-                beleptetes.Visibility = Visibility.Visible;
-                //a nev beallitasa
-                beleptetes.nevMezo.Content = nev;
+  
 
                 berletLetrehozas = Convert.ToDateTime(berletLetrehozas_str, new CultureInfo("en-US"));
                 DateTime lejarati_datum = berletLetrehozas.AddDays(hanyNapig);
@@ -79,25 +78,28 @@ namespace FitnessApp.UI
                 TimeSpan currentHourMinute;
                 currentHourMinute = DateTime.Now.TimeOfDay;
 
-
                 if (!checkIfClientHasThatAbonament(bId, vKod, sqlCon))
                 {
                     MessageBox.Show("Ennek a kliensnek nincs ilyen berlete! ");
+                    beleptetes.Visibility = Visibility.Hidden;
                     return;
                 }
-
 
                 if (currentHourMinute < new TimeSpan(kezdetOra, kezdetPerc, 0) || currentHourMinute > new TimeSpan(vegOra, vegPerc, 0))
                 {
                     MessageBox.Show("A berlet most nem hasznalhato!");
+                    beleptetes.Visibility = Visibility.Hidden;
                     return;
                 }
 
-
-
                 isFirstEntry(sqlCon, vKod, bId);         
                 updateKliensekBerletetei(vKod);
-                
+
+                //beleptetes infok megjelenitese
+                beleptetes.Visibility = Visibility.Visible;
+                //a nev beallitasa
+                beleptetes.nevMezo.Content = nev;
+
 
                 // abban az esetben ha a berletnek megvan szabva hogy hany napig ervenyes
                 if (hanyNapig != -1 && hanyBelepes == -1)
@@ -145,7 +147,6 @@ namespace FitnessApp.UI
                 }
                 else
                 {
-                    MessageBox.Show("if: kombinalt: maradek belepes:  " + maradek_belepes);
                     if (kulonbseg < 1 || maradek_belepes < 1)
                     {
                         beleptetes.lejarat.Visibility = Visibility.Visible;
@@ -206,7 +207,7 @@ namespace FitnessApp.UI
             }
             catch (Exception ex)
             {
-                System.Windows.MessageBox.Show("Select kliensBerleti: " + ex.Message);
+                System.Windows.MessageBox.Show("Hiba: Select kliensBerleti: " + ex.Message);
             }
             finally
             {
@@ -247,8 +248,6 @@ namespace FitnessApp.UI
 
                 if (result < 0)
                     System.Windows.MessageBox.Show("Adatbázis hiba a kliensberletei frissitesenel");
-                else
-                    System.Windows.MessageBox.Show("KliensBerletei sikeresen frissitve");
             }
             catch (Exception ex)
             {
