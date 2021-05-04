@@ -1,86 +1,76 @@
-﻿<UserControl 
-    x:Class="FitnessApp.UI.UjKliens" 
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-    xmlns:local="clr-namespace:FitnessApp.UI" 
-    mc:Ignorable="d" 
-    d:DesignHeight="450" 
-    d:DesignWidth="800">
+﻿<UserControl x:Class="FitnessApp.UI.UjKliens" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:local="clr-namespace:FitnessApp.UI" mc:Ignorable="d" d:DesignHeight="450" d:DesignWidth="800">
 
     <StackPanel>
-        <Grid Margin="10" x:Name="ujKliens">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
 
-            <Label ToolTip="Teljes név, vagy becenév" Grid.Row="0" Content="Név:"/>
-            <TextBox x:Name="UserName" Grid.Row="0" Grid.Column="1" AcceptsReturn="True" 
-                     Margin="0,0,0,10" MaxLength="20" ToolTip="Név"/>
+        <StackPanel Orientation="Horizontal" Width="Auto">
+            <Grid Margin="10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
 
-            <Label ToolTip="Regisztráló telefonszáma" Grid.Row="1" Content="Telefonszám:"/>
-            <TextBox x:Name="Number" Grid.Row="1" Grid.Column="1" AcceptsReturn="True" 
-                     Margin="0,0,0,10" MaxLength="15" ToolTip="Telefonszám"/>
+                <Label ToolTip="Teljes név, vagy becenév" Grid.Row="0" Content="Név:" />
+                <TextBox x:Name="UserName" Grid.Row="0" Grid.Column="1" AcceptsReturn="True" Margin="0,0,0,10" MaxLength="20" ToolTip="Név" Width="300" />
 
-            <Label ToolTip="Regisztráló e-mail címe" Grid.Row="2" Content="E-mail:"/>
-            <TextBox x:Name="Email" Grid.Row="2" Grid.Column="1" AcceptsReturn="True" 
-                     Margin="0,0,0,10" MaxLength="40" ToolTip="E-mail."/>
+                <Label ToolTip="Regisztráló telefonszáma" Grid.Row="1" Content="Telefonszám:" />
+                <TextBox x:Name="Number" Grid.Row="1" Grid.Column="1" AcceptsReturn="True" Margin="0,0,0,10" MaxLength="15" ToolTip="Telefonszám" />
 
-            <Label ToolTip="Regisztráló fényképe" Grid.Row="3" Content="Fotó:"/>
-            <Button ToolTip="Fénykép hozzáadása" x:Name="BtnUpload" Grid.Row="3" Grid.Column="1" 
+                <Label ToolTip="Regisztráló e-mail címe" Grid.Row="2" Content="E-mail:" />
+                <TextBox x:Name="Email" Grid.Row="2" Grid.Column="1" AcceptsReturn="True" Margin="0,0,0,10" MaxLength="40" ToolTip="E-mail." />
+
+                <Label ToolTip="Regisztráló fényképe" Grid.Row="3" Content="Fotó:" />
+                <Button ToolTip="Fénykép hozzáadása" x:Name="BtnUpload" Grid.Row="3" Grid.Column="1" 
                     Margin="0,0,0,10" Width="50" Height="50" Click="BtnUpload_click" 
                     BorderBrush="WhiteSmoke" HorizontalAlignment="Left">
-                <Button.Background>
-                    <ImageBrush x:Name="upload" Stretch="Uniform"/>
-                </Button.Background>
-            </Button>
-            <Button ToolTip="Fénykép készítése" x:Name="keszit" Grid.Row="3" Grid.Column="1" 
+                    <Button.Background>
+                        <ImageBrush x:Name="upload" Stretch="Uniform"/>
+                    </Button.Background>
+                </Button>
+                <!--<Button ToolTip="Fénykép készítése" x:Name="keszit" Grid.Row="3" Grid.Column="1" 
                     Margin="0,0,0,10" Width="50" Height="50" Click="Btnkeszit_click" 
                     BorderBrush="WhiteSmoke" HorizontalAlignment="Right">
-                <Button.Background>
-                    <ImageBrush x:Name="kesz" Stretch="Uniform"/>
-                </Button.Background>
-            </Button>
-            <Image ToolTip="Photo" x:Name="imgPhoto" Grid.Row="3" Grid.Column="2" 
-                   Width="35" Height="35" Margin="20, 0, 10, 0"/>
+                    <Button.Background>
+                        <ImageBrush x:Name="kesz" Stretch="Uniform"/>
+                    </Button.Background>
+                </Button>-->
 
-            <Label ToolTip="Személyi szám" Grid.Row="4" Content="CNP:"/>
-            <TextBox x:Name="CNP" Grid.Row="4" Grid.Column="1" AcceptsReturn="True" 
-                     Margin="0,0,0,10" MaxLength="13" ToolTip="Személyi szám."/>
 
-            <Label ToolTip="Teljes lakcím megadása" Grid.Row="5" Content="Cím:"/>
-            <TextBox x:Name="address" Grid.Row="5" Grid.Column="1" AcceptsReturn="True" 
-                     Margin="0,0,0,10" MaxLength="25" ToolTip="Lakcím"/>
+                <Label ToolTip="Személyi szám" Grid.Row="4" Content="CNP:" />
+                <TextBox x:Name="CNP" Grid.Row="4" Grid.Column="1" AcceptsReturn="True" Margin="0,0,0,10" MaxLength="13" ToolTip="Személyi szám." />
 
-            <Label ToolTip="Bérletek illesztése ID szerint. PL: 6,7,8" Grid.Row="6" Content="Bérletek:" />
-            <TextBox x:Name="berlet_IDK" Grid.Row="6" Grid.Column="1" AcceptsReturn="True" Margin="0,0,0,10"
-                     MaxLength="25" ToolTip="Bérletek ID szerint"/>
-            
-            <Label ToolTip="Megjegyzés megadáasa." Grid.Row="7" Content="Megjegyzés:"/>
-            <TextBox x:Name="Comment" Grid.Row="7" Grid.Column="1" AcceptsReturn="True" Margin="0,0,0,10"/>
-        
-        </Grid>
+                <Label ToolTip="Teljes lakcím megadása" Grid.Row="5" Content="Cím:" />
+                <TextBox x:Name="address" Grid.Row="5" Grid.Column="1" AcceptsReturn="True" Margin="0,0,0,10" MaxLength="25" ToolTip="Lakcím" />
+
+                <Label ToolTip="Bérletek illesztése ID szerint. PL: 6,7,8" Grid.Row="6" Content="Bérletek:" />
+                <TextBox x:Name="berlet_IDK" Grid.Row="6" Grid.Column="1" AcceptsReturn="True" Margin="0,0,0,10" MaxLength="25" ToolTip="Bérletek illesztése ID szerint. PL: 6,7,8" />
+
+                <Label ToolTip="Megjegyzés megadáasa." Grid.Row="7" Content="Megjegyzés:" />
+                <TextBox x:Name="Comment" Grid.Row="7" Grid.Column="1" AcceptsReturn="True" Margin="0,0,0,10" />
+
+            </Grid>
+            <Image HorizontalAlignment="Right" ToolTip="Photo" 
+                   x:Name="imgPhoto" Width="250" Height="250" Margin="20, 0, 10, 0" />
+        </StackPanel>
 
         <WrapPanel>
-            <Button ToolTip="Mentés az adatbázisba" x:Name="BtnOk" Click="BtnOk_click" Margin="10"
-                    BorderBrush="WhiteSmoke" Width="50" Height="50">
+            <Button ToolTip="Mentés az adatbázisba" x:Name="BtnOk" Click="BtnOk_click" Margin="10" BorderBrush="WhiteSmoke" Width="50" Height="50">
                 <Button.Background>
-                    <ImageBrush x:Name="save" Stretch="Uniform"/>
+                    <ImageBrush x:Name="save" Stretch="Uniform" />
                 </Button.Background>
             </Button>
         </WrapPanel>
+        
     </StackPanel>
 </UserControl>

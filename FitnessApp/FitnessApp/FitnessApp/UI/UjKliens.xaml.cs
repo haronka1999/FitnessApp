@@ -37,8 +37,8 @@ namespace FitnessApp.UI
         private float  eladasi_ar = 0;
         List<string> options = new List<string>();
 
-        FilterInfoCollection filterInfoCollection;
-        VideoCaptureDevice videoCaptureDevice;
+        //private FilterInfoCollection VideoCaptureDevices;
+        //private VideoCaptureDevice FinalVideo;
 
         public IEnumerable<string> Options
         {
@@ -54,7 +54,7 @@ namespace FitnessApp.UI
             options = getAbonamentStrings();
             upload.ImageSource = new BitmapImage(new Uri(Utils.upload));
             save.ImageSource = new BitmapImage(new Uri(Utils.save));
-            kesz.ImageSource = new BitmapImage(new Uri(Utils.camera));
+            //kesz.ImageSource = new BitmapImage(new Uri(Utils.camera));
         }
 
         private void BtnOk_click(object sender, RoutedEventArgs e)
@@ -395,9 +395,22 @@ namespace FitnessApp.UI
               .Select(s => s[random.Next(s.Length)]).ToArray());
         }
 
-        private void Btnkeszit_click(object sender, RoutedEventArgs e)
+        /*private void Btnkeszit_click(object sender, RoutedEventArgs e)
         {
-            
+            VideoCaptureDevices = new FilterInfoCollection(FilterCategory.VideoInputDevice);
+
+            FinalVideo = new VideoCaptureDevice(VideoCaptureDevices[0].MonikerString);
+            FinalVideo.NewFrame += new NewFrameEventHandler(FinalVideo_NewFrame);
+            FinalVideo.Start();
         }
+        void FinalVideo_NewFrame(object sender, NewFrameEventArgs eventArgs)
+        {
+            Bitmap video = (Bitmap)eventArgs.Frame.Clone();
+            imgPhoto = video;
+        }
+        private void close(object sender, EventArgs e)
+        {
+            FinalVideo.Stop();
+        }*/
     }
 }
