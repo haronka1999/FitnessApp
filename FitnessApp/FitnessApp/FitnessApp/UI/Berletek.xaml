@@ -43,7 +43,7 @@
                                 <Button x:Name="editButton" Click="Edit_Berlet" Margin="10" BorderBrush="WhiteSmoke"
                                         ToolTip="Szerkesztés az adatbázisban." Width="30" Height="30">
                                     <Button.Background>
-                                        <ImageBrush x:Name="edit" ImageSource="E:/egyetem/felev2/.net/gyakok/projekt/FitnessApp/FitnessApp/FitnessApp/FitnessApp/UI/edit.png" Stretch="Uniform"/>
+                                        <ImageBrush x:Name="edit" ImageSource="C:/.Net_Project/FitnessApp/FitnessApp/FitnessApp/FitnessApp/UI/edit.png" Stretch="Uniform"/>
                                     </Button.Background>
                                 </Button>
                             </DataTemplate>
@@ -55,7 +55,7 @@
                                 <Button Click="Delete_Berlet" ToolTip="Törlés az adatbázisból." 
                                         Margin="10" BorderBrush="WhiteSmoke" Width="30" Height="30">
                                     <Button.Background>
-                                        <ImageBrush x:Name="trash" ImageSource="E:/egyetem/felev2/.net/gyakok/projekt/FitnessApp/FitnessApp/FitnessApp/FitnessApp/UI/trash.png" Stretch="Uniform"/>
+                                        <ImageBrush x:Name="trash" ImageSource="C:/.Net_Project/FitnessApp/FitnessApp/FitnessApp/FitnessApp/UI/trash.png" Stretch="Uniform"/>
                                     </Button.Background>
                                 </Button>
                             </DataTemplate>
