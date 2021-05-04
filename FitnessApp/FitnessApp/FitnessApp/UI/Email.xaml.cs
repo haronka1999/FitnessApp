@@ -78,7 +78,8 @@ namespace FitnessApp.UI
             {
                 op = new OpenFileDialog();
                 op.Title = "Válasszon profilképet";
-                op.Filter = "All supported graphics|*.jpg;*.jpeg;*.png|" +
+                op.Filter = "All files (*.*)|*.*|txt files (*.txt)|*.txt|" +
+                    "All supported graphics|*.jpg;*.jpeg;*.png|" +
                   "JPEG (*.jpg;*.jpeg)|*.jpg;*.jpeg|" +
                   "Portable Network Graphic (*.png)|*.png|Pdf Files|*.pdf|" +
                   "Zip Files|*.zip;*.rar";
