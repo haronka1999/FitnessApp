@@ -17,5 +17,7 @@ namespace FitnessApp
         public static string save = "E:/egyetem/felev2/.net/gyakok/projekt/FitnessApp/FitnessApp/FitnessApp/FitnessApp/UI/Save.png";
         public static string email = "E:/egyetem/felev2/.net/gyakok/projekt/FitnessApp/FitnessApp/FitnessApp/FitnessApp/UI/email_send.png";
         public static string excel = "E:/egyetem/felev2/.net/gyakok/projekt/FitnessApp/FitnessApp/FitnessApp/FitnessApp/UI/microsoft_excel.png";
+        public static string attachment = "E:/egyetem/felev2/.net/gyakok/projekt/FitnessApp/FitnessApp/FitnessApp/FitnessApp/UI/attachment.png";
+        public static string camera = "E:/egyetem/felev2/.net/gyakok/projekt/FitnessApp/FitnessApp/FitnessApp/FitnessApp/UI/camera.png";
     }
 }

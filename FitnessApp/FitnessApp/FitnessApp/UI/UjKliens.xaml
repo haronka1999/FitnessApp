@@ -10,7 +10,7 @@
     d:DesignWidth="800">
 
     <StackPanel>
-        <Grid Margin="10">
+        <Grid Margin="10" x:Name="ujKliens">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
@@ -40,10 +40,18 @@
                      Margin="0,0,0,10" MaxLength="40" ToolTip="E-mail."/>
 
             <Label ToolTip="Regisztráló fényképe" Grid.Row="3" Content="Fotó:"/>
-            <Button ToolTip="Fénykép hozzáadása." x:Name="BtnUpload" Grid.Row="3" Grid.Column="1" 
-                    Margin="0,0,0,10" Width="50" Height="50" Click="BtnUpload_click" BorderBrush="WhiteSmoke">
+            <Button ToolTip="Fénykép hozzáadása" x:Name="BtnUpload" Grid.Row="3" Grid.Column="1" 
+                    Margin="0,0,0,10" Width="50" Height="50" Click="BtnUpload_click" 
+                    BorderBrush="WhiteSmoke" HorizontalAlignment="Left">
                 <Button.Background>
                     <ImageBrush x:Name="upload" Stretch="Uniform"/>
+                </Button.Background>
+            </Button>
+            <Button ToolTip="Fénykép készítése" x:Name="keszit" Grid.Row="3" Grid.Column="1" 
+                    Margin="0,0,0,10" Width="50" Height="50" Click="Btnkeszit_click" 
+                    BorderBrush="WhiteSmoke" HorizontalAlignment="Right">
+                <Button.Background>
+                    <ImageBrush x:Name="kesz" Stretch="Uniform"/>
                 </Button.Background>
             </Button>
             <Image ToolTip="Photo" x:Name="imgPhoto" Grid.Row="3" Grid.Column="2" 
@@ -58,7 +66,8 @@
                      Margin="0,0,0,10" MaxLength="25" ToolTip="Lakcím"/>
 
             <Label ToolTip="Bérletek illesztése ID szerint. PL: 6,7,8" Grid.Row="6" Content="Bérletek:" />
-            <TextBox x:Name="berlet_IDK" Grid.Row="6" Grid.Column="1" AcceptsReturn="True" Margin="0,0,0,10" MaxLength="25" ToolTip="Bérletek illesztése ID szerint. PL: 6,7,8" />
+            <TextBox x:Name="berlet_IDK" Grid.Row="6" Grid.Column="1" AcceptsReturn="True" Margin="0,0,0,10"
+                     MaxLength="25" ToolTip="Bérletek ID szerint"/>
             
             <Label ToolTip="Megjegyzés megadáasa." Grid.Row="7" Content="Megjegyzés:"/>
             <TextBox x:Name="Comment" Grid.Row="7" Grid.Column="1" AcceptsReturn="True" Margin="0,0,0,10"/>

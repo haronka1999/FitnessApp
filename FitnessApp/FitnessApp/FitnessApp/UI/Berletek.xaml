@@ -68,7 +68,7 @@
 
         <WrapPanel>
             <Button x:Name="saveEditButton" Click="Save_Edited_Berlet" Visibility="Hidden" 
-                    Content="Mentés" Margin="20" Width="50" Height="50" ToolTip="Mentés az adatbázisba."
+                    Margin="20" Width="50" Height="50" ToolTip="Mentés az adatbázisba."
                     BorderBrush="WhiteSmoke">
                 <Button.Background>
                     <ImageBrush x:Name="save" Stretch="Uniform"/>
