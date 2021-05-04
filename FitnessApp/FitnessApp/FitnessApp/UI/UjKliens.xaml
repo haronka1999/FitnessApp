@@ -8,8 +8,8 @@
     mc:Ignorable="d" 
     d:DesignHeight="450" 
     d:DesignWidth="800">
-
-
+    
+    
     <StackPanel>
         <Grid Margin="10">
             <Grid.ColumnDefinitions>
@@ -54,34 +54,7 @@
             <Label ToolTip="Válasz bérlet típust." Grid.Row="6" Content="Bérlet típusa:"/>
 
 
-            <!--<ItemsControl ItemsSource="{Binding Rbs}" ItemTemplate="{StaticResource RadioDataTemplate}">
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <StackPanel x:Name="radios" />
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-            </ItemsControl>-->
-
-            <!--<ListBox Name="RadioButtonList" Grid.Row="6" Grid.Column="1">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <RadioButton GroupName="radioList" Tag="{Binding}" Content="{Binding Message_to_display}" />
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>-->
-
-                
-                
-                
-
-            <!--<ItemsControl Grid.Row="6" Grid.Column="1"  ItemsSource="{Binding Options}">
-                <ItemsControl.ItemTemplate >
-                    <DataTemplate>
-                        <RadioButton x:Name="radioButtons" Content="{Binding}" />
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>-->
-
+     
             <Label ToolTip="Megjegyzés megadáasa." Grid.Row="7" Content="Megjegyzés:"/>
             <TextBox x:Name="Comment" Grid.Row="7" Grid.Column="1" AcceptsReturn="True" Margin="0,0,0,10"/>
         
