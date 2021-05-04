@@ -21,15 +21,19 @@ namespace FitnessApp.UI
         private string vonalKod = "";
         private string date_str = "";
         private string nev = "";
-        private int belepesekSzama = -1;
-        private DateTime berletLetrehozas;
+        private int belepesekSzama = -1;       
+        private bool isFirst = false;
         private string berletLetrehozas_str;
+        private DateTime berletLetrehozas;
         private DateTime today = DateTime.Now;
 
         public FoOldal()
         {
             InitializeComponent();
         }
+
+        // ******************************************************* //
+        // ******************** MENTES *************************** //
         private void BtnOk_click(object sender, RoutedEventArgs e)
         {
             string vKod = vonalkod.Text;
@@ -70,15 +74,28 @@ namespace FitnessApp.UI
                 int kezdetPerc = Int32.Parse(temp1[1]);
                 int vegOra = Int32.Parse(temp2[0]);
                 int vegPerc = Int32.Parse(temp2[1]);
-
                 TimeSpan currentHourMinute;
                 currentHourMinute = DateTime.Now.TimeOfDay;
+
+
+                if (!checkIfClientHasThatAbonament(bId, vKod, sqlCon))
+                {
+                    MessageBox.Show("Ennek a kliensnek nincs ilyen berlete! ");
+                    return;
+                }
+
+
                 if (currentHourMinute < new TimeSpan(kezdetOra, kezdetPerc, 0) || currentHourMinute > new TimeSpan(vegOra, vegPerc, 0))
                 {
                     MessageBox.Show("A berlet most nem hasznalhato!");
                     return;
                 }
 
+
+
+                isFirstEntry(sqlCon, vKod, bId);         
+                updateKliensekBerletetei(vKod);
+                
 
                 // abban az esetben ha a berletnek megvan szabva hogy hany napig ervenyes
                 if (hanyNapig != -1 && hanyBelepes == -1)
@@ -152,6 +169,130 @@ namespace FitnessApp.UI
                 MessageBox.Show("Kérem töltse ki a kért mezőket!");
             }
 
+        }
+
+        private void isFirstEntry(SqlConnection sqlCon, string vKod, string bId)
+        {
+            isFirst = false;
+            try
+            {
+                if (sqlCon.State == ConnectionState.Closed)
+                {
+                    sqlCon.Open();
+                }
+
+
+                string query = "Select eddigi_belepes_szam from KliensBerletei b  " +
+                    "join Kliensek k on k.kliens_id = b.kliens_id " +
+                    "where k.vonalkod = @vKod and b.berlet_id= @bId;";
+
+                SqlCommand sqlCmd = new SqlCommand(query, sqlCon);
+                sqlCmd.Parameters.AddWithValue("@vKod", vKod);
+                sqlCmd.Parameters.AddWithValue("@bId", bId);
+
+                using (SqlDataReader reader = sqlCmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        if (Int32.Parse(reader["eddigi_belepes_szam"].ToString()) == 0)
+                        {
+                            isFirst = true;
+                        }
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Select kliensBerleti: " + ex.Message);
+            }
+            finally
+            {
+                sqlCon.Close();
+            }
+       
+        }
+
+        private void updateKliensekBerletetei(string vKod)
+        {
+            SqlConnection sqlCon = new SqlConnection(conString);
+
+
+            string query = "";
+            if (isFirst)
+            {
+                query = "UPDATE KliensBerletei set eddigi_belepes_szam = 1, elso_hasznalat_datum = @today WHERE vonalkod = @vKod;";
+            }
+            else
+            {
+                query = "UPDATE KliensBerletei set eddigi_belepes_szam = 1,  WHERE vonalkod = @vKod;";
+            }
+            
+            try
+            {
+                SqlCommand sqlCmd = new SqlCommand(query, sqlCon);
+                sqlCmd.Parameters.AddWithValue("@vKod", vKod);
+                if (isFirst)
+                {
+                    sqlCmd.Parameters.AddWithValue("@today", today);
+                }
+                if (sqlCon.State == ConnectionState.Closed)
+                {
+                    sqlCon.Open();
+                }
+
+                int result = sqlCmd.ExecuteNonQuery();
+
+                if (result < 0)
+                    System.Windows.MessageBox.Show("Adatbázis hiba a kliensberletei frissitesenel");
+                else
+                    System.Windows.MessageBox.Show("KliensBerletei sikeresen frissitve");
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Hiba update kliensek berletei: " + ex.Message);
+            }
+            finally
+            {
+                sqlCon.Close();
+            }
+        }
+
+        private bool checkIfClientHasThatAbonament(string bId, string vKod, SqlConnection sqlCon)
+        {
+            bool hasAbonament = false;
+            try
+            {
+                if (sqlCon.State == ConnectionState.Closed)
+                {
+                    sqlCon.Open();
+                }
+
+                string query = "Select * from Kliensek k " +
+                    "join KliensBerletei b on k.kliens_id = b.kliens_id " +
+                    "where k.vonalkod = @vKod and b.berlet_id= @bId;";
+                SqlCommand sqlCmd = new SqlCommand(query, sqlCon);
+                sqlCmd.Parameters.AddWithValue("@vKod", vKod);
+                sqlCmd.Parameters.AddWithValue("@bId", bId);
+
+                using (SqlDataReader reader = sqlCmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        hasAbonament = true;
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Hiba checkAbonament: " + ex.Message);
+            }
+            finally
+            {
+                sqlCon.Close();
+            }
+            return hasAbonament;
         }
 
         private void setMegnevezes()
@@ -404,7 +545,7 @@ namespace FitnessApp.UI
                     sqlCon.Open();
                 }
 
-                string query = "select kliens_id from Kliensek where vonalkod = @vkod;";
+                string query = "select kliens_id from Kliensek where vonalkod = @vkod and is_deleted=0;";
                 SqlCommand sqlCmd = new SqlCommand(query, sqlCon);
                 sqlCmd.Parameters.AddWithValue("@vkod", vKod);
                 using (SqlDataReader reader = sqlCmd.ExecuteReader())

@@ -56,7 +56,9 @@
             <TextBox x:Name="address" Grid.Row="5" Grid.Column="1" AcceptsReturn="True" 
                      Margin="0,0,0,10" MaxLength="25" ToolTip="Lakcím"/>
 
-     
+            <Label ToolTip="Bérletek illesztése ID szerint. PL: 6,7,8" Grid.Row="6" Content="Bérletek:" />
+            <TextBox x:Name="berlet_IDK" Grid.Row="6" Grid.Column="1" AcceptsReturn="True" Margin="0,0,0,10" MaxLength="25" ToolTip="Bérletek illesztése ID szerint. PL: 6,7,8" />
+            
             <Label ToolTip="Megjegyzés megadáasa." Grid.Row="7" Content="Megjegyzés:"/>
             <TextBox x:Name="Comment" Grid.Row="7" Grid.Column="1" AcceptsReturn="True" Margin="0,0,0,10"/>
         

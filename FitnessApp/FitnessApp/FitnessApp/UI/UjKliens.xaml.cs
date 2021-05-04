@@ -5,6 +5,7 @@ using System.Data.SqlClient;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Media.Imaging;
@@ -28,6 +29,11 @@ namespace FitnessApp.UI
         private string comment;
         private List<Berlet> berletek;
         private string date_str;
+        private int kliens_id = -1;
+        private int terem_id = -1;
+        private string vonalkod = "";
+        private DateTime today = DateTime.Now;
+        private float  eladasi_ar = 0;
         List<string> options = new List<string>();
 
         public IEnumerable<string> Options
@@ -43,6 +49,168 @@ namespace FitnessApp.UI
             berletek = getBerletekFromDatabase();             
             options = getAbonamentStrings();
         }
+
+        private void BtnOk_click(object sender, RoutedEventArgs e)
+        {
+            name = UserName.Text;
+            phone = Number.Text;
+            email = Email.Text;
+            cnp = CNP.Text;
+            my_address = address.Text;
+            barcode = generateRandomString(BARCODE_LENGTH);
+            comment = Comment.Text;
+            int deleted = 0;
+            date_str = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+            DateTime date = Convert.ToDateTime(date_str);           
+            string[] IDs = Regex.Replace(berlet_IDK.Text, @"\s+", "").Split(',');
+         
+            
+            if (name == "" || phone == "" || email == "" || cnp == "" || my_address == "" || barcode == "" || date_str == "")
+            {
+                System.Windows.MessageBox.Show("Nem minden mező került kitöltésre!");
+                return;
+            }
+
+            insertClientIntoDataBase(name, phone, email, deleted, photo, date, cnp, my_address, barcode, comment);
+            getDatasFromClients(cnp);
+            for(int i = 0; i < IDs.Length; i++)
+            {
+                int current_id = Int32.Parse(IDs[i]);                            
+                if ( checkIfBerletIdsExist(current_id) ){              
+                    insertKliensBerletei(current_id);
+                }              
+            }
+            
+            UserName.Text = "";
+            Number.Text = "";
+            Email.Text = "";
+            CNP.Text = "";
+            address.Text = "";
+            Comment.Text = "";
+        }
+
+
+        private bool checkIfBerletIdsExist(int current_id)
+        {
+            bool isExisting = false;
+            SqlConnection sqlCon = new SqlConnection(conString);
+            try
+            {
+                if (sqlCon.State == ConnectionState.Closed)
+                {
+                    sqlCon.Open();
+                }
+
+                string query = "Select ar,terem_id from Berletek where berlet_id  = @current_id;";
+                SqlCommand sqlCmd = new SqlCommand(query, sqlCon);
+                sqlCmd.Parameters.AddWithValue("@current_id", current_id);
+
+                using (SqlDataReader reader = sqlCmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        isExisting = true;
+                        eladasi_ar = float.Parse(reader["ar"].ToString());
+                        terem_id = Int32.Parse(reader["terem_id"].ToString());
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("1) Hiba complex query kliensek: " + ex.Message);
+            }
+            finally
+            {
+                sqlCon.Close();
+            }
+
+            return isExisting;
+        }
+
+        private void insertKliensBerletei(int berlet_id)
+        {
+
+
+
+            SqlConnection sqlCon = new SqlConnection(conString);
+            string query = "INSERT INTO KliensBerletei (kliens_id, berlet_id, vasarlas_datum, " +
+            "vonalkod, eddigi_belepes_szam, eladasi_ar, elso_hasznalat_datum, terem_id) " +
+            "VALUES (@kliens_id, @berlet_id, @vasarlas_datum, @vonalkod, @eddigi_belepes_szam, @eladasi_ar, @elso_hasznalat_datum, @terem_id);";
+            try
+            {
+                SqlCommand sqlCmd = new SqlCommand(query, sqlCon);
+                sqlCmd.Parameters.AddWithValue("@kliens_id", kliens_id);
+                sqlCmd.Parameters.AddWithValue("@berlet_id", berlet_id);
+                sqlCmd.Parameters.AddWithValue("@vasarlas_datum", today.ToString());
+                sqlCmd.Parameters.AddWithValue("@vonalkod", vonalkod);
+                sqlCmd.Parameters.AddWithValue("@eddigi_belepes_szam", 0);
+                sqlCmd.Parameters.AddWithValue("@eladasi_ar", eladasi_ar);
+                sqlCmd.Parameters.AddWithValue("@elso_hasznalat_datum", "");
+                sqlCmd.Parameters.AddWithValue("@terem_id", terem_id);
+
+        
+
+                if (sqlCon.State == ConnectionState.Closed)
+                {
+                    sqlCon.Open();
+                }
+
+                int result = sqlCmd.ExecuteNonQuery();
+
+
+                if (result < 0)
+                    System.Windows.MessageBox.Show("Adatbázis hiba kliens berletei hozzaadasanal!");
+                else
+                    System.Windows.MessageBox.Show("KliensBerletei! sikeresen hozzáadva");
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Hiba kliensekBerletei: " + ex.Message);
+            }
+            finally
+            {
+                sqlCon.Close();
+            }
+        }
+
+        private void getDatasFromClients(string cnp)
+        {
+
+            SqlConnection sqlCon = new SqlConnection(conString);
+            try
+            {
+                if (sqlCon.State == ConnectionState.Closed)
+                {
+                    sqlCon.Open();
+                }
+
+                string query = "Select kliens_id,vonalkod from Kliensek where szemelyi  =  @cnp;";
+                SqlCommand sqlCmd = new SqlCommand(query, sqlCon);
+                sqlCmd.Parameters.AddWithValue("@cnp", cnp);
+
+                using (SqlDataReader reader = sqlCmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        kliens_id = Int32.Parse(reader["kliens_id"].ToString());
+                        vonalkod = reader["vonalkod"].ToString();
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("1) Hiba complex query kliensek: " + ex.Message);
+            }
+            finally
+            {
+                sqlCon.Close();
+            }
+
+        }
+
+
 
         private List<string> getAbonamentStrings()
         {
@@ -134,35 +302,7 @@ namespace FitnessApp.UI
             }
         }
 
-        private void BtnOk_click(object sender, RoutedEventArgs e)
-        {
-            name = UserName.Text;
-            phone = Number.Text;
-            email = Email.Text;
-            cnp = CNP.Text;
-            my_address = address.Text;
-            barcode = generateRandomString(BARCODE_LENGTH);
-            comment = Comment.Text;
-            date_str = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-            DateTime date = Convert.ToDateTime(date_str);
-            int deleted = 0;
-
-
-            if (name == "" || phone == "" || email == "" || cnp == ""  || my_address == "" || barcode == "" || date_str == "")
-            {
-                System.Windows.MessageBox.Show("Nem minden mező került kitöltésre!");
-                return;
-            }
-
-            insertClientIntoDataBase(name, phone, email, deleted, photo, date, cnp, my_address, barcode, comment);
-
-            UserName.Text = "";
-            Number.Text = "";
-            Email.Text = "";
-            CNP.Text = "";
-            address.Text = "";
-            Comment.Text = "";
-        }
+      
 
         private void insertClientIntoDataBase(string name, string phone, string email, int deleted, string photo, DateTime date, string cnp, string my_address, string barcode, string comment)
         {
