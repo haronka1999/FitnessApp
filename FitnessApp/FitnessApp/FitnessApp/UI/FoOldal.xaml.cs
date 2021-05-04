@@ -225,7 +225,7 @@ namespace FitnessApp.UI
             }
             else
             {
-                query = "UPDATE KliensBerletei set eddigi_belepes_szam = 1,  WHERE vonalkod = @vKod;";
+                query = "UPDATE KliensBerletei set eddigi_belepes_szam = 1  WHERE vonalkod = @vKod;";
             }
             
             try
