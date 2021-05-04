@@ -9,7 +9,7 @@
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     mc:Ignorable="d"
     WindowState="Maximized"
-    Title="FitnesApp" 
+    Title="FitnessApp" 
     Height="600" 
     Width="1024" 
     ResizeMode="CanResizeWithGrip" 
