@@ -42,7 +42,9 @@
             <Label ToolTip="Regisztráló fényképe" Grid.Row="3" Content="Fotó:"/>
             <Button ToolTip="Fénykép hozzáadása." x:Name="BtnUpload" Grid.Row="3" Grid.Column="1" 
                     Margin="0,0,0,10" Width="150" Click="BtnUpload_click" Content="Feltölt"
-                    Foreground="Silver" Background="Black" BorderBrush="Green"/>
+                    Foreground="Silver" Background="Gold" BorderBrush="Green">
+                <!--<Image Source="image_add.png" Width="50" Height="30" Stretch="Uniform"/>-->
+            </Button>
             <Image ToolTip="Photo" x:Name="imgPhoto" Grid.Row="3" Grid.Column="2" 
                    Width="35" Height="35" Margin="20, 0, 10, 0"/>
 
@@ -87,7 +89,7 @@
         <WrapPanel>
             <Button ToolTip="Mentés az adatbázisba" x:Name="BtnOk" Click="BtnOk_click" 
                     Margin="10" Width="120" Content="Mentés" Foreground="Silver" 
-                    Background="Black" BorderBrush="Green"/>
+                    Background="DarkBlue" BorderBrush="Green"/>
         </WrapPanel>
     </StackPanel>
 </UserControl>

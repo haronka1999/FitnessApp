@@ -64,7 +64,7 @@
         <WrapPanel>
             <Button x:Name="BtnSave" ToolTip="Az adatok elmentése az adatbázisban" 
                     Click="BtnSave_click" Margin="10" Width="120" Content="Mentés"
-                    Foreground="Silver" Background="Black" BorderBrush="Green"/>
+                    Foreground="Silver" Background="DarkBlue" BorderBrush="Green"/>
         </WrapPanel>
         
     </StackPanel>

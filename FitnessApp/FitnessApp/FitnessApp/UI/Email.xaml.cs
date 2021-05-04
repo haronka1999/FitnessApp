@@ -47,5 +47,14 @@ namespace FitnessApp.UI
                 }
             }
         }
+
+        private void torol(object sender, RoutedEventArgs e)
+        {
+            mymail.Text = "";
+            pass.Password = "";
+            to.Text = "";
+            subject.Text = "";
+            body.Text = "";
+        }
     }
 }

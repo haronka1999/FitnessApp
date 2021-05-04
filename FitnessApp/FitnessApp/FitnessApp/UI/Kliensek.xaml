@@ -11,12 +11,12 @@
 
     <StackPanel>
 
-        <StackPanel Margin="10" Orientation="Horizontal">
+        <StackPanel Margin="10, 10, 0, 20" Orientation="Horizontal">
             <TextBox x:Name="searchResult" IsReadOnly="False" Height="20" Width="200" ToolTip="Keresés"
-                     HorizontalAlignment="Left" Margin="0, 20, 0, 0" MaxLength="20"/>
+                     HorizontalAlignment="Left" Margin="0, 10, 0, 0" MaxLength="20"/>
             <Button ToolTip="Név szerinti keresés" Click ="Search_Client_Click" Content="Keresés" x:Name="kereses"
-                    Margin="20, 0, 0, 0" Width="100" Foreground="Silver" Background="Black" BorderBrush="Green">
-                <!--<Image Source="search.png"/>-->
+                    Margin="20, 0, 0, 0" Width="100" Foreground="Silver" Background="DarkMagenta" BorderBrush="Green">
+                <!--<Image Source="search.png" Width="50" Height="30" Stretch="Uniform"/>-->
             </Button>
         </StackPanel>
 
@@ -56,7 +56,9 @@
                             <DataTemplate>
                                 <Button x:Name="editButton" Click="Edit_User" Content="Szerkesztés" Margin="10" 
                                         Width="100" ToolTip="Szerkesztés az adatbázisban."
-                                        Foreground="Silver" Background="Black" BorderBrush="Green"/>
+                                        Foreground="Silver" Background="Yellow" BorderBrush="Green">
+                                    <!--<Image Source="edit.png" Width="50" Height="30" Stretch="Uniform"/>-->
+                                </Button>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
@@ -65,7 +67,9 @@
                             <DataTemplate>
                                 <Button Click="Delete_User" Width="100" Content="Törlés" 
                                         ToolTip="Törlés az adatbázisból." Margin="10"
-                                        Foreground="Silver" Background="Black" BorderBrush="Green"/>
+                                        Foreground="Silver" Background="Red" BorderBrush="Green">
+                                    <!--<Image Source="trash.png" Width="50" Height="30" Stretch="Uniform"/>-->
+                                </Button>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
@@ -76,9 +80,9 @@
 
         <WrapPanel>
             <Button x:Name="SaveClients" Click="BtnSaveXls_click" Margin="20" Width="150" Content="Mentés Excel-be" 
-                    ToolTip="Excel-be mentés." Foreground="Silver" Background="Black" BorderBrush="Green"/>
+                    ToolTip="Excel-be mentés." Foreground="Silver" Background="PaleGreen" BorderBrush="Green"/>
             <Button x:Name="saveEditButton" Click="Save_Edited_Users" Visibility="Hidden" Foreground="Silver" 
-                    BorderBrush="Green" Background="Black" Content="Mentés" Margin="20" Width="120" 
+                    BorderBrush="Green" Background="DarkBlue" Content="Mentés" Margin="20" Width="120" 
                     ToolTip="Mentés az adatbázisba."/>
         </WrapPanel>
     </StackPanel>
