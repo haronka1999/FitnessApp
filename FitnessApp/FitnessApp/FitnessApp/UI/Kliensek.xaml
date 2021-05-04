@@ -4,11 +4,16 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:l="clr-namespace:FitnessApp"
     xmlns:local="clr-namespace:FitnessApp.UI" 
     mc:Ignorable="d" 
     d:DesignHeight="450" 
     d:DesignWidth="800">
 
+    <UserControl.Resources>
+        <l:ImageConverter x:Key="converter" />
+    </UserControl.Resources>
+    
     <StackPanel>
 
         <StackPanel Margin="10, 10, 0, 20" Orientation="Horizontal">
@@ -38,7 +43,7 @@
                     <DataGridTemplateColumn Header="Image" Width="2*" IsReadOnly="True">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Image Source="{Binding photo}" Width="20" Height="20"/>
+                                <Image Source="{Binding photo , Converter={StaticResource converter}}" Width="60" Height="60"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>

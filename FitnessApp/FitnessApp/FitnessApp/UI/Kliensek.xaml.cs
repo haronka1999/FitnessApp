@@ -16,9 +16,9 @@ namespace FitnessApp.UI
     public partial class Kliensek : System.Windows.Controls.UserControl
     {
         private string export_path_excel;
-
         public ObservableCollection<Kliens> users { get; set; }
         public object MessageBpx { get; private set; }
+        public string photo { get; set; }
 
         public Kliensek()
         {
@@ -27,7 +27,6 @@ namespace FitnessApp.UI
             users = new ObservableCollection<Kliens>();
             users = getUsersFromDatabase();
             this.KliensGrid.ItemsSource = users;
-
             search.ImageSource = new BitmapImage(new Uri(Utils.search));
             save.ImageSource = new BitmapImage(new Uri(Utils.save));
             excel.ImageSource = new BitmapImage(new Uri(Utils.excel));
@@ -52,20 +51,13 @@ namespace FitnessApp.UI
 
                     while (reader.Read())
                     {
-                        BitmapImage bi = new BitmapImage();
-                        bi.BeginInit();
-                        bi.StreamSource = new MemoryStream(System.Convert.FromBase64String(reader["photo"].ToString()));
-                        bi.EndInit();
-
-                        byte[] data = Convert.FromBase64String(reader["photo"].ToString());
-                        string decodedPhoto = Encoding.UTF8.GetString(data);
-
+                        photo = reader["photo"].ToString();
                         Kliens kliens = new Kliens(Int32.Parse(reader["kliens_id"].ToString()),
                                                     reader["nev"].ToString(),
                                                     reader["telefon"].ToString(),
                                                     reader["email"].ToString(),
                                                     bool.Parse(reader["is_deleted"].ToString()),
-                                                    decodedPhoto,
+                                                    photo,
                                                     Convert.ToDateTime(reader["inserted_date"].ToString()),
                                                     reader["szemelyi"].ToString(),
                                                     reader["cim"].ToString(),
@@ -160,7 +152,6 @@ namespace FitnessApp.UI
 
                 if (result < 0)
                     System.Windows.MessageBox.Show("Adatbázis hiba a kliens szerkesztésnél");
-                //else System.Windows.MessageBox.Show("Kliens sikeresen szerkesztve");
 
                 Refresh();
             }
@@ -200,7 +191,6 @@ namespace FitnessApp.UI
             {
                 System.Windows.MessageBox.Show("Hiba a kimentesnel: " + ex.Message);
             }
-
         }
 
         private string getPath(object sender)
@@ -242,15 +232,13 @@ namespace FitnessApp.UI
                     {
                         while (reader.Read())
                         {
-                            byte[] data = Convert.FromBase64String(reader["photo"].ToString());
-                            string decodedPhoto = Encoding.UTF8.GetString(data);
-
+                            photo = reader["photo"].ToString();
                             Kliens kliens = new Kliens(Int32.Parse(reader["kliens_id"].ToString()),
                                                         reader["nev"].ToString(),
                                                         reader["telefon"].ToString(),
                                                         reader["email"].ToString(),
                                                         bool.Parse(reader["is_deleted"].ToString()),
-                                                        decodedPhoto,
+                                                        photo,
                                                         Convert.ToDateTime(reader["inserted_date"].ToString()),
                                                         reader["szemelyi"].ToString(),
                                                         reader["cim"].ToString(),
@@ -273,7 +261,6 @@ namespace FitnessApp.UI
                 {
                     sqlCon.Close();
                 }
-
                 users = kliensek;
             }
             else
@@ -289,6 +276,5 @@ namespace FitnessApp.UI
             users = getUsersFromDatabase();
             this.KliensGrid.ItemsSource = users;
         }
-
     }
 }
