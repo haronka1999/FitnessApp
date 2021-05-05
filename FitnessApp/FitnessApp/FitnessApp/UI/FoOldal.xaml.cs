@@ -131,7 +131,7 @@ namespace FitnessApp.UI
                     if (maradek_belepes < 1 )
                     {
                         beleptetes.lejarat.Visibility = Visibility.Visible;
-                        return;
+                        return; 
                     }
 
                     if (maradek_belepes == 1 || maradek_belepes == 2)
@@ -142,6 +142,7 @@ namespace FitnessApp.UI
                     }
                     else
                         addingANewEntry(sqlCon);
+
 
                     beleptetes.hanyadikhasznalatMezo.Content = hanyBelepes + "/" + belepesekSzama;
 
